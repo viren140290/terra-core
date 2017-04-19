@@ -96,17 +96,17 @@ var CollapsibleButtonView = function (_React$Component) {
       return newArray;
     }
   }, {
-    key: 'getSelectedIndexes',
-    value: function getSelectedIndexes(children) {
-      var selectedIndexes = [];
+    key: 'getSelectedStates',
+    value: function getSelectedStates(children) {
+      var selectedStates = [];
       for (var i = 0; i < children.length; i += 1) {
         if (children[i].props.children) {
-          selectedIndexes.push(getSelectedValues(sub[i].props.children));
+          selectedStates.push(CollapsibleButtonView.getSelectedStates(children[i].props.children));
         } else {
-          return children[i].props.isSelected;
+          selectedStates.push(children[i].props.isSelected);
         }
       }
-      return selectedIndexes;
+      return selectedStates;
     }
   }, {
     key: 'indexPathValueFromNestedArrays',
@@ -122,8 +122,8 @@ var CollapsibleButtonView = function (_React$Component) {
   }, {
     key: 'getInitialState',
     value: function getInitialState(children) {
-      var selectedIndexes = getSelectedIndexes(children);
-      return { hiddenIndexes: [], selectedIndexes: selectedIndexes, toggleOpen: false };
+      var selectedStates = CollapsibleButtonView.getSelectedStates(children);
+      return { hiddenIndexes: [], selectedStates: selectedStates, toggleOpen: false };
     }
   }]);
 
@@ -132,7 +132,7 @@ var CollapsibleButtonView = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (CollapsibleButtonView.__proto__ || Object.getPrototypeOf(CollapsibleButtonView)).call(this, props));
 
-    _this.state = getInitialState(_this.props.children);
+    _this.state = CollapsibleButtonView.getInitialState(_this.props.children);
     _this.setContainer = _this.setContainer.bind(_this);
     _this.handleResize = _this.handleResize.bind(_this);
     _this.handleToggle = _this.handleToggle.bind(_this);
@@ -147,7 +147,7 @@ var CollapsibleButtonView = function (_React$Component) {
 
       if (this.container) {
         this.resizeObserver = new _resizeObserverPolyfill2.default(function (entries) {
-          _this2.setState({ hiddenIndexes: [], selectedIndexes: _this2.state.selectedIndexes, toggleOpen: _this2.state.toggleOpen });
+          _this2.setState({ hiddenIndexes: [], selectedStates: _this2.state.selectedStates, toggleOpen: _this2.state.toggleOpen });
           _this2.forceUpdate();
           _this2.handleResize(entries[0].contentRect.width);
         });
@@ -173,7 +173,7 @@ var CollapsibleButtonView = function (_React$Component) {
   }, {
     key: 'handleToggle',
     value: function handleToggle() {
-      this.setState({ toggleOpen: !this.toggleOpen, hiddenIndexes: this.state.hiddenIndexes, selectedIndexes: this.state.selectedIndexes });
+      this.setState({ toggleOpen: !this.state.toggleOpen, hiddenIndexes: this.state.hiddenIndexes, selectedStates: this.state.selectedStates });
     }
   }, {
     key: 'handleResize',
@@ -195,7 +195,7 @@ var CollapsibleButtonView = function (_React$Component) {
       }
 
       if (hiddenIndexes.length !== this.state.hiddenIndexes.length) {
-        this.setState({ toggleOpen: false, hiddenIndexes: hiddenIndexes, selectedIndexes: this.state.selectedIndexes });
+        this.setState({ toggleOpen: false, hiddenIndexes: hiddenIndexes, selectedStates: this.state.selectedStates });
       }
     }
   }, {
@@ -224,14 +224,14 @@ var CollapsibleButtonView = function (_React$Component) {
     value: function handleOnClick(event, index) {
       var shouldDismiss = this.children[index].isListStyle === true; //needs to be advanced
       if (this.state.toggleOpen && shouldDismiss) {
-        this.setState({ toggleOpen: false, hiddenIndexes: this.state.hiddenIndexes, selectedIndexes: this.state.selectedIndexes });
+        this.setState({ toggleOpen: false, hiddenIndexes: this.state.hiddenIndexes, selectedStates: this.state.selectedStates });
       }
     }
   }, {
     key: 'handleOnChange',
     value: function handleOnChange(event, indexPath, selectedValue) {
-      var selectedIndexes = CollapsibleButtonView.nestedArrayWithValueAtIndexPath(this.state.selectedIndexes, selectedValue, indexPath);
-      this.setState({ toggleOpen: this.state.toggleOpen, hiddenIndexes: this.state.hiddenIndexes, selectedIndexes: selectedIndexes });
+      var selectedStates = CollapsibleButtonView.nestedArrayWithValueAtIndexPath(this.state.selectedStates, selectedValue, indexPath);
+      this.setState({ toggleOpen: this.state.toggleOpen, hiddenIndexes: this.state.hiddenIndexes, selectedStates: selectedStates });
     }
   }, {
     key: 'wrapOnClick',
@@ -266,26 +266,24 @@ var CollapsibleButtonView = function (_React$Component) {
     value: function wrapChildComponents(children, indexPath) {
       var _this5 = this;
 
-      children.map(function (child, i) {
+      return children.map(function (child, i) {
         var newProps = {};
-        indexPath.push(i);
+        var clonedIndexPath = indexPath.slice(0);
+        clonedIndexPath.push(i);
 
-        if (_this5.props.children[child].type.displayName !== 'CollapsibleButtonGroup') {
-          newProps.onChange = _this5.wrapOnChange(child, indexPath);
-          newProps.selectedIndexes = CollapsibleButtonView.indexPathValueFromNestedArrays(_this5.state.selectedIndexes, indexPath);
+        if (child.type.displayName !== 'CollapsibleButtonGroup') {
+          newProps.onChange = _this5.wrapOnChange(child, clonedIndexPath);
+          newProps.selectedIndexes = CollapsibleButtonView.indexPathValueFromNestedArrays(_this5.state.selectedStates, clonedIndexPath);
         } else {
           newProps.onClick = _this5.wrapOnClick(child);
-          newProps.isSelected = CollapsibleButtonView.indexPathValueFromNestedArrays(_this5.state.selectedIndexes, indexPath);
+          newProps.isSelected = CollapsibleButtonView.indexPathValueFromNestedArrays(_this5.state.selectedStates, clonedIndexPath);
         }
 
-        if (_this5.child.children.length > 0) {
-          _this5.wrapChildComponents(_this5.child.children, i);
+        if (child.props.children) {
+          _this5.wrapChildComponents(child.props.children, clonedIndexPath);
         }
 
-        return _react2.default.cloneElement(child, {
-          onClick: onClick,
-          isSelected: _this5.state.selectedIndex === i
-        });
+        return _react2.default.cloneElement(child, newProps);
       });
     }
   }, {
@@ -318,24 +316,29 @@ var CollapsibleButtonView = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'terra-CollapsibleButtonView' },
+        { className: 'terra-CollapsibleButtonView-totallyTemporary' },
         _react2.default.createElement(
           'div',
-          { className: 'terra-CollapsibleButtonView-container', ref: this.setContainer },
-          visibleChildren.map(function (child, childIndex) {
-            var childKey = childIndex;
-            return _react2.default.createElement(
-              'div',
-              { className: 'terra-CollapsibleButtonView-item', key: childKey },
-              child
-            );
-          })
+          { className: 'terra-CollapsibleButtonView' },
+          _react2.default.createElement(
+            'div',
+            { className: 'terra-CollapsibleButtonView-container', ref: this.setContainer },
+            visibleChildren.map(function (child, childIndex) {
+              var childKey = childIndex;
+              return _react2.default.createElement(
+                'div',
+                { className: 'terra-CollapsibleButtonView-item', key: childKey },
+                child
+              );
+            })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'terra-CollapsibleButtonView-toggle' },
+            toggle
+          )
         ),
-        _react2.default.createElement(
-          'div',
-          { className: 'terra-CollapsibleButtonView-toggle' },
-          toggle
-        )
+        hiddenSection
       );
     }
   }]);

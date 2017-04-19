@@ -51,16 +51,16 @@ class CollapsibleButtonView extends React.Component {
     return newArray;
   }
 
-  static getSelectedIndexes(children) {
-    let selectedIndexes = [];
+  static getSelectedStates(children) {
+    let selectedStates = [];
     for (let i = 0; i < children.length; i += 1) {
       if (children[i].props.children) {
-        selectedIndexes.push(getSelectedValues(sub[i].props.children));
+        selectedStates.push(CollapsibleButtonView.getSelectedStates(children[i].props.children));
       } else {
-        return children[i].props.isSelected;
+        selectedStates.push(children[i].props.isSelected);
       }
     }
-    return selectedIndexes;
+    return selectedStates;
   }
 
   static indexPathValueFromNestedArrays(nestedArrays, indexPath) {
@@ -74,13 +74,13 @@ class CollapsibleButtonView extends React.Component {
   }
 
   static getInitialState(children) {
-    const selectedIndexes = getSelectedIndexes(children);
-    return { hiddenIndexes: [], selectedIndexes , toggleOpen: false};
+    const selectedStates = CollapsibleButtonView.getSelectedStates(children);
+    return { hiddenIndexes: [], selectedStates , toggleOpen: false};
   }
 
   constructor(props) {
     super(props);
-    this.state = getInitialState(this.props.children);
+    this.state = CollapsibleButtonView.getInitialState(this.props.children);
     this.setContainer = this.setContainer.bind(this);
     this.handleResize = this.handleResize.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
@@ -90,7 +90,7 @@ class CollapsibleButtonView extends React.Component {
   componentDidMount() {
     if (this.container) {
       this.resizeObserver = new ResizeObserver((entries) => { 
-        this.setState({ hiddenIndexes: [], selectedIndexes: this.state.selectedIndexes, toggleOpen: this.state.toggleOpen });
+        this.setState({ hiddenIndexes: [], selectedStates: this.state.selectedStates, toggleOpen: this.state.toggleOpen });
         this.forceUpdate(); 
         this.handleResize(entries[0].contentRect.width); 
       });
@@ -111,7 +111,7 @@ class CollapsibleButtonView extends React.Component {
   }
 
   handleToggle() {
-    this.setState({ toggleOpen: !this.toggleOpen, hiddenIndexes: this.state.hiddenIndexes, selectedIndexes: this.state.selectedIndexes });
+    this.setState({ toggleOpen: !this.state.toggleOpen, hiddenIndexes: this.state.hiddenIndexes, selectedStates: this.state.selectedStates });
   }
 
   handleResize(width) {
@@ -132,7 +132,7 @@ class CollapsibleButtonView extends React.Component {
     }
 
     if (hiddenIndexes.length !== this.state.hiddenIndexes.length) {
-      this.setState({ toggleOpen: false, hiddenIndexes, selectedIndexes: this.state.selectedIndexes });
+      this.setState({ toggleOpen: false, hiddenIndexes, selectedStates: this.state.selectedStates });
     }
   }
 
@@ -158,13 +158,13 @@ class CollapsibleButtonView extends React.Component {
   handleOnClick(event, index) {
     const shouldDismiss = this.children[index].isListStyle === true; //needs to be advanced
     if (this.state.toggleOpen && shouldDismiss) {
-      this.setState({ toggleOpen: false, hiddenIndexes: this.state.hiddenIndexes, selectedIndexes: this.state.selectedIndexes });
+      this.setState({ toggleOpen: false, hiddenIndexes: this.state.hiddenIndexes, selectedStates: this.state.selectedStates });
     }
   }
 
   handleOnChange(event, indexPath, selectedValue) {
-    const selectedIndexes = CollapsibleButtonView.nestedArrayWithValueAtIndexPath(this.state.selectedIndexes, selectedValue, indexPath);
-    this.setState({ toggleOpen: this.state.toggleOpen, hiddenIndexes: this.state.hiddenIndexes, selectedIndexes });
+    const selectedStates = CollapsibleButtonView.nestedArrayWithValueAtIndexPath(this.state.selectedStates, selectedValue, indexPath);
+    this.setState({ toggleOpen: this.state.toggleOpen, hiddenIndexes: this.state.hiddenIndexes, selectedStates });
   }
 
   wrapOnClick(item) {
@@ -190,26 +190,24 @@ class CollapsibleButtonView extends React.Component {
   }
 
   wrapChildComponents(children, indexPath) {
-    children.map((child, i) => {
+    return children.map((child, i) => {
       const newProps = {};
-      indexPath.push(i);
+      const clonedIndexPath = indexPath.slice(0);
+      clonedIndexPath.push(i);
 
-      if (this.props.children[child].type.displayName !== 'CollapsibleButtonGroup') {
-        newProps.onChange = this.wrapOnChange(child, indexPath);
-        newProps.selectedIndexes = CollapsibleButtonView.indexPathValueFromNestedArrays(this.state.selectedIndexes, indexPath);
+      if (child.type.displayName !== 'CollapsibleButtonGroup') {
+        newProps.onChange = this.wrapOnChange(child, clonedIndexPath);
+        newProps.selectedIndexes = CollapsibleButtonView.indexPathValueFromNestedArrays(this.state.selectedStates, clonedIndexPath);
       } else {
         newProps.onClick = this.wrapOnClick(child);
-        newProps.isSelected = CollapsibleButtonView.indexPathValueFromNestedArrays(this.state.selectedIndexes, indexPath);
+        newProps.isSelected = CollapsibleButtonView.indexPathValueFromNestedArrays(this.state.selectedStates, clonedIndexPath);
       }
 
-      if (this.child.children.length > 0) {
-        this.wrapChildComponents(this.child.children, i);
+      if (child.props.children) {
+        this.wrapChildComponents(child.props.children, clonedIndexPath);
       }
 
-      return React.cloneElement(child, {
-        onClick,
-        isSelected: this.state.selectedIndex === i,
-      });
+      return React.cloneElement(child, newProps);
     });
   }
 
@@ -239,20 +237,23 @@ class CollapsibleButtonView extends React.Component {
     }
 
     return (
-      <div className="terra-CollapsibleButtonView">
-        <div className="terra-CollapsibleButtonView-container" ref={this.setContainer}>
-          {visibleChildren.map((child, childIndex) => {
-            const childKey = childIndex;
-            return (
-              <div className="terra-CollapsibleButtonView-item" key={childKey}>
-                {child}
-              </div>
-            );
-          })}
+      <div className="terra-CollapsibleButtonView-totallyTemporary">
+        <div className="terra-CollapsibleButtonView">
+          <div className="terra-CollapsibleButtonView-container" ref={this.setContainer}>
+            {visibleChildren.map((child, childIndex) => {
+              const childKey = childIndex;
+              return (
+                <div className="terra-CollapsibleButtonView-item" key={childKey}>
+                  {child}
+                </div>
+              );
+            })}
+          </div>
+          <div className="terra-CollapsibleButtonView-toggle">
+            {toggle}
+          </div>
         </div>
-        <div className="terra-CollapsibleButtonView-toggle">
-          {toggle}
-        </div>
+        {hiddenSection}
       </div>
     );
   }
