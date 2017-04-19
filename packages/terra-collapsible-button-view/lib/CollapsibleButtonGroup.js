@@ -83,7 +83,7 @@ var CollapsibleButtonGroup = function (_React$Component) {
           var newSelections = this.props.selectedIndexes.map(function (value, i) {
             return i === index;
           });
-          this.props.onChange(newSelections);
+          this.props.onChange(event, newSelections);
         }
       }
     }
@@ -107,11 +107,12 @@ var CollapsibleButtonGroup = function (_React$Component) {
       var _this3 = this;
 
       var _props = this.props,
-          onChange = _props.onChange,
+          selectedIndexes = _props.selectedIndexes,
           isSelectable = _props.isSelectable,
           isListStyle = _props.isListStyle,
+          onChange = _props.onChange,
           children = _props.children,
-          customProps = _objectWithoutProperties(_props, ['onChange', 'isSelectable', 'isListStyle', 'children']);
+          customProps = _objectWithoutProperties(_props, ['selectedIndexes', 'isSelectable', 'isListStyle', 'onChange', 'children']);
 
       var groupClassNames = (0, _classnames2.default)(['terra-CollapsibleButtonGroup', customProps.className]);
 

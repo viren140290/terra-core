@@ -31,7 +31,7 @@ class CollapsibleButtonView extends React.Component {
     const clonedIndexPath = indexPath.slice(0);
 
     while (clonedIndexPath.length > 0) {
-      child = currentChildren ? currentChildren[clonedIndexPath.pop()] : null;
+      child = currentChildren ? currentChildren[clonedIndexPath.shift()] : null;
       currentChildren = child ? child.children : null;
     }
 
@@ -39,12 +39,13 @@ class CollapsibleButtonView extends React.Component {
   }
 
   static nestedArrayWithValueAtIndexPath(nestedArrays, value, indexPath) {
-    const newArray = nestedArrays.map(a => Object.assign({}, a));
+    var newArray = JSON.parse(JSON.stringify(nestedArrays));
+    // const newArray = nestedArrays.map(a => Object.assign({}, a));
     let currentArray = newArray;
     const clonedIndexPath = indexPath.slice(0);
 
     while (clonedIndexPath.length > 1) {
-      currentArray = currentArray[clonedIndexPath.pop()];
+      currentArray = currentArray[clonedIndexPath.shift()];
     }
 
     currentArray[clonedIndexPath] = value; 
@@ -68,7 +69,7 @@ class CollapsibleButtonView extends React.Component {
     const clonedIndexPath = indexPath.slice(0);
 
     while (clonedIndexPath.length > 0) {
-      currentValue = currentValue[clonedIndexPath.pop()];
+      currentValue = currentValue[clonedIndexPath.shift()];
     }
     return currentValue;
   }
@@ -84,6 +85,8 @@ class CollapsibleButtonView extends React.Component {
     this.setContainer = this.setContainer.bind(this);
     this.handleResize = this.handleResize.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
     this.toggleButton = <Button text="…" onClick={this.handleToggle} />;
   }
 
@@ -155,22 +158,23 @@ class CollapsibleButtonView extends React.Component {
     return hiddenChildren;
   }
 
-  handleOnClick(event, index) {
-    const shouldDismiss = this.children[index].isListStyle === true; //needs to be advanced
+  handleOnClick(event, indexPath) {
+    const child = CollapsibleButtonView.childFromIndexPath(indexPath);
+    const shouldDismiss = child.isListStyle === true; //needs to be advanced
     if (this.state.toggleOpen && shouldDismiss) {
       this.setState({ toggleOpen: false, hiddenIndexes: this.state.hiddenIndexes, selectedStates: this.state.selectedStates });
     }
   }
 
-  handleOnChange(event, indexPath, selectedValue) {
+  handleOnChange(event, selectedValue, indexPath) {
     const selectedStates = CollapsibleButtonView.nestedArrayWithValueAtIndexPath(this.state.selectedStates, selectedValue, indexPath);
     this.setState({ toggleOpen: this.state.toggleOpen, hiddenIndexes: this.state.hiddenIndexes, selectedStates });
   }
 
-  wrapOnClick(item) {
+  wrapOnClick(item, indexPath) {
     const onClick = item.props.onClick;
     return (event) => {
-      this.handleOnClick(event);
+      this.handleOnClick(event, indexPath);
 
       if (onClick) {
         onClick(event);
@@ -180,8 +184,8 @@ class CollapsibleButtonView extends React.Component {
 
   wrapOnChange(item, indexPath) {
     const onChange = item.props.onChange;
-    return (event) => {
-      this.handleOnChange(event, indexPath, selectedValue);
+    return (event, selectedValue) => {
+      this.handleOnChange(event, selectedValue, indexPath);
 
       if (onChange) {
         onChange(event, selectedValue);
@@ -195,16 +199,16 @@ class CollapsibleButtonView extends React.Component {
       const clonedIndexPath = indexPath.slice(0);
       clonedIndexPath.push(i);
 
-      if (child.type.displayName !== 'CollapsibleButtonGroup') {
+      if (child.type.name === 'CollapsibleButtonGroup') {
         newProps.onChange = this.wrapOnChange(child, clonedIndexPath);
         newProps.selectedIndexes = CollapsibleButtonView.indexPathValueFromNestedArrays(this.state.selectedStates, clonedIndexPath);
       } else {
-        newProps.onClick = this.wrapOnClick(child);
+        newProps.onClick = this.wrapOnClick(child, clonedIndexPath);
         newProps.isSelected = CollapsibleButtonView.indexPathValueFromNestedArrays(this.state.selectedStates, clonedIndexPath);
       }
 
       if (child.props.children) {
-        this.wrapChildComponents(child.props.children, clonedIndexPath);
+        newProps.children = this.wrapChildComponents(child.props.children, clonedIndexPath);
       }
 
       return React.cloneElement(child, newProps);

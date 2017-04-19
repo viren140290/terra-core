@@ -2,14 +2,10 @@
 @import './variables';
 @import './mixins';
 
-.terra-CollapsibleButtonView {
-  border-left: 1px dark;
-  border-right: 1px dark;
-  padding-left: 20px;
-  padding-right: 20px;
+.terra-CollapsibleButtonItem {
+  cursor: pointer;
 }
 
-.terra-CollapsibleButtonView--hidden {
-  max-width: 100%;
-  position: relative;
+.terra-CollapsibleButtonItem--selected {
+  background-color: #2388cc;
 }

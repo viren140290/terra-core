@@ -25,10 +25,6 @@ const propTypes = {
    */
   isListStyle: PropTypes.bool,
   /**
-   * Callback function triggered when clicked
-   */
-  onClick: PropTypes.func,
-  /**
    * Child Nodes
    */
   children: PropTypes.node,
@@ -40,7 +36,6 @@ const defaultProps = {
   isReversed: false,
   isSelected: false,
   isListStyle: false,
-  onClick: undefined,
   children: undefined,
 };
 
@@ -50,7 +45,6 @@ const CollapsibleButtonItem = ({
   isReversed,
   isSelected,
   isListStyle,
-  onClick,
   children,
   ...customProps, 
 }) => {

@@ -47,7 +47,7 @@ class CollapsibleButtonGroup extends React.Component {
         const newSelections = this.props.selectedIndexes.map((value, i) => {
           return i === index;
         });
-        this.props.onChange(newSelections);
+        this.props.onChange(event, newSelections);
       }
     }
   }
@@ -64,7 +64,7 @@ class CollapsibleButtonGroup extends React.Component {
   }
 
   render() {
-    const { onChange, isSelectable, isListStyle, children, ...customProps } = this.props;
+    const {selectedIndexes, isSelectable, isListStyle, onChange, children, ...customProps } = this.props;
     const groupClassNames = classNames(['terra-CollapsibleButtonGroup',
       customProps.className,
     ]);
