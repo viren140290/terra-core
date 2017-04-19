@@ -192,7 +192,7 @@ var CollapsibleButtonView = function (_React$Component) {
           hiddenIndexes.push(i);
         }
       }
-
+      // this needs to match arrays
       if (hiddenIndexes.length !== this.state.hiddenIndexes.length) {
         this.setState({ toggleOpen: false, hiddenIndexes: hiddenIndexes, selectedStates: this.state.selectedStates });
       }
@@ -214,7 +214,7 @@ var CollapsibleButtonView = function (_React$Component) {
       var indexes = this.state.hiddenIndexes;
       var hiddenChildren = [];
       for (var i = 0; i < indexes.length; i += 1) {
-        hiddenChildren.push(children[indexes[i]]);
+        hiddenChildren.push(_react2.default.cloneElement(children[indexes[i]], { isListStyle: true }));
       }
       return hiddenChildren;
     }

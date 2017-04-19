@@ -66,6 +66,7 @@ class CollapsibleButtonGroup extends React.Component {
   render() {
     const {selectedIndexes, isSelectable, isListStyle, onChange, children, ...customProps } = this.props;
     const groupClassNames = classNames(['terra-CollapsibleButtonGroup',
+      { 'terra-CollapsibleButtonGroup--listStyle': isListStyle },
       customProps.className,
     ]);
 

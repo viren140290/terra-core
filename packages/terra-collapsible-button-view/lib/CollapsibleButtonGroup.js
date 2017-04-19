@@ -114,7 +114,7 @@ var CollapsibleButtonGroup = function (_React$Component) {
           children = _props.children,
           customProps = _objectWithoutProperties(_props, ['selectedIndexes', 'isSelectable', 'isListStyle', 'onChange', 'children']);
 
-      var groupClassNames = (0, _classnames2.default)(['terra-CollapsibleButtonGroup', customProps.className]);
+      var groupClassNames = (0, _classnames2.default)(['terra-CollapsibleButtonGroup', { 'terra-CollapsibleButtonGroup--listStyle': isListStyle }, customProps.className]);
 
       var wrappedChildren = children.map(function (child, index) {
         if (isSelectable) {

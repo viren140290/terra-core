@@ -133,7 +133,7 @@ class CollapsibleButtonView extends React.Component {
         hiddenIndexes.push(i);
       }
     }
-
+    // this needs to match arrays
     if (hiddenIndexes.length !== this.state.hiddenIndexes.length) {
       this.setState({ toggleOpen: false, hiddenIndexes, selectedStates: this.state.selectedStates });
     }
@@ -153,7 +153,7 @@ class CollapsibleButtonView extends React.Component {
     const indexes = this.state.hiddenIndexes;
     const hiddenChildren = [];
     for (let i = 0; i < indexes.length; i += 1) {
-      hiddenChildren.push(children[indexes[i]]);
+      hiddenChildren.push(React.cloneElement(children[indexes[i]], {isListStyle: true}));
     }
     return hiddenChildren;
   }

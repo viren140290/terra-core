@@ -4,4 +4,9 @@
 
 .terra-CollapsibleButtonGroup {
   border: solid 2px #cc5423;
+  display: flex;
+}
+
+.terra-CollapsibleButtonGroup--listStyle {
+  display: block;
 }

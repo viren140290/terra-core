@@ -51,6 +51,7 @@ const CollapsibleButtonItem = ({
   const buttonClassName = classNames([
     'terra-CollapsibleButtonItem',
     { 'terra-CollapsibleButtonItem--selected': isSelected },
+    { 'terra-CollapsibleButtonItem--listStyle': isListStyle },
     customProps.className,
   ]);
 

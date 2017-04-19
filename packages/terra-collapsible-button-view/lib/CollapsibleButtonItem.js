@@ -65,7 +65,7 @@ var CollapsibleButtonItem = function CollapsibleButtonItem(_ref) {
       children = _ref.children,
       customProps = _objectWithoutProperties(_ref, ['text', 'icon', 'isReversed', 'isSelected', 'isListStyle', 'children']);
 
-  var buttonClassName = (0, _classnames2.default)(['terra-CollapsibleButtonItem', { 'terra-CollapsibleButtonItem--selected': isSelected }, customProps.className]);
+  var buttonClassName = (0, _classnames2.default)(['terra-CollapsibleButtonItem', { 'terra-CollapsibleButtonItem--selected': isSelected }, { 'terra-CollapsibleButtonItem--listStyle': isListStyle }, customProps.className]);
 
   return _react2.default.createElement(
     'div',
