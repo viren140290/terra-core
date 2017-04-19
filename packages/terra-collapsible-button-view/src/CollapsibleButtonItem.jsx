@@ -23,7 +23,7 @@ const propTypes = {
   /**
    * Indidcates if the element is viewed inline or in list style.
    */
-  isHidden: PropTypes.bool,
+  isListStyle: PropTypes.bool,
   /**
    * Callback function triggered when clicked
    */
@@ -39,7 +39,7 @@ const defaultProps = {
   icon: undefined,
   isReversed: false,
   isSelected: false,
-  isHidden: false,
+  isListStyle: false,
   onClick: undefined,
   children: undefined,
 };
@@ -49,7 +49,7 @@ const CollapsibleButtonItem = ({
   icon,
   isReversed,
   isSelected,
-  isHidden,
+  isListStyle,
   onClick,
   children,
   ...customProps, 

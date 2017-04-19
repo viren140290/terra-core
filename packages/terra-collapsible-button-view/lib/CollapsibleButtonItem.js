@@ -40,7 +40,7 @@ var propTypes = {
   /**
    * Indidcates if the element is viewed inline or in list style.
    */
-  isHidden: _react.PropTypes.bool,
+  isListStyle: _react.PropTypes.bool,
   /**
    * Callback function triggered when clicked
    */
@@ -56,7 +56,7 @@ var defaultProps = {
   icon: undefined,
   isReversed: false,
   isSelected: false,
-  isHidden: false,
+  isListStyle: false,
   onClick: undefined,
   children: undefined
 };
@@ -66,10 +66,10 @@ var CollapsibleButtonItem = function CollapsibleButtonItem(_ref) {
       icon = _ref.icon,
       isReversed = _ref.isReversed,
       isSelected = _ref.isSelected,
-      isHidden = _ref.isHidden,
+      isListStyle = _ref.isListStyle,
       onClick = _ref.onClick,
       children = _ref.children,
-      customProps = _objectWithoutProperties(_ref, ['text', 'icon', 'isReversed', 'isSelected', 'isHidden', 'onClick', 'children']);
+      customProps = _objectWithoutProperties(_ref, ['text', 'icon', 'isReversed', 'isSelected', 'isListStyle', 'onClick', 'children']);
 
   var buttonClassName = (0, _classnames2.default)(['terra-CollapsibleButtonItem', { 'terra-CollapsibleButtonItem--selected': isSelected }, customProps.className]);
 

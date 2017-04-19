@@ -14,9 +14,9 @@ const propTypes = {
    **/
   isSelectable: PropTypes.bool,
   /**
-   * Indicates if the button group should have toggle-style selectability
+   * Indicates if the button group should display in list style.
    **/
-  isHidden: PropTypes.bool,
+  isListStyle: PropTypes.bool,
   /**
    * Callback function when the state changes
    **/
@@ -30,47 +30,24 @@ const propTypes = {
 const defaultProps = {
   selectedIndexes: [],
   isSelectable: false,
-  isHidden: false,
+  isListStyle: false,
   onChange: undefined,
   children: undefined,
 };
 
 class CollapsibleButtonGroup extends React.Component {
-  static getInitialState(buttons, isSelectable) {
-    if (!isSelectable) { return null; }
-
-    for (let i = 0; i < buttons.length; i += 1) {
-      if (buttons[i].props.isSelected) {
-        return i;
-      }
-    }
-
-    return null;
-  }
-
   constructor(props) {
     super(props);
     this.handleOnClick = this.handleOnClick.bind(this);
-    this.state = {
-      selectedIndex: CollapsibleButtonGroup.getInitialState(this.props.buttons.concat(this.props.children), this.props.isSelectable),
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const newSelectedIndex = CollapsibleButtonGroup.getInitialState(nextProps.buttons.concat(nextProps.children), nextProps.isSelectable);
-
-    if (newSelectedIndex !== this.state.selectedIndex) {
-      this.setState({ selectedIndex: newSelectedIndex });
-    }
   }
 
   handleOnClick(event, index) {
-    // No need to re-render if the button clicked is already selected
-    if (this.state.selectedIndex !== index) {
-      this.setState({ selectedIndex: index });
-
+    if (this.props.selectedIndexes[index] !== true) {
       if (this.props.onChange) {
-        this.props.onChange(this.state.selectedIndex);
+        const newSelections = this.props.selectedIndexes.map((value, i) => {
+          return i === index;
+        });
+        this.props.onChange(newSelections);
       }
     }
   }
@@ -87,28 +64,21 @@ class CollapsibleButtonGroup extends React.Component {
   }
 
   render() {
-    const { onChange, isSelectable, children, ...customProps } = this.props;
-    const buttonGroupClassNames = classNames(['terra-CollapsibleButtonGroup',
+    const { onChange, isSelectable, isListStyle, children, ...customProps } = this.props;
+    const groupClassNames = classNames(['terra-CollapsibleButtonGroup',
       customProps.className,
     ]);
 
-    const allButtons = children.map((button, i) => {
-      let onClick;
+    const wrappedChildren = children.map((child, index) => {
       if (isSelectable) {
-        onClick = this.wrapOnClick(button, i);
-      } else {
-        onClick = button.props.onClick;
+        return React.cloneElement(child, {onClick: this.wrapOnClick(child, index)});
       }
-
-      return React.cloneElement(button, {
-        onClick,
-        isSelected: this.state.selectedIndex === i,
-      });
+      return child;
     });
 
     return (
-      <div {...customProps} className={buttonGroupClassNames}>
-        {allButtons}
+      <div {...customProps} className={groupClassNames}>
+        {wrappedChildren}
       </div>
     );
   }

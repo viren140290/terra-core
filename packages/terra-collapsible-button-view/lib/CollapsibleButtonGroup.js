@@ -42,9 +42,9 @@ var propTypes = {
    **/
   isSelectable: _react.PropTypes.bool,
   /**
-   * Indicates if the button group should have toggle-style selectability
+   * Indicates if the button group should display in list style.
    **/
-  isHidden: _react.PropTypes.bool,
+  isListStyle: _react.PropTypes.bool,
   /**
    * Callback function when the state changes
    **/
@@ -58,7 +58,7 @@ var propTypes = {
 var defaultProps = {
   selectedIndexes: [],
   isSelectable: false,
-  isHidden: false,
+  isListStyle: false,
   onChange: undefined,
   children: undefined
 };
@@ -66,53 +66,24 @@ var defaultProps = {
 var CollapsibleButtonGroup = function (_React$Component) {
   _inherits(CollapsibleButtonGroup, _React$Component);
 
-  _createClass(CollapsibleButtonGroup, null, [{
-    key: 'getInitialState',
-    value: function getInitialState(buttons, isSelectable) {
-      if (!isSelectable) {
-        return null;
-      }
-
-      for (var i = 0; i < buttons.length; i += 1) {
-        if (buttons[i].props.isSelected) {
-          return i;
-        }
-      }
-
-      return null;
-    }
-  }]);
-
   function CollapsibleButtonGroup(props) {
     _classCallCheck(this, CollapsibleButtonGroup);
 
     var _this = _possibleConstructorReturn(this, (CollapsibleButtonGroup.__proto__ || Object.getPrototypeOf(CollapsibleButtonGroup)).call(this, props));
 
     _this.handleOnClick = _this.handleOnClick.bind(_this);
-    _this.state = {
-      selectedIndex: CollapsibleButtonGroup.getInitialState(_this.props.buttons.concat(_this.props.children), _this.props.isSelectable)
-    };
     return _this;
   }
 
   _createClass(CollapsibleButtonGroup, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      var newSelectedIndex = CollapsibleButtonGroup.getInitialState(nextProps.buttons.concat(nextProps.children), nextProps.isSelectable);
-
-      if (newSelectedIndex !== this.state.selectedIndex) {
-        this.setState({ selectedIndex: newSelectedIndex });
-      }
-    }
-  }, {
     key: 'handleOnClick',
     value: function handleOnClick(event, index) {
-      // No need to re-render if the button clicked is already selected
-      if (this.state.selectedIndex !== index) {
-        this.setState({ selectedIndex: index });
-
+      if (this.props.selectedIndexes[index] !== true) {
         if (this.props.onChange) {
-          this.props.onChange(this.state.selectedIndex);
+          var newSelections = this.props.selectedIndexes.map(function (value, i) {
+            return i === index;
+          });
+          this.props.onChange(newSelections);
         }
       }
     }
@@ -138,29 +109,23 @@ var CollapsibleButtonGroup = function (_React$Component) {
       var _props = this.props,
           onChange = _props.onChange,
           isSelectable = _props.isSelectable,
+          isListStyle = _props.isListStyle,
           children = _props.children,
-          customProps = _objectWithoutProperties(_props, ['onChange', 'isSelectable', 'children']);
+          customProps = _objectWithoutProperties(_props, ['onChange', 'isSelectable', 'isListStyle', 'children']);
 
-      var buttonGroupClassNames = (0, _classnames2.default)(['terra-CollapsibleButtonGroup', customProps.className]);
+      var groupClassNames = (0, _classnames2.default)(['terra-CollapsibleButtonGroup', customProps.className]);
 
-      var allButtons = children.map(function (button, i) {
-        var onClick = void 0;
+      var wrappedChildren = children.map(function (child, index) {
         if (isSelectable) {
-          onClick = _this3.wrapOnClick(button, i);
-        } else {
-          onClick = button.props.onClick;
+          return _react2.default.cloneElement(child, { onClick: _this3.wrapOnClick(child, index) });
         }
-
-        return _react2.default.cloneElement(button, {
-          onClick: onClick,
-          isSelected: _this3.state.selectedIndex === i
-        });
+        return child;
       });
 
       return _react2.default.createElement(
         'div',
-        _extends({}, customProps, { className: buttonGroupClassNames }),
-        allButtons
+        _extends({}, customProps, { className: groupClassNames }),
+        wrappedChildren
       );
     }
   }]);

@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -68,13 +70,30 @@ var CollapsibleButtonView = function (_React$Component) {
     value: function childFromIndexPath(children, indexPath) {
       var child = void 0;
       var currentChildren = children;
+      var clonedIndexPath = indexPath.slice(0);
 
-      while (indexPath.length > 0) {
-        child = currentChildren ? currentChildren[indexPath.pop()] : null;
+      while (clonedIndexPath.length > 0) {
+        child = currentChildren ? currentChildren[clonedIndexPath.pop()] : null;
         currentChildren = child ? child.children : null;
       }
 
       return child;
+    }
+  }, {
+    key: 'nestedArrayWithValueAtIndexPath',
+    value: function nestedArrayWithValueAtIndexPath(nestedArrays, value, indexPath) {
+      var newArray = nestedArrays.map(function (a) {
+        return _extends({}, a);
+      });
+      var currentArray = newArray;
+      var clonedIndexPath = indexPath.slice(0);
+
+      while (clonedIndexPath.length > 1) {
+        currentArray = currentArray[clonedIndexPath.pop()];
+      }
+
+      currentArray[clonedIndexPath] = value;
+      return newArray;
     }
   }, {
     key: 'getSelectedIndexes',
@@ -93,8 +112,10 @@ var CollapsibleButtonView = function (_React$Component) {
     key: 'indexPathValueFromNestedArrays',
     value: function indexPathValueFromNestedArrays(nestedArrays, indexPath) {
       var currentValue = nestedArrays;
-      while (indexPath.length > 0) {
-        currentValue = currentValue[indexPath.pop()];
+      var clonedIndexPath = indexPath.slice(0);
+
+      while (clonedIndexPath.length > 0) {
+        currentValue = currentValue[clonedIndexPath.pop()];
       }
       return currentValue;
     }
@@ -201,15 +222,15 @@ var CollapsibleButtonView = function (_React$Component) {
   }, {
     key: 'handleOnClick',
     value: function handleOnClick(event, index) {
-      var shouldDismiss = this.children[index].isHidden === true; //needs to be advanced
+      var shouldDismiss = this.children[index].isListStyle === true; //needs to be advanced
       if (this.state.toggleOpen && shouldDismiss) {
         this.setState({ toggleOpen: false, hiddenIndexes: this.state.hiddenIndexes, selectedIndexes: this.state.selectedIndexes });
       }
     }
   }, {
     key: 'handleOnChange',
-    value: function handleOnChange(event, index) {
-      var selectedIndexes = this.state.selectedIndexes; //need to be advanced
+    value: function handleOnChange(event, indexPath, selectedValue) {
+      var selectedIndexes = CollapsibleButtonView.nestedArrayWithValueAtIndexPath(this.state.selectedIndexes, selectedValue, indexPath);
       this.setState({ toggleOpen: this.state.toggleOpen, hiddenIndexes: this.state.hiddenIndexes, selectedIndexes: selectedIndexes });
     }
   }, {
@@ -228,15 +249,15 @@ var CollapsibleButtonView = function (_React$Component) {
     }
   }, {
     key: 'wrapOnChange',
-    value: function wrapOnChange(item, index) {
+    value: function wrapOnChange(item, indexPath) {
       var _this4 = this;
 
       var onChange = item.props.onChange;
       return function (event) {
-        _this4.handleOnChange(event, index);
+        _this4.handleOnChange(event, indexPath, selectedValue);
 
         if (onChange) {
-          onChange(event);
+          onChange(event, selectedValue);
         }
       };
     }
@@ -250,7 +271,7 @@ var CollapsibleButtonView = function (_React$Component) {
         indexPath.push(i);
 
         if (_this5.props.children[child].type.displayName !== 'CollapsibleButtonGroup') {
-          newProps.onChange = _this5.wrapOnChange(child);
+          newProps.onChange = _this5.wrapOnChange(child, indexPath);
           newProps.selectedIndexes = CollapsibleButtonView.indexPathValueFromNestedArrays(_this5.state.selectedIndexes, indexPath);
         } else {
           newProps.onClick = _this5.wrapOnClick(child);
