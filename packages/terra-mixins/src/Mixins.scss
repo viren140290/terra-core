@@ -528,3 +528,51 @@
     transform: translate3d($x, $y, $z);
   }
 }
+
+@mixin terra-rem($property, $values...) {
+  $rem-values: loop-values(false, $values...);
+  #{$property}: $rem-values;
+}
+
+@mixin terra-rem-fallback($property, $values...) {
+  $px-values: loop-values(true, $values...);
+  $rem-values: loop-values(false, $values...);
+  #{$property}: $px-values;
+  #{$property}: $rem-values;
+}
+
+// Functions
+// ====================================================
+
+// Converts px to rem
+// TODO: Update base-font-size from hard coded value.
+@function pixels-to-rem($value) {
+  $rem-value: $value / 14px;
+  @return #{$rem-value}rem;
+}
+
+// Strips the unit from a given value
+@function strip-unit($value) {
+  @return $value / ($value * 0 + 1);
+}
+
+// Returns the list of values to be displayed. If px_fallback is true, non-zero number
+// values keep 'px' unit, otherwise values are converted to 'rem' units.
+@function loop-values($px_fallback, $values...) {
+  $result: ();
+
+  @each $value in $values {
+    @if type-of($value) == list {
+      $calculated-values: loop-values($value...);
+      $result: append($result, $calculated-values);
+    } @elseif type-of($value) != number or unit($value) == '%' {
+      $result: append($result, $value);
+    } @elseif $value == 0 {
+      $result: append($result, strip-unit($value));
+    } @else {
+      $result: if($px_fallback, append($result, $value), append($result, pixels-to-rem($value)));
+    }
+  }
+
+  @return $result;
+}

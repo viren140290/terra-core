@@ -1,15 +1,16 @@
 // Styles specific to development only
 // stylelint-disable
+@import '~terra-mixins';
 
 #root {
-  padding: 20px;
+  @include terra-rem(padding, 20px);
 }
 
 .markdown-body {
-  margin-bottom: 20px;
+  @include terra-rem(margin-bottom, 20px);
 }
 
 .demo-bar {
   background-color: #eee;
-  padding: 10px;
+  @include terra-rem(padding, 20px);
 }

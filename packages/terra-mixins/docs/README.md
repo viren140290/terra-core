@@ -19,6 +19,35 @@ JS (webpack)
 ```js
 import 'terra-mixins';
 ```
+### Scalability Mixins
+
+The scalability mixins give developers the option to set css properties in pixels while actually displaying rem
+values in the browsers for scalability support. Theses mixins allows people to think and work in pixels, but output
+rems with the option to output pixel fallback as well.
+
+#### Notes
+
+- `values` can be a list of values separated by either a space or comma
+
+#### terra-rem
+Takes the list of given values and adds the corresponding rem values to the desired property.
+
+##### Inputs
+
+| Input     | Description                    |
+|-----------|--------------------------------|
+| $property | The desired property to assign |
+| $values   | The list of word, percentage or pixel values to assign to the property. |
+
+#### terra-rem-fallback
+Takes the list of given values and adds the corresponding rem values and fallback px values to the desired property.
+
+##### Inputs
+
+| Input     | Description                    |
+|-----------|--------------------------------|
+| $property | The desired property to assign |
+| $values   | The list of word, percentage or pixel values to assign to the property. |
 
 ### Bidirectionality (bidi) Mixins
 
