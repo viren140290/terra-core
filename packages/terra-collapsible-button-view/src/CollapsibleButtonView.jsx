@@ -4,6 +4,7 @@ import React, { PropTypes } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import classNames from 'classnames';
 import Button from 'terra-button';
+import PopupPresenter from 'terra-popup-presenter';
 import Item from './CollapsibleButtonItem';
 import Group from './CollapsibleButtonGroup';
 import './CollapsibleButtonView.scss';
@@ -84,10 +85,11 @@ class CollapsibleButtonView extends React.Component {
     this.state = CollapsibleButtonView.getInitialState(this.props.children);
     this.setContainer = this.setContainer.bind(this);
     this.handleResize = this.handleResize.bind(this);
-    this.handleToggle = this.handleToggle.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
-    this.toggleButton = <Button text="…" onClick={this.handleToggle} />;
+    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
+    this.toggleButton = <Button text="…" onClick={this.handleButtonClick} />;
   }
 
   componentDidMount() {
@@ -113,8 +115,12 @@ class CollapsibleButtonView extends React.Component {
     this.container = node;
   }
 
-  handleToggle() {
-    this.setState({ toggleOpen: !this.state.toggleOpen, hiddenIndexes: this.state.hiddenIndexes, selectedStates: this.state.selectedStates });
+  handleButtonClick() {
+    this.setState({ toggleOpen: true, hiddenIndexes: this.state.hiddenIndexes, selectedStates: this.state.selectedStates });
+  }
+
+  handleRequestClose() {
+    this.setState({ toggleOpen: false, hiddenIndexes: this.state.hiddenIndexes, selectedStates: this.state.selectedStates });
   }
 
   handleResize(width) {
@@ -232,32 +238,36 @@ class CollapsibleButtonView extends React.Component {
 
     let toggle;
     if (hiddenChildren.length > 0) {
-      toggle = this.toggleButton;
-    }
-
-    let hiddenSection;
-    if (this.state.toggleOpen) {
-      hiddenSection = <div className="terra-CollapsibleButtonView-hiddenArea">{hiddenChildren}</div>;
+      const constraints = [{to: 'window', attachment: 'together'}];
+      toggle = (
+        <PopupPresenter 
+          constraints={constraints}
+          content={<div>{hiddenChildren}</div>}
+          contentAttachment="bottom right"
+          contentOffset="0 -15px"
+          isOpen={this.state.toggleOpen}
+          target={this.toggleButton}
+          targetAttachment="top center"
+          onRequestClose={this.handleRequestClose}
+        />
+      );
     }
 
     return (
-      <div className="terra-CollapsibleButtonView-totallyTemporary">
-        <div className="terra-CollapsibleButtonView">
-          <div className="terra-CollapsibleButtonView-container" ref={this.setContainer}>
-            {visibleChildren.map((child, childIndex) => {
-              const childKey = childIndex;
-              return (
-                <div className="terra-CollapsibleButtonView-item" key={childKey}>
-                  {child}
-                </div>
-              );
-            })}
-          </div>
-          <div className="terra-CollapsibleButtonView-toggle">
-            {toggle}
-          </div>
+      <div className="terra-CollapsibleButtonView">
+        <div className="terra-CollapsibleButtonView-container" ref={this.setContainer}>
+          {visibleChildren.map((child, childIndex) => {
+            const childKey = childIndex;
+            return (
+              <div className="terra-CollapsibleButtonView-item" key={childKey}>
+                {child}
+              </div>
+            );
+          })}
         </div>
-        {hiddenSection}
+        <div className="terra-CollapsibleButtonView-toggle">
+          {toggle}
+        </div>
       </div>
     );
   }

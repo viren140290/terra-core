@@ -22,6 +22,10 @@ var _terraButton = require('terra-button');
 
 var _terraButton2 = _interopRequireDefault(_terraButton);
 
+var _terraPopupPresenter = require('terra-popup-presenter');
+
+var _terraPopupPresenter2 = _interopRequireDefault(_terraPopupPresenter);
+
 var _CollapsibleButtonItem = require('./CollapsibleButtonItem');
 
 var _CollapsibleButtonItem2 = _interopRequireDefault(_CollapsibleButtonItem);
@@ -132,10 +136,11 @@ var CollapsibleButtonView = function (_React$Component) {
     _this.state = CollapsibleButtonView.getInitialState(_this.props.children);
     _this.setContainer = _this.setContainer.bind(_this);
     _this.handleResize = _this.handleResize.bind(_this);
-    _this.handleToggle = _this.handleToggle.bind(_this);
     _this.handleOnClick = _this.handleOnClick.bind(_this);
     _this.handleOnChange = _this.handleOnChange.bind(_this);
-    _this.toggleButton = _react2.default.createElement(_terraButton2.default, { text: '\u2026', onClick: _this.handleToggle });
+    _this.handleButtonClick = _this.handleButtonClick.bind(_this);
+    _this.handleRequestClose = _this.handleRequestClose.bind(_this);
+    _this.toggleButton = _react2.default.createElement(_terraButton2.default, { text: '\u2026', onClick: _this.handleButtonClick });
     return _this;
   }
 
@@ -170,9 +175,14 @@ var CollapsibleButtonView = function (_React$Component) {
       this.container = node;
     }
   }, {
-    key: 'handleToggle',
-    value: function handleToggle() {
-      this.setState({ toggleOpen: !this.state.toggleOpen, hiddenIndexes: this.state.hiddenIndexes, selectedStates: this.state.selectedStates });
+    key: 'handleButtonClick',
+    value: function handleButtonClick() {
+      this.setState({ toggleOpen: true, hiddenIndexes: this.state.hiddenIndexes, selectedStates: this.state.selectedStates });
+    }
+  }, {
+    key: 'handleRequestClose',
+    value: function handleRequestClose() {
+      this.setState({ toggleOpen: false, hiddenIndexes: this.state.hiddenIndexes, selectedStates: this.state.selectedStates });
     }
   }, {
     key: 'handleResize',
@@ -302,43 +312,43 @@ var CollapsibleButtonView = function (_React$Component) {
 
       var toggle = void 0;
       if (hiddenChildren.length > 0) {
-        toggle = this.toggleButton;
-      }
-
-      var hiddenSection = void 0;
-      if (this.state.toggleOpen) {
-        hiddenSection = _react2.default.createElement(
-          'div',
-          { className: 'terra-CollapsibleButtonView-hiddenArea' },
-          hiddenChildren
-        );
+        var constraints = [{ to: 'window', attachment: 'together' }];
+        toggle = _react2.default.createElement(_terraPopupPresenter2.default, {
+          constraints: constraints,
+          content: _react2.default.createElement(
+            'div',
+            null,
+            hiddenChildren
+          ),
+          contentAttachment: 'bottom right',
+          contentOffset: '0 -15px',
+          isOpen: this.state.toggleOpen,
+          target: this.toggleButton,
+          targetAttachment: 'top center',
+          onRequestClose: this.handleRequestClose
+        });
       }
 
       return _react2.default.createElement(
         'div',
-        { className: 'terra-CollapsibleButtonView-totallyTemporary' },
+        { className: 'terra-CollapsibleButtonView' },
         _react2.default.createElement(
           'div',
-          { className: 'terra-CollapsibleButtonView' },
-          _react2.default.createElement(
-            'div',
-            { className: 'terra-CollapsibleButtonView-container', ref: this.setContainer },
-            visibleChildren.map(function (child, childIndex) {
-              var childKey = childIndex;
-              return _react2.default.createElement(
-                'div',
-                { className: 'terra-CollapsibleButtonView-item', key: childKey },
-                child
-              );
-            })
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'terra-CollapsibleButtonView-toggle' },
-            toggle
-          )
+          { className: 'terra-CollapsibleButtonView-container', ref: this.setContainer },
+          visibleChildren.map(function (child, childIndex) {
+            var childKey = childIndex;
+            return _react2.default.createElement(
+              'div',
+              { className: 'terra-CollapsibleButtonView-item', key: childKey },
+              child
+            );
+          })
         ),
-        hiddenSection
+        _react2.default.createElement(
+          'div',
+          { className: 'terra-CollapsibleButtonView-toggle' },
+          toggle
+        )
       );
     }
   }]);
