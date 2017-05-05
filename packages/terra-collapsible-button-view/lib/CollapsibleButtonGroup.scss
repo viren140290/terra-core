@@ -1,0 +1,12 @@
+@import '~terra-mixins';
+@import './variables';
+@import './mixins';
+
+.terra-CollapsibleButtonGroup {
+  border: solid 2px #cc5423;
+  display: flex;
+}
+
+.terra-CollapsibleButtonGroup--listStyle {
+  display: block;
+}

@@ -25,6 +25,7 @@ const App = props => (
             <List.Item content={<Link to="/site/badge">Badge</Link>} />
             <List.Item content={<Link to="/site/button">Button</Link>} />
             <List.Item content={<Link to="/site/button-group">Button Group</Link>} />
+            <List.Item content={<Link to="/site/collapsible-button-view">Collpasible Button View</Link>} />
             <List.Item content={<Link to="/site/content">Content</Link>} />
             <List.Item content={<Link to="/site/content-container">Content Container</Link>} />
             <List.Item content={<Link to="/site/datepicker">Date Picker</Link>} />

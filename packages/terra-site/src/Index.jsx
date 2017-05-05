@@ -11,6 +11,7 @@ import BadgeExamples from './examples/badge/Index';
 import BaseExamples from './examples/base/Index';
 import ButtonExamples from './examples/button/Index';
 import ButtonGroupExamples from './examples/button-group/Index';
+import CollapsibleButtonViewExamples from './examples/collapsible-button-view/Index';
 import ContentExamples from './examples/content/Index';
 import ContentContainerExamples from './examples/content-container/Index';
 import DatePickerExamples from './examples/date-picker/Index';
@@ -69,6 +70,7 @@ ReactDOM.render((
       <Route path="base" component={BaseExamples} />
       <Route path="button" component={ButtonExamples} />
       <Route path="button-group" component={ButtonGroupExamples} />
+      <Route path="collapsible-button-view" component={CollapsibleButtonViewExamples} />
       <Route path="content" component={ContentExamples} />
       <Route path="content-container" component={ContentContainerExamples} />
       <Route path="datepicker" component={DatePickerExamples} />
