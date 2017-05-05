@@ -12,6 +12,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+require('terra-base/lib/baseStyles');
+
 var _List = require('./List');
 
 var _List2 = _interopRequireDefault(_List);
@@ -25,6 +27,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var KEYCODES = {
+  ENTER: 13
+};
 
 var propTypes = {
   /**
@@ -59,23 +65,11 @@ var SingleSelectList = function (_React$Component) {
     key: 'selectedIndexFromItems',
     value: function selectedIndexFromItems(items) {
       for (var i = 0; i < items.length; i += 1) {
-        if (items[i].props.isSelected === true) {
+        if (items[i].props.isSelected && items[i].props.isSelectable) {
           return i;
         }
       }
       return -1;
-    }
-  }, {
-    key: 'propsForItem',
-    value: function propsForItem(item, onClick) {
-      var newProps = { onClick: onClick };
-      if (item.props.isSelectable === undefined) {
-        newProps.isSelectable = true;
-      } else if (!item.props.isSelectable) {
-        newProps = {};
-      }
-
-      return newProps;
     }
   }]);
 
@@ -85,6 +79,7 @@ var SingleSelectList = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (SingleSelectList.__proto__ || Object.getPrototypeOf(SingleSelectList)).call(this, props));
 
     _this.handleSelection = _this.handleSelection.bind(_this);
+    _this.shouldHandleSelection = _this.shouldHandleSelection.bind(_this);
     _this.state = { selectedIndex: SingleSelectList.selectedIndexFromItems(_this.props.children) };
     return _this;
   }
@@ -95,13 +90,16 @@ var SingleSelectList = function (_React$Component) {
       var index = SingleSelectList.selectedIndexFromItems(nextProps.children);
 
       if (index !== this.state.selectedIndex) {
-        this.setState({ selectedIndexes: index });
+        this.setState({ selectedIndex: index });
       }
     }
   }, {
     key: 'handleSelection',
     value: function handleSelection(event, index) {
       this.setState({ selectedIndex: index });
+      if (this.props.onChange) {
+        this.props.onChange(event, index);
+      }
     }
   }, {
     key: 'shouldHandleSelection',
@@ -115,7 +113,8 @@ var SingleSelectList = function (_React$Component) {
 
       return items.map(function (item, index) {
         var wrappedOnClick = _this2.wrappedOnClickForItem(item, index);
-        var newProps = _this2.newPropsForItem(item, index, wrappedOnClick);
+        var wrappedOnKeyDown = _this2.wrappedOnKeyDownForItem(item, index);
+        var newProps = _this2.newPropsForItem(item, index, wrappedOnClick, wrappedOnKeyDown);
 
         return _react2.default.cloneElement(item, newProps);
       });
@@ -126,13 +125,10 @@ var SingleSelectList = function (_React$Component) {
       var _this3 = this;
 
       var initialOnClick = item.props.onClick;
+
       return function (event) {
         if (_this3.shouldHandleSelection(index)) {
           _this3.handleSelection(event, index);
-
-          if (_this3.onChange) {
-            _this3.onChange(event, _this3.state.selectedIndexes);
-          }
         }
 
         if (initialOnClick) {
@@ -141,31 +137,48 @@ var SingleSelectList = function (_React$Component) {
       };
     }
   }, {
-    key: 'newPropsForItem',
-    value: function newPropsForItem(item, index, onClick) {
-      var isSelected = this.state.selectedIndex === index;
+    key: 'wrappedOnKeyDownForItem',
+    value: function wrappedOnKeyDownForItem(item, index) {
+      var _this4 = this;
 
-      var newProps = { onClick: onClick };
+      var initialOnKeyDown = item.props.onKeyDown;
+
+      return function (event) {
+        if (event.nativeEvent.keyCode === KEYCODES.ENTER) {
+          if (_this4.shouldHandleSelection(index)) {
+            _this4.handleSelection(event, index);
+          }
+        }
+
+        if (initialOnKeyDown) {
+          initialOnKeyDown(event);
+        }
+      };
+    }
+  }, {
+    key: 'newPropsForItem',
+    value: function newPropsForItem(item, index, onClick, onKeyDown) {
+      var isSelected = this.state.selectedIndex === index;
+      var newProps = {};
+
+      // Set the isSelected attribute to false for all the items except the items whose index is set to state selectedIndex
       if (isSelected !== item.isSelected) {
         newProps.isSelected = isSelected;
       }
 
-      if (item.props.isSelectable === undefined) {
-        newProps.isSelectable = true;
-      } else if (!item.props.isSelectable) {
-        newProps = {};
+      newProps.isSelectable = item.props.isSelectable;
+
+      // If selectable, add tabIndex on items to navigate through keyboard tab key for selectable lists and add
+      // onClick and onKeyDown functions.
+      if (newProps.isSelectable) {
+        newProps.tabIndex = '0';
+        newProps.onClick = onClick;
+        newProps.onKeyDown = onKeyDown;
       }
 
-      if (item.props.hasChevron === undefined) {
-        newProps.hasChevron = this.props.hasChevrons;
-      }
+      newProps.hasChevron = this.props.hasChevrons;
 
       return newProps;
-    }
-  }, {
-    key: 'unusedVariables',
-    value: function unusedVariables(variable) {
-      return variable === this;
     }
   }, {
     key: 'render',
@@ -173,19 +186,19 @@ var SingleSelectList = function (_React$Component) {
       var _props = this.props,
           children = _props.children,
           isDivided = _props.isDivided,
-          hasChevrons = _props.hasChevrons,
-          onChange = _props.onChange,
-          customProps = _objectWithoutProperties(_props, ['children', 'isDivided', 'hasChevrons', 'onChange']);
+          customProps = _objectWithoutProperties(_props, ['children', 'isDivided']);
 
       var clonedChildItems = this.cloneChildItems(children);
 
-      // Figure out how to handle this scenario.
-      this.unusedVariables(onChange);
-      this.unusedVariables(hasChevrons);
-
+      if ('onChange' in customProps) {
+        delete customProps.onChange;
+      }
+      if ('hasChevrons' in customProps) {
+        delete customProps.hasChevrons;
+      }
       return _react2.default.createElement(
         _List2.default,
-        _extends({ isDivided: isDivided }, customProps, { tabIndex: '0' }),
+        _extends({ isDivided: isDivided }, customProps),
         clonedChildItems
       );
     }

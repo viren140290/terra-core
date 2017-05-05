@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
+import 'terra-base/lib/baseStyles';
 import ChevronRight from 'terra-icon/lib/icon/IconChevronRight';
 import './ListItem.scss';
 
@@ -25,8 +26,8 @@ const propTypes = {
 const defaultProps = {
   content: undefined,
   isSelected: false,
-  isSelectable: undefined,
-  hasChevron: undefined,
+  isSelectable: false,
+  hasChevron: false,
 };
 
 const ListItem = ({

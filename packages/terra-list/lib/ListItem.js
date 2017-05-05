@@ -14,6 +14,8 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
+require('terra-base/lib/baseStyles');
+
 var _IconChevronRight = require('terra-icon/lib/icon/IconChevronRight');
 
 var _IconChevronRight2 = _interopRequireDefault(_IconChevronRight);
@@ -46,8 +48,8 @@ var propTypes = {
 var defaultProps = {
   content: undefined,
   isSelected: false,
-  isSelectable: undefined,
-  hasChevron: undefined
+  isSelectable: false,
+  hasChevron: false
 };
 
 var ListItem = function ListItem(_ref) {
