@@ -126,6 +126,11 @@ var CollapsibleButtonView = function (_React$Component) {
       var selectedStates = CollapsibleButtonView.getSelectedStates(children);
       return { hiddenIndexes: [], selectedStates: selectedStates, toggleOpen: false };
     }
+  }, {
+    key: 'isIndexPathHidden',
+    value: function isIndexPathHidden(hiddenIndexes, indexPath) {
+      return hiddenIndexes.indexOf(indexPath[0]) >= 0;
+    }
   }]);
 
   function CollapsibleButtonView(props) {
@@ -231,17 +236,16 @@ var CollapsibleButtonView = function (_React$Component) {
   }, {
     key: 'handleOnClick',
     value: function handleOnClick(event, indexPath) {
-      var child = CollapsibleButtonView.childFromIndexPath(indexPath);
-      var shouldDismiss = child.isListStyle === true; //needs to be advanced
-      if (this.state.toggleOpen && shouldDismiss) {
-        this.setState({ toggleOpen: false, hiddenIndexes: this.state.hiddenIndexes, selectedStates: this.state.selectedStates });
-      }
+      // const shouldDismiss = CollapsibleButtonView.isIndexPathHidden(this.state.hiddenIndexes, indexPath); //needs to be advanced
+      // if (this.state.toggleOpen && shouldDismiss) {
+      //   this.setState({ toggleOpen: false, hiddenIndexes: this.state.hiddenIndexes, selectedStates: this.state.selectedStates });
+      // }
     }
   }, {
     key: 'handleOnChange',
     value: function handleOnChange(event, selectedValue, indexPath) {
       var selectedStates = CollapsibleButtonView.nestedArrayWithValueAtIndexPath(this.state.selectedStates, selectedValue, indexPath);
-      this.setState({ toggleOpen: this.state.toggleOpen, hiddenIndexes: this.state.hiddenIndexes, selectedStates: selectedStates });
+      this.setState({ toggleOpen: false, hiddenIndexes: this.state.hiddenIndexes, selectedStates: selectedStates });
     }
   }, {
     key: 'wrapOnClick',
