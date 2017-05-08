@@ -50,9 +50,8 @@
     "lint": "npm run lint:js && npm run lint:scss",
     "lint:js": "eslint --ext .js,.jsx .",
     "lint:scss": "lerna run lint:scss",
-    "prepush": "node scripts/prepush/index.js",
     "pretest": "npm run lint",
-    "postinstall": "npm run bootstrap",
+    "postinstall": "npm run bootstrap && npm run compile",
     "start": "cd packages/terra-site && npm run start",
     "test": "npm run jest && npm run test:nightwatch-default",
     "test:nightwatch-default": "node ./packages/terra-toolkit/lib/scripts/nightwatch-process.js --env default-tiny,default-small,default-medium,default-large,default-huge,default-enormous"
@@ -73,7 +72,6 @@
     "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-react": "^6.9.0",
     "glob": "^7.1.1",
-    "husky": "^0.13.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^18.1.0",
     "lerna": "2.0.0-beta.36",
