@@ -17,6 +17,7 @@
     "compile": "$(cd ..; npm bin)/babel src --out-dir lib --copy-files",
     "lint": "npm run lint:js",
     "lint:js": "$(cd ..; npm bin)/eslint **/*.js, **/*.jsx",
+    "prepublish": "npm run compile",
     "release:major": "npm test && node ../../scripts/release/release.js major",
     "release:minor": "npm test && node ../../scripts/release/release.js minor",
     "release:patch": "npm test && node ../../scripts/release/release.js patch",
