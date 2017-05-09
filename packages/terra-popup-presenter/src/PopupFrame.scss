@@ -3,8 +3,8 @@
 .terra-PopupFrame-content {
   background-color: #fcfcfc;
   border: 1px solid;
+  min-width: 30px;
   overflow: hidden;
-  width: 200px;
 }
 
 .terra-PopupFrame {
@@ -17,7 +17,7 @@
   }
 
   .terra-PopupFrame-content {
-    border-radius: 5px;
+    // border-radius: 5px;
     flex: 0 0 auto;
     padding: 5px;
     position: relative;

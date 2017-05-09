@@ -2,7 +2,7 @@
 @import './variables';
 @import './mixins';
 
-.terra-CollapsibleButtonItem {
+.terra-CollapsibleTabItem {
   background-color: transparent;
   color: $terra-dark;
   cursor: pointer;
@@ -23,7 +23,7 @@
   }
 }
 
-.terra-CollapsibleButtonItem--selected {
+.terra-CollapsibleTabItem--selected {
   background-color: $terra-grey-20;
 
   &:focus,

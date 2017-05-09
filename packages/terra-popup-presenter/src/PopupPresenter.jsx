@@ -20,10 +20,12 @@ const propTypes = {
   target: PropTypes.element.isRequired,
   targetAttachment: PropTypes.oneOf(TetherComponent.attachmentPositions),
   targetOffset: PropTypes.string,
+  showArrow: PropTypes.bool,
 };
 
 const defaultProps = {
   isOpen: false,
+  showArrow: true,
 };
 
 const WrappedPopupFrame = onClickOutside(PopupFrame);
@@ -83,6 +85,7 @@ class PopupPresenter extends React.Component {
       targetOffset,
       arrowAlignment,
       arrowPosition,
+      showArrow,
       ...customProps 
     } = this.props; // eslint-disable-line no-unused-vars
 
@@ -95,7 +98,7 @@ class PopupPresenter extends React.Component {
         onRequestClose,
         arrowAlignment: PopupPresenter.arrowAlignmentFromAttachment(contentAttachment),
         arrowPosition: PopupPresenter.arrowPositionFromAttachment(contentAttachment),
-        showArrow: contentAttachment !== 'middle center',
+        showArrow: showArrow,
       };
 
       wrappedContent = (

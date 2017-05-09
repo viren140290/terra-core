@@ -54,11 +54,13 @@ var propTypes = {
   onRequestClose: _react.PropTypes.func,
   target: _react.PropTypes.element.isRequired,
   targetAttachment: _react.PropTypes.oneOf(_TetherComponent2.default.attachmentPositions),
-  targetOffset: _react.PropTypes.string
+  targetOffset: _react.PropTypes.string,
+  showArrow: _react.PropTypes.bool
 };
 
 var defaultProps = {
-  isOpen: false
+  isOpen: false,
+  showArrow: true
 };
 
 var WrappedPopupFrame = (0, _reactOnclickoutside2.default)(_PopupFrame2.default);
@@ -90,7 +92,8 @@ var PopupPresenter = function (_React$Component) {
           targetOffset = _props.targetOffset,
           arrowAlignment = _props.arrowAlignment,
           arrowPosition = _props.arrowPosition,
-          customProps = _objectWithoutProperties(_props, ['className', 'closeOnEsc', 'closeOnOutsideClick', 'constraints', 'content', 'contentAttachment', 'contentOffset', 'isOpen', 'onRequestClose', 'target', 'targetAttachment', 'targetOffset', 'arrowAlignment', 'arrowPosition']); // eslint-disable-line no-unused-vars
+          showArrow = _props.showArrow,
+          customProps = _objectWithoutProperties(_props, ['className', 'closeOnEsc', 'closeOnOutsideClick', 'constraints', 'content', 'contentAttachment', 'contentOffset', 'isOpen', 'onRequestClose', 'target', 'targetAttachment', 'targetOffset', 'arrowAlignment', 'arrowPosition', 'showArrow']); // eslint-disable-line no-unused-vars
 
       var wrappedContent = void 0;
       if (isOpen && content) {
@@ -101,7 +104,7 @@ var PopupPresenter = function (_React$Component) {
           onRequestClose: onRequestClose,
           arrowAlignment: PopupPresenter.arrowAlignmentFromAttachment(contentAttachment),
           arrowPosition: PopupPresenter.arrowPositionFromAttachment(contentAttachment),
-          showArrow: contentAttachment !== 'middle center'
+          showArrow: showArrow
         };
 
         wrappedContent = _react2.default.createElement(

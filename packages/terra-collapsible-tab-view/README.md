@@ -1,18 +1,18 @@
-# Terra Collapsible Button View
+# Terra Collapsible Tab View
 
 
-[![NPM version](http://img.shields.io/npm/v/terra-collapsible-button-view.svg)](https://www.npmjs.org/package/terra-collapsible-button-view)
+[![NPM version](http://img.shields.io/npm/v/terra-collapsible-tab-view.svg)](https://www.npmjs.org/package/terra-collapsible-tab-view)
 [![Build Status](https://travis-ci.org/cerner/terra-core.svg?branch=master)](https://travis-ci.org/cerner/terra-core)
 
-The Terra CollapsibleButtonView is a container that allows the display of a list of buttons according to responsive sizing.
+The Terra CollapsibleButtonView is a container that allows the display of a list of tabs according to responsive sizing.
 
 - [Getting Started](#getting-started)
-- [Documentation](https://github.com/cerner/terra-core/tree/master/packages/terra-collapsible-button-view/docs)
+- [Documentation](https://github.com/cerner/terra-core/tree/master/packages/terra-collapsible-tab-view/docs)
 - [LICENSE](#license)
 
 ## Getting Started
 
-- Install from [npmjs](https://www.npmjs.com): `npm install terra-collapsible-button-view`
+- Install from [npmjs](https://www.npmjs.com): `npm install terra-collapsible-tab-view`
 
 ## LICENSE
 

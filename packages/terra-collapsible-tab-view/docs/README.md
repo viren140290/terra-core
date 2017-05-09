@@ -1,6 +1,6 @@
-# Terra Collapsible Button View
+# Terra Collapsible Tab View
 
-The Terra CollapsibleButtonView is a container that adjusts the visibility buttons based on size.
+The Terra CollapsibleTabView is a container that adjusts the visibility tabs based on size.
 
 ## Getting Started
 

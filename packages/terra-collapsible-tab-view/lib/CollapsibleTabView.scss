@@ -2,33 +2,32 @@
 @import './variables';
 @import './mixins';
 
-.terra-CollapsibleButtonView {
+.terra-CollapsibleTabView {
   display: flex;
+  height: 40px;
   justify-content: space-between;
   position: relative;
   width: 100%;
 }
 
-.terra-CollapsibleButtonView-container {
+.terra-CollapsibleTabView-container {
+  border: 1px solid $terra-grey-30;
   display: flex;
   flex: 1 1 auto;
   flex-wrap: nowrap;
   overflow-x: hidden;
-  padding-right: 5px;
   position: relative;
   width: 100%;
 }
 
-.terra-CollapsibleButtonView-item {
+.terra-CollapsibleTabView-item {
   flex: 0 0 auto;
   overflow: hidden;
 }
 
-.terra-CollapsibleButtonView-toggle {
+.terra-CollapsibleTabView-toggle {
   align-items: center;
   display: flex;
   flex: 0 0 auto;
-  overflow: hidden;
-  padding-left: 5px;
-  padding-right: 5px;
+  margin-left: 5px;
 }
