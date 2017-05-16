@@ -17,6 +17,7 @@ const ModalTests = () => (
       <li><Link to="/tests/modal-tests/override-role">Override Role</Link></li>
       <li><Link to="/tests/modal-tests/scrollable-true">Scrollable True</Link></li>
       <li><Link to="/tests/modal-tests/scrollable-false">Scrollable False</Link></li>
+      <li><Link to="/tests/modal-tests/datepicker">Datepicker inside Modal</Link></li>
     </ul>
   </div>
 );

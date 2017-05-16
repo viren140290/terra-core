@@ -15,6 +15,7 @@ import ModalOverrideRole from './components/ModalOverrideRole';
 import ModalNoFocusableContent from './components/ModalNoFocusableContent';
 import ModalScrollableTrue from './components/ModalScrollableTrue';
 import ModalScrollableFalse from './components/ModalScrollableFalse';
+import ModalDatepicker from './components/ModalDatepicker';
 
 const routes = (
   <div>
@@ -30,6 +31,7 @@ const routes = (
     <Route path="/tests/modal-tests/no-focusable-content" component={ModalNoFocusableContent} />
     <Route path="/tests/modal-tests/scrollable-true" component={ModalScrollableTrue} />
     <Route path="/tests/modal-tests/scrollable-false" component={ModalScrollableFalse} />
+    <Route path="/tests/modal-tests/datepicker" component={ModalDatepicker} />
   </div>
 );
 
