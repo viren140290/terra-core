@@ -5,6 +5,7 @@ import App from './App';
 import Home from './Home';
 
 // Examples
+import AlertExamples from './examples/alert/Index';
 import ArrangeExamples from './examples/arrange/Index';
 import BaseExamples from './examples/base/Index';
 import BadgeExamples from './examples/badge/Index';
@@ -29,6 +30,7 @@ import TitleExamples from './examples/title/Index';
 
 // Test
 /* eslint-disable import/first */
+import AlertTestRoutes from 'terra-alert/tests/nightwatch/AlertTestRoutes';
 import ArrangeTestRoutes from 'terra-arrange/tests/nightwatch/ArrangeTestRoutes';
 import BaseTestRoutes from 'terra-base/tests/nightwatch/BaseTestRoutes';
 import ButtonTestRoutes from 'terra-button/tests/nightwatch/ButtonTestRoutes';
@@ -52,6 +54,7 @@ ReactDOM.render((
     <Redirect from="/" to="/site" />
     <Route path="/site" component={App}>
       <IndexRoute component={Home} />
+      <Route path="alert" component={AlertExamples} />
       <Route path="arrange" component={ArrangeExamples} />
       <Route path="badge" component={BadgeExamples} />
       <Route path="base" component={BaseExamples} />
@@ -74,6 +77,7 @@ ReactDOM.render((
       <Route path="table" component={TableExamples} />
     </Route>
     <Route path="/tests" component={TestLinks} />
+    {AlertTestRoutes}
     {ArrangeTestRoutes}
     {BaseTestRoutes}
     {ButtonTestRoutes}
