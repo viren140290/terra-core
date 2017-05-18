@@ -42,11 +42,15 @@ var propTypes = {
   /**
    * Content in the body of the panel that will be expanded or collapsed
    **/
-  children: _propTypes2.default.node,
+  children: _propTypes2.default.node.isRequired,
   /**
-   * Callback function after expanded and after collapsed.
+   * Callback function when the toggler is opened.
    **/
-  handleToggled: _react2.default.PropTypes.func,
+  onOpen: _propTypes2.default.func,
+  /**
+   * Callback function when the toggler is closed.
+   **/
+  onClose: _propTypes2.default.func,
   /**
    * Content in the ‘header’ section that acts as a trigger for the collapse/expand action
    **/
@@ -58,15 +62,16 @@ var propTypes = {
   /**
    * Expands or collapses content
    **/
-  isOpened: _propTypes2.default.bool
+  isOpen: _propTypes2.default.bool
 };
 
 var defaultProps = {
   children: null,
-  handleToggled: null,
+  onOpen: null,
+  onClose: null,
   header: null,
   isAnimated: true,
-  isOpened: false
+  isOpen: false
 };
 
 var Toggler = function (_React$Component) {
@@ -78,7 +83,7 @@ var Toggler = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Toggler.__proto__ || Object.getPrototypeOf(Toggler)).call(this, props));
 
     _this.state = {
-      isOpened: props.isOpened
+      isOpen: props.isOpen
     };
 
     _this.handleToggle = _this.handleToggle.bind(_this);
@@ -87,36 +92,39 @@ var Toggler = function (_React$Component) {
 
   _createClass(Toggler, [{
     key: 'handleToggle',
-    value: function handleToggle(event) {
-      this.setState({ isOpened: !this.state.isOpened });
-      if (this.props.handleToggled !== null) {
-        this.props.handleToggled(event);
+    value: function handleToggle() {
+      if (this.props.onClose !== null && this.state.isOpen) {
+        this.props.onClose();
+      } else if (this.props.onOpen !== null && !this.state.isOpen) {
+        this.props.onOpen();
       }
+      this.setState({ isOpen: !this.state.isOpen });
     }
   }, {
     key: 'render',
     value: function render() {
-      // Disable this rule because otherwise handleToggled get added to customProps and get applied to the article
+      // Disable this rule because otherwise onOpen and onClose get added to customProps and get applied to the article
       // It is used in above functions, just not part of this render
       // eslint-disable-next-line no-unused-vars
       var _props = this.props,
           header = _props.header,
-          isOpened = _props.isOpened,
+          isOpen = _props.isOpen,
           isAnimated = _props.isAnimated,
           children = _props.children,
-          handleToggled = _props.handleToggled,
-          customProps = _objectWithoutProperties(_props, ['header', 'isOpened', 'isAnimated', 'children', 'handleToggled']);
+          onOpen = _props.onOpen,
+          onClose = _props.onClose,
+          customProps = _objectWithoutProperties(_props, ['header', 'isOpen', 'isAnimated', 'children', 'onOpen', 'onClose']);
 
-      var togglerClass = (0, _classnames2.default)(['terra-Toggler', { 'is-collapsed': !this.state.isOpened }, { 'is-expanded': this.state.isOpened }, { 'is-animated': isAnimated }, customProps.className]);
+      var togglerClass = (0, _classnames2.default)(['terra-Toggler', { 'is-collapsed': !this.state.isOpen }, { 'is-expanded': this.state.isOpen }, { 'is-animated': isAnimated }, customProps.className]);
 
-      var ariaHidden = this.state.isOpened ? null : 'true';
-      var ariaExpanded = this.state.isOpened ? 'true' : 'false';
+      var ariaHidden = this.state.isOpen ? 'false' : 'true';
+      var ariaExpanded = this.state.isOpen ? 'true' : 'false';
 
       return (
         // TODO: Links in header shouldn't trigger collapse
         _react2.default.createElement(
           'article',
-          _extends({}, customProps, { className: togglerClass, role: 'tablist' }),
+          _extends({}, customProps, { className: togglerClass }),
           _react2.default.createElement(
             _terraButton2.default,
             { size: 'small', variant: 'link', className: 'terra-Toggler-header', 'aria-expanded': ariaExpanded, onClick: this.handleToggle },
@@ -124,7 +132,7 @@ var Toggler = function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            { className: 'terra-Toggler-content', role: 'tabpanel', 'aria-hidden': ariaHidden },
+            { className: 'terra-Toggler-content', 'aria-hidden': ariaHidden },
             children
           )
         )

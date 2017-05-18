@@ -9,11 +9,15 @@ const propTypes = {
   /**
    * Content in the body of the panel that will be expanded or collapsed
    **/
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
   /**
-   * Callback function after expanded and after collapsed.
+   * Callback function when the toggler is opened.
    **/
-  handleToggled: React.PropTypes.func,
+  onOpen: PropTypes.func,
+  /**
+   * Callback function when the toggler is closed.
+   **/
+  onClose: PropTypes.func,
   /**
    * Content in the ‘header’ section that acts as a trigger for the collapse/expand action
    **/
@@ -25,58 +29,61 @@ const propTypes = {
   /**
    * Expands or collapses content
    **/
-  isOpened: PropTypes.bool,
+  isOpen: PropTypes.bool,
 };
 
 const defaultProps = {
   children: null,
-  handleToggled: null,
+  onOpen: null,
+  onClose: null,
   header: null,
   isAnimated: true,
-  isOpened: false,
+  isOpen: false,
 };
 
 class Toggler extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpened: props.isOpened,
+      isOpen: props.isOpen,
     };
 
     this.handleToggle = this.handleToggle.bind(this);
   }
 
-  handleToggle(event) {
-    this.setState({ isOpened: !this.state.isOpened });
-    if (this.props.handleToggled !== null) {
-      this.props.handleToggled(event);
+  handleToggle() {
+    if (this.props.onClose !== null && this.state.isOpen) {
+      this.props.onClose();
+    } else if (this.props.onOpen !== null && !this.state.isOpen) {
+      this.props.onOpen();
     }
+    this.setState({ isOpen: !this.state.isOpen });
   }
 
   render() {
-    // Disable this rule because otherwise handleToggled get added to customProps and get applied to the article
+    // Disable this rule because otherwise onOpen and onClose get added to customProps and get applied to the article
     // It is used in above functions, just not part of this render
     // eslint-disable-next-line no-unused-vars
-    const { header, isOpened, isAnimated, children, handleToggled, ...customProps } = this.props;
+    const { header, isOpen, isAnimated, children, onOpen, onClose, ...customProps } = this.props;
 
     const togglerClass = classNames([
       'terra-Toggler',
-      { 'is-collapsed': !this.state.isOpened },
-      { 'is-expanded': this.state.isOpened },
+      { 'is-collapsed': !this.state.isOpen },
+      { 'is-expanded': this.state.isOpen },
       { 'is-animated': isAnimated },
       customProps.className,
     ]);
 
-    const ariaHidden = this.state.isOpened ? null : 'true';
-    const ariaExpanded = this.state.isOpened ? 'true' : 'false';
+    const ariaHidden = this.state.isOpen ? 'false' : 'true';
+    const ariaExpanded = this.state.isOpen ? 'true' : 'false';
 
     return (
       // TODO: Links in header shouldn't trigger collapse
-      <article {...customProps} className={togglerClass} role="tablist">
+      <article {...customProps} className={togglerClass} >
         <Button size="small" variant="link" className="terra-Toggler-header" aria-expanded={ariaExpanded} onClick={this.handleToggle} >
           {header}
         </Button>
-        <div className="terra-Toggler-content" role="tabpanel" aria-hidden={ariaHidden} >
+        <div className="terra-Toggler-content" aria-hidden={ariaHidden} >
           {children}
         </div>
       </article>
