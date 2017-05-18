@@ -14,6 +14,7 @@ import ButtonGroupExamples from './examples/button-group/Index';
 import ContentExamples from './examples/content/Index';
 import ContentContainerExamples from './examples/content-container/Index';
 import DatePickerExamples from './examples/date-picker/Index';
+import DateTimePickerExamples from './examples/date-time-picker/Index';
 import DemographicsBannerExamples from './examples/demographics-banner/Index';
 import GridExamples from './examples/grid/Index';
 import I18nExamples from './examples/i18n/Index';
@@ -40,6 +41,7 @@ import ButtonTestRoutes from 'terra-button/tests/nightwatch/ButtonTestRoutes';
 import ButtonGroupTestRoutes from 'terra-button-group/tests/nightwatch/ButtonGroupTestRoutes';
 import ContentContainerTestRoutes from 'terra-content-container/tests/nightwatch/ContentContainerTestRoutes';
 import DatePickerTestRoutes from 'terra-date-picker/tests/nightwatch/DatePickerTestRoutes';
+import DateTimePickerTestRoutes from 'terra-date-time-picker/tests/nightwatch/DateTimePickerTestRoutes';
 import DemographicsBannerTestRoutes from 'terra-demographics-banner/tests/nightwatch/DemographicsBannerTestRoutes';
 import I18nTestRoutes from 'terra-i18n/tests/nightwatch/I18nTestRoutes';
 import ImageTestRoutes from 'terra-image/tests/nightwatch/ImageTestRoutes';
@@ -72,6 +74,7 @@ ReactDOM.render((
       <Route path="content" component={ContentExamples} />
       <Route path="content-container" component={ContentContainerExamples} />
       <Route path="datepicker" component={DatePickerExamples} />
+      <Route path="date-time-picker" component={DateTimePickerExamples} />
       <Route path="demographics-banner" component={DemographicsBannerExamples} />
       <Route path="grid" component={GridExamples} />
       <Route path="i18n" component={I18nExamples} />
@@ -95,6 +98,7 @@ ReactDOM.render((
     {ButtonTestRoutes}
     {ButtonGroupTestRoutes}
     {DatePickerTestRoutes}
+    {DateTimePickerTestRoutes}
     {DemographicsBannerTestRoutes}
     {SlidePanelTestRoutes}
     {I18nTestRoutes}

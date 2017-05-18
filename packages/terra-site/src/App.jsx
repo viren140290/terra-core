@@ -29,6 +29,7 @@ const App = props => (
             <List.Item content={<Link to="/site/content">Content</Link>} />
             <List.Item content={<Link to="/site/content-container">Content Container</Link>} />
             <List.Item content={<Link to="/site/datepicker">Date Picker</Link>} />
+            <List.Item content={<Link to="/site/date-time-picker">Date Time Picker</Link>} />
             <List.Item content={<Link to="/site/demographics-banner">Demographics Banner</Link>} />
             <List.Item content={<Link to="/site/grid">Grid</Link>} />
             <List.Item content={<Link to="/site/i18n">I18n</Link>} />

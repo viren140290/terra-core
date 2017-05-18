@@ -1,0 +1,8 @@
+@import '~terra-mixins';
+@import './variables';
+@import './mixins';
+
+.terra-DateTimePicker {
+  display: inline-flex;
+  width: 100%;
+}
