@@ -1,8 +1,8 @@
 import React from 'react';
-import Toggler from '../../../lib/Toggler';
+import TogglerUncontrolled from '../../../lib/TogglerUncontrolled';
 import TogglerSetup from './TogglerSetup';
 
-class TogglerEvent extends React.Component {
+class TogglerDefault extends React.Component {
   constructor() {
     super();
     this.handleOnOpen = this.handleOnOpen.bind(this);
@@ -11,21 +11,25 @@ class TogglerEvent extends React.Component {
 
   /* eslint-disable */
   handleOnOpen() {
-    alert('onOpen');
+    console.log('onOpen');
   }
 
   handleOnClose() {
-    alert('onClose');
+    console.log('onClose');
   }
   /* eslint-enable */
 
   render() {
     return (
-      <Toggler header={TogglerSetup.header} onOpen={this.handleOnOpen} onClose={this.handleOnClose} >
+      <TogglerUncontrolled
+        buttonContent={'Click Here'}
+        onOpen={this.handleOnOpen}
+        onClose={this.handleOnClose}
+      >
         {TogglerSetup.children}
-      </Toggler>
+      </TogglerUncontrolled>
     );
   }
 }
 
-export default TogglerEvent;
+export default TogglerDefault;

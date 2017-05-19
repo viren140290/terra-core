@@ -1,6 +1,8 @@
+## Usage
+```
 import React from 'react';
+import Toggler from 'terra-toggler';
 import Button from 'terra-button';
-import Toggler from '../../../lib/Toggler';
 import TogglerSetup from './TogglerSetup';
 
 class TogglerDefault extends React.Component {
@@ -29,3 +31,4 @@ class TogglerDefault extends React.Component {
 
 
 export default TogglerDefault;
+```
