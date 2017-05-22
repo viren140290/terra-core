@@ -1,0 +1,28 @@
+@import '~terra-mixins';
+@import './variables';
+@import './mixins';
+
+.terra-Menu {
+  display: flex;
+  height: 40px;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+}
+
+.terra-Menu-container {
+  border: 1px solid $terra-grey-30;
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.terra-Menu-toggle {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  margin-left: 5px;
+}
