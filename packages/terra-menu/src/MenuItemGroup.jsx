@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import 'terra-base/lib/baseStyles';
+import './MenuItemGroup.scss';
 
 const propTypes = {
   children: PropTypes.node,
 };
 
-const MenuItem = ({ children, ...customProps }) => {
+const MenuItemGroup = ({ children, ...customProps }) => {
   const menuItemGroupClassName = classNames([
     'terra-MenuItemGroup',
     customProps.className,
@@ -21,6 +22,6 @@ const MenuItem = ({ children, ...customProps }) => {
 };
 
 
-MenuItem.propTypes = propTypes;
+MenuItemGroup.propTypes = propTypes;
 
-export default MenuItem;
+export default MenuItemGroup;

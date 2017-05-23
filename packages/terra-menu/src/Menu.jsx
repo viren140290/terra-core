@@ -3,6 +3,8 @@ import ResizeObserver from 'resize-observer-polyfill';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Button from 'terra-button';
+import MenuItem from './MenuItem';
+import MenuItemGroup from './MenuItemGroup';
 import 'terra-base/lib/baseStyles';
 import './Menu.scss';
 
@@ -17,7 +19,7 @@ class Menu extends React.Component {
     this.setContainer = this.setContainer.bind(this);
     this.handleResize = this.handleResize.bind(this);
     this.state = {
-      hideTabs: false,
+      hiddenIndexes: [],
       toggleOpen: false,
     };
   }
@@ -92,5 +94,9 @@ class Menu extends React.Component {
 }
 
 Menu.propTypes = propTypes;
+
+Menu.Item = MenuItem;
+
+Menu.Group = MenuItemGroup;
 
 export default Menu;

@@ -35,6 +35,7 @@ const App = props => (
             <List.Item content={<Link to="/site/icon">Icon</Link>} />
             <List.Item content={<Link to="/site/image">Image</Link>} />
             <List.Item content={<Link to="/site/list">List</Link>} />
+            <List.Item content={<Link to="/site/menu">Menu</Link>} />
             <List.Item content={<Link to="/site/modal">Modal</Link>} />
             <List.Item content={<Link to="/site/progress-bar">Progress Bar</Link>} />
             <List.Item content={<Link to="/site/responsive-element">Responsive Element</Link>} />

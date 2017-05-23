@@ -2,11 +2,11 @@
 @import './variables';
 @import './mixins';
 
-.terra-MenuItem {
-  @include terra-margin-end(1.429rem);
-
+.terra-MenuItemGroup {
+  border: solid 2px #cc5423;
+  display: flex;
   flex: 0 0 auto;
-  max-width: 100%;
+  flex-wrap: nowrap;
   overflow: hidden;
   position: relative;
 }
