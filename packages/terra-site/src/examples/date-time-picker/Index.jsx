@@ -1,9 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
-import moment from 'moment';
 import PropsTable from 'terra-props-table';
 import Markdown from 'terra-markdown';
 import DateTimePicker from 'terra-date-time-picker/src/DateTimePicker';
+import DateTimeRange from 'terra-date-time-picker/src/DateTimeRange';
 import ReadMe from 'terra-date-time-picker/docs/README.md';
 import { version } from 'terra-date-time-picker/package.json';
 
@@ -19,7 +19,7 @@ const DateTimePickerExamples = () => (
     <Markdown id="readme" src={ReadMe} />
     <PropsTable id="props" src={DateTimePickerSrc} />
     <h2 id="default">Default</h2>
-    <DateTimePicker value={moment('01-01-2000 12:00', 'MM-DD-YYYY HH:mm')} />
+    <DateTimeRange endDateTime={'2017-02-22 22:22'} startDateTime={'2017-01-11 11:11'} />
   </div>
 );
 

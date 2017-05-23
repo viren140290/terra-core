@@ -3,9 +3,10 @@ import moment from 'moment';
 class DateUtil {
 
   // Converts an ISO 8601 date into a moment object. If the date is invalid and unable to convert, the originally provided date is returned.
-  static createSafeDate(date, format) {
-    if (date && format) {
-      const momentDate = moment(date, format);
+  static createSafeDate(date) {
+    if (date) {
+      debugger;
+      const momentDate = moment(date);
       return momentDate.isValid() ? momentDate : date;
     }
 

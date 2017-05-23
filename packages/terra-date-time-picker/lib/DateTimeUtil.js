@@ -14,24 +14,41 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var DateUtil = function () {
-  function DateUtil() {
-    _classCallCheck(this, DateUtil);
+var DateTimeUtil = function () {
+  function DateTimeUtil() {
+    _classCallCheck(this, DateTimeUtil);
   }
 
-  _createClass(DateUtil, null, [{
-    key: 'createSafeDate',
+  _createClass(DateTimeUtil, null, [{
+    key: 'formatISO8601DateTime',
 
 
-    // Converts an ISO 8601 date into a moment object. If the date is invalid and unable to convert, the originally provided date is returned.
-    value: function createSafeDate(date) {
-      if (date) {
-        debugger;
-        var momentDate = (0, _moment2.default)(date);
-        return momentDate.isValid() ? momentDate : date;
+    /* Takes a supported ISO8601 string and formats it based on the provided date and time formats.
+       :dateTime (String) - The ISO8601 string representation of the datetime to format.
+       :dateFormat (String) - The format to format the date.
+       :timeFormat (String) - The format to format the time.
+        Returns a hash containing the formatted date and time when a valid ISO8601 date time string is passed.
+       Returns empty hash when invalid datetime is passed.
+      */
+    value: function formatISO8601DateTime(dateTime, dateFormat, timeFormat) {
+      if (!dateTime) {
+        return {};
       }
 
-      return date;
+      var dateTimeMoment = (0, _moment2.default)(dateTime);
+      var data = {};
+
+      if (dateTimeMoment.isValid()) {
+        if (dateFormat) {
+          data.date = dateTimeMoment.format(dateFormat);
+        }
+
+        if (timeFormat) {
+          data.time = dateTimeMoment.format(timeFormat);
+        }
+      }
+
+      return data;
     }
 
     // Filters out any invalid dates in the provided list of dates and returns a list of moment objects representation of the valid dates
@@ -55,7 +72,7 @@ var DateUtil = function () {
     }
   }]);
 
-  return DateUtil;
+  return DateTimeUtil;
 }();
 
-exports.default = DateUtil;
+exports.default = DateTimeUtil;

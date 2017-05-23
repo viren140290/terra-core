@@ -1,18 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import moment from 'moment';
 import 'terra-base/lib/baseStyles';
-import DatePicker from 'terra-date-picker';
-import DateUtil from 'terra-date-picker/lib/DateUtil'
-import TimeInput from 'terra-time-input';
+import DatePicker from 'terra-date-picker/src/DatePicker';
+import TimeInput from 'terra-time-input/src/TimeInput';
+import DateTimeUtil from './DateTimeUtil';
 import './DateTimePicker.scss';
 
 const propTypes = {
-/**
-   * An ISO 8601 string representation of the end date for a date range.
+  /**
+   * Custom input attributes to apply to the date input.
    */
-  endDate: PropTypes.string,
+  dateInputAttributes: PropTypes.object,
+  /**
+   * An ISO 8601 string representation of the end date/time for a date range.
+   */
+  endDateTime: PropTypes.string,
   /**
    * An array of ISO 8601 string representation of the dates to disable in the picker.
    */
@@ -26,10 +29,6 @@ const propTypes = {
    */
   includeDates: PropTypes.arrayOf(PropTypes.string),
   /**
-   * Custom input attributes to apply to the date input.
-   */
-  dateInputAttributes: PropTypes.object,
-  /**
    * Indicates the end date picker of a date range.
    */
   isEndDateRange: PropTypes.bool,
@@ -38,21 +37,25 @@ const propTypes = {
    */
   isStartDateRange: PropTypes.bool,
   /**
-   * An ISO 8601 string representation of the maximum date that can be selected.
+   * Indicates whether or not this component is UTC aware. Default is true.
    */
-  maxDate: PropTypes.string,
+  isUTC: PropTypes.bool,
   /**
-   * An ISO 8601 string representation of the minimum date that can be selected.
+   * An ISO 8601 string representation of the maximum date/time that can be entered.
    */
-  minDate: PropTypes.string,
+  maxDateTime: PropTypes.string,
   /**
-   * A callback function to execute when a valid date is selected or entered.
+   * An ISO 8601 string representation of the minimum date that can be entered.
+   */
+  minDateTime: PropTypes.string,
+  /**
+   * A callback function to execute when a valid date or time is selected or entered.
    */
   onChange: PropTypes.func,
   /**
-   * An ISO 8601 string representation of the start date for a date range.
+   * An ISO 8601 string representation of the start date/time for a date range.
    */
-  startDate: PropTypes.string,
+  startDateTime: PropTypes.string,
   /**
    * Custom input attributes to apply to the time input.
    */
@@ -64,6 +67,9 @@ const propTypes = {
 };
 
 const defaultProps = {
+  isEndDateRange: false,
+  isStartDateRange: false,
+  isUTC: true,
   value: undefined,
 };
 
@@ -71,93 +77,82 @@ class DateTimePicker extends React.Component {
   constructor(props) {
     super(props);
 
+    const data = DateTimeUtil.formatISO8601DateTime(props.value, 'MM/DD/YYYY', 'HH:mm');
+
     this.state = {
       locale: 'en-US', // TODO: Get the locale from i18n
       dateFormat: 'MM/DD/YYYY', // TODO: Get date format from i18n
       timeFormat: 'HH:mm', // TODO: Get time format from i18n
-      selectedDate: DateUtil.createSafeDate(props.value, 'MM/DD/YYYY'),
+      dateValue: data.date,
+      timeValue: data.time,
     };
 
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleTimeChange = this.handleTimeChange.bind(this);
   }
 
-  handleDateChange(date) {
-    date.hour(this.state.startDate.hour());
-    date.minute(this.state.startDate.minute());
-
+  handleDateChange(date, event) {
+    debugger;
     this.setState({
-      value: date,
+      dateValue: date,
     });
 
     if (this.props.onChange) {
-      const dateString = date && date.isValid() ? date.format(this.state.dateFormat) : '';
-      this.props.onChange(dateString);
+      this.props.onChange(date, event);
     }
   }
 
-  handleTimeChange(event) {
-    // Check if the time is a valid time using strict parsing.
-    const targetMoment = moment(event.target.value, this.state.timeFormat, true);
-
-    if (!targetMoment.isValid()) {
-      return;
-    }
-
-    if (event.target.value === this.state.startDate.format(this.state.timeFormat)) {
-      return;
-    }
-
-    const newDateTime = this.state.startDate.clone();
-    newDateTime.hour(event.target.value.substring(0, 2));
-    newDateTime.minute(event.target.value.substring(3, 5));
-
+  handleTimeChange(time, event) {
+    debugger;
     this.setState({
-      startDate: newDateTime,
+      timeValue: time,
     });
 
     if (this.props.onChange) {
-      this.props.onChange(newDateTime);
+      this.props.onChange(time, event);
     }
   }
 
   render() {
     const {
       dateInputAttributes,
-      endDate,
+      endDateTime,
       excludeDates,
       filterDate,
       includeDates,
-      maxDate,
-      minDate,
+      isUTC,
+      maxDateTime,
+      minDateTime,
       isEndDateRange,
       isStartDateRange,
-      startDate,
+      startDateTime,
       timeInputAttributes,
       value,
       ...customProps
     } = this.props;
 
+    // const endDateTimeData = DateTimeUtil.formatISO8601DateTime(endDateTime, 'MM/DD/YYYY', 'HH:mm');
+
     return (<div className="terra-DateTimePicker">
       <DatePicker
         {...customProps}
         inputAttributes={dateInputAttributes}
-        selectedDate={this.state.value}
-        endDate={endDate}
+        selectedDate={this.state.dateValue}
+        endDate={endDateTime}
         excludeDates={excludeDates}
         filterDate={filterDate}
         includeDates={includeDates}
-        maxDate={maxDate}
-        minDate={minDate}
+        maxDate={maxDateTime}
+        minDate={minDateTime}
         isEndDateRange={isEndDateRange}
         isStartDateRange={isStartDateRange}
-        startDate={startDate}
+        startDate={startDateTime}
         onChange={this.handleDateChange}
       />
       <TimeInput
         {...customProps}
         inputAttributes={timeInputAttributes}
-        value={this.state.value}
+        value={this.state.timeValue}
         onChange={this.handleTimeChange}
       />
     </div>);

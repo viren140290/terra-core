@@ -88,6 +88,13 @@ var TimeInput = function (_React$Component) {
   _createClass(TimeInput, [{
     key: 'handleChange',
     value: function handleChange(event) {
+      // Check if the time is a valid time using strict parsing.
+      var timeMoment = (0, _moment2.default)(event.target.value, this.state.timeFormat, true);
+
+      if (!timeMoment.isValid()) {
+        return;
+      }
+
       if (event.target.value === this.state.value) {
         return;
       }

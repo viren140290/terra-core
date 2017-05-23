@@ -42,6 +42,13 @@ class TimeInput extends React.Component {
   }
 
   handleChange(event) {
+    // Check if the time is a valid time using strict parsing.
+    const timeMoment = moment(event.target.value, this.state.timeFormat, true);
+
+    if (!timeMoment.isValid()) {
+      return;
+    }
+
     if (event.target.value === this.state.value) {
       return;
     }
