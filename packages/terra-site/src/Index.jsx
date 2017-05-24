@@ -22,6 +22,7 @@ import ImageExamples from './examples/image/Index';
 import ListExamples from './examples/list/Index';
 import MenuExamples from './examples/menu/Index';
 import ModalExamples from './examples/modal/Index';
+import PopupPresenterExamples from './examples/popup-presenter/Index';
 import ProgressBarExamples from './examples/progress-bar/Index';
 import ResponsiveElementExamples from './examples/responsive-element/Index';
 import SlidePanelExamples from './examples/slide-panel/Index';
@@ -55,6 +56,7 @@ import StatusTestRoutes from 'terra-status/tests/nightwatch/StatusTestRoutes';
 import GridTestRoutes from 'terra-grid/tests/nightwatch/GridTestRoutes';
 import ProgressBarTestRoutes from 'terra-progress-bar/tests/nightwatch/ProgressBarTestRoutes';
 import IconTestRoutes from 'terra-icon/tests/nightwatch/IconTestRoutes';
+import PopupPresenterTestRoutes from 'terra-popup-presenter/tests/nightwatch/PopupPresenterTestRoutes';
 import TestLinks from './TestLinks';
 /* eslint-enable import/first */
 
@@ -79,6 +81,7 @@ ReactDOM.render((
       <Route path="list" component={ListExamples} />
       <Route path="menu" component={MenuExamples} />
       <Route path="modal" component={ModalExamples} />
+      <Route path="popup-presenter" component={PopupPresenterExamples} />
       <Route path="progress-bar" component={ProgressBarExamples} />
       <Route path="responsive-element" component={ResponsiveElementExamples} />
       <Route path="slide-panel" component={SlidePanelExamples} />
@@ -110,6 +113,6 @@ ReactDOM.render((
     {ModalTestRoutes}
     {ProgressBarTestRoutes}
     {GridTestRoutes}
-    {IconTestRoutes}
+    {PopupPresenterTestRoutes}
   </Router>
 ), document.getElementById('root'));
