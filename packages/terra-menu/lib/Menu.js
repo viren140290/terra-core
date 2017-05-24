@@ -98,7 +98,7 @@ var Menu = function (_React$Component) {
     key: 'handleResize',
     value: function handleResize(width) {
       // do calculation here
-      var widthToMeasure = width;
+      var availableWidth = width;
       var hiddenIndexes = [];
       var calcWidth = 0;
 
@@ -108,7 +108,7 @@ var Menu = function (_React$Component) {
           break;
         }
         calcWidth += child.getBoundingClientRect().width;
-        if (calcWidth > widthToMeasure) {
+        if (calcWidth > availableWidth) {
           hiddenIndexes.push(i);
         }
       }

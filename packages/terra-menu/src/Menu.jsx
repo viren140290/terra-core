@@ -42,7 +42,7 @@ class Menu extends React.Component {
 
   handleResize(width) {
     // do calculation here
-    const widthToMeasure = width;
+    const availableWidth = width;
     const hiddenIndexes = [];
     let calcWidth = 0;
 
@@ -52,7 +52,7 @@ class Menu extends React.Component {
         break;
       }
       calcWidth += child.getBoundingClientRect().width;
-      if (calcWidth > widthToMeasure) {
+      if (calcWidth > availableWidth) {
         hiddenIndexes.push(i);
       }
     }

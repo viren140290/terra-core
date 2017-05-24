@@ -3,7 +3,7 @@
 @import './mixins';
 
 .terra-MenuItem {
-  @include terra-margin-end(1.429rem);
+  @include terra-padding-end(1.429rem);
 
   flex: 0 0 auto;
   max-width: 100%;
