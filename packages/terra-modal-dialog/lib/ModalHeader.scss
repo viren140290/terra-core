@@ -1,0 +1,19 @@
+@import '~terra-mixins';
+
+.terra-ModalDialog-header {
+  background-color: $terra-grey-5;
+  border-bottom: 1px solid $terra-grey-15;
+  display: table;
+}
+
+.terra-ModalDialog-header-title {
+  color: $terra-dark;
+  display: table-cell;
+  font-size: 1.286rem; // ~18px
+  line-height: 1.2;
+  margin-bottom: 0;
+  margin-left: 0.5714rem;
+  margin-right: 0;
+  margin-top: 0.5714rem;
+  width: 100%;
+}

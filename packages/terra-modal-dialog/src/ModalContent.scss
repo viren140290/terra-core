@@ -1,0 +1,7 @@
+@import '~terra-mixins';
+
+.terra-ModalDialog-content {
+  flex: 1 1 auto;
+  line-height: normal; // This prevents the scrollbar from always being displayed https://stackoverflow.com/a/10251811/6178508
+  overflow-y: auto;
+}

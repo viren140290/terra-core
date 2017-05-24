@@ -1,0 +1,14 @@
+@import '~terra-mixins';
+
+.terra-ModalDialog-header-dismiss {
+  @include terra-padding-horizontal(0, 0);
+  border: 0;
+  color: $terra-dark;
+  cursor: pointer;
+  height: 2em;
+  margin-bottom: 0.3571rem;
+  margin-left: 0.7143rem;
+  margin-right: 0.7143rem;
+  margin-top: 0.3571rem;
+  width: 2em;
+}

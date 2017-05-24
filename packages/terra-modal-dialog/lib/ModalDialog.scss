@@ -1,0 +1,7 @@
+@import '~terra-mixins';
+
+.terra-ModalDialog {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

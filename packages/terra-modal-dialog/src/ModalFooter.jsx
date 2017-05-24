@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './ModalFooter.scss';
 
 const propTypes = {
   children: PropTypes.node,
@@ -10,7 +11,7 @@ const defaultProps = {
 };
 
 const ModalFooter = ({ children, ...customProps }) => (
-  <div className={'terra-Modal-footer'} {...customProps} >
+  <div className={'terra-ModalDialog-footer'} {...customProps} >
     {children}
   </div>
   );
