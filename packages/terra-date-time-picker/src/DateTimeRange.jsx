@@ -14,9 +14,13 @@ const propTypes = {
    */
   startDateTime: PropTypes.string,
   /**
-   * A callback function to execute when a valid date or time is selected or entered.
+   * A callback function to execute when a valid date is selected or entered.
    */
-  onChange: PropTypes.func,
+  onDateChange: PropTypes.func,
+  /**
+   * A callback function to execute when a valid time is entered.
+   */
+  onTimeChange: PropTypes.func,
 };
 
 class DateTimeRange extends React.Component {
@@ -27,32 +31,64 @@ class DateTimeRange extends React.Component {
       startDateTime: props.startDateTime,
       endDateTime: props.endDateTime,
     };
-    this.handleChangeStart = this.handleChangeStart.bind(this);
-    this.handleChangeEnd = this.handleChangeEnd.bind(this);
+    this.handleDateChangeStart = this.handleDateChangeStart.bind(this);
+    this.handleDateChangeEnd = this.handleDateChangeEnd.bind(this);
+    this.handleTimeChangeStart = this.handleTimeChangeStart.bind(this);
+    this.handleTimeChangeEnd = this.handleTimeChangeEnd.bind(this);
+
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleTimeChange = this.handleTimeChange.bind(this);
   }
 
-  handleChange({ startDate = this.state.startDateTime, endDate = this.state.endDateTime }) {
-    debugger;
+  handleDateChange({ startDate = this.state.startDateTime, endDate = this.state.endDateTime, event }) {
     let startDateForRange = startDate;
     let endDateForRange = endDate;
 
-    if (moment(startDateForRange, this.state.format).isAfter(moment(endDateForRange, this.state.format))) {
-      [startDateForRange, endDateForRange] = [endDateForRange, startDateForRange];
-    }
+    // It seems unnatural to swap the start and stop date when start and after stop. Perhaps, we should just display an error instead.
+    // if (moment(startDateForRange).isAfter(moment(endDateForRange))) {
+    //   [startDateForRange, endDateForRange] = [endDateForRange, startDateForRange];
+    // }
 
     this.setState({ startDateTime: startDateForRange, endDateTime: endDateForRange });
 
-    if (this.props.onChange) {
-      this.props.onChange(startDateForRange, endDateForRange);
+    if (this.props.onDateChange) {
+      this.props.onDateChange(startDateForRange, endDateForRange, event);
     }
   }
 
-  handleChangeStart(startDate) {
-    this.handleChange({ startDate });
+  handleTimeChange({ startTime = this.state.startDateTime, endTime = this.state.endDateTime, event }) {
+    let startTimeForRange = startTime;
+    let endTimeForRange = endTime;
+
+    // if (moment(startTimeForRange).isAfter(moment(endTimeForRange))) {
+    //   [startDateForRange, endDateForRange] = [endDateForRange, startDateForRange];
+    // }
+
+    // this.setState({ startDateTime: startDateForRange, endDateTime: endDateForRange });
+
+    // if (this.props.onChange) {
+    //   this.props.onChange(startDateForRange, endDateForRange);
+    // }
+
+    if (this.props.onTimeChange) {
+      this.props.onTimeChange(startTimeForRange, endTimeForRange, event);
+    }
   }
 
-  handleChangeEnd(endDate) {
-    this.handleChange({ endDate });
+  handleDateChangeStart(startDate, event) {
+    this.handleDateChange({ startDate, event });
+  }
+
+  handleDateChangeEnd(endDate, event) {
+    this.handleDateChange({ endDate, event });
+  }
+
+  handleTimeChangeStart(startTime, event) {
+    this.handleTimeChange({ startTime, event });
+  }
+
+  handleTimeChangeEnd(endTime, event) {
+    this.handleTimeChange({ endTime, event });
   }
 
   render() {
@@ -63,16 +99,17 @@ class DateTimeRange extends React.Component {
         isStartDateRange
         startDateTime={this.state.startDateTime}
         endDateTime={this.state.endDateTime}
-        onChange={this.handleChangeStart}
+        onDateChange={this.handleDateChangeStart}
+        onTimeChange={this.handleTimeChangeStart}
       />
-      <p> - </p>
       <DateTimePicker
         {...this.props}
         value={this.state.endDateTime}
         isEndDateRange
         startDateTime={this.state.startDateTime}
         endDateTime={this.state.endDateTime}
-        onChange={this.handleChangeEnd}
+        onDateChange={this.handleDateChangeEnd}
+        onTimeChange={this.handleTimeChangeEnd}
       />
     </div>);
   }

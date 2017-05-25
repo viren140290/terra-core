@@ -78,11 +78,10 @@ var DateRange = function (_React$Component) {
       var startDateForRange = startDate;
       var endDateForRange = endDate;
 
-      if ((0, _moment2.default)(startDateForRange, this.state.format).isAfter((0, _moment2.default)(endDateForRange, this.state.format))) {
-        var _ref2 = [endDateForRange, startDateForRange];
-        startDateForRange = _ref2[0];
-        endDateForRange = _ref2[1];
-      }
+      // It seems unnatural to swap the start and stop date when start and after stop. Perhaps, we should just display an error instead.
+      // if (moment(startDateForRange, this.state.format).isAfter(moment(endDateForRange, this.state.format))) {
+      //   [startDateForRange, endDateForRange] = [endDateForRange, startDateForRange];
+      // }
 
       this.setState({ startDate: startDateForRange, endDate: endDateForRange });
 

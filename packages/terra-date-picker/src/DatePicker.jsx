@@ -66,7 +66,6 @@ const defaultProps = {
 class DatePicker extends React.Component {
   constructor(props) {
     super(props);
-    debugger;
 
     this.state = {
       locale: 'en-US', // TODO: Get the locale from i18n
@@ -78,13 +77,12 @@ class DatePicker extends React.Component {
   }
 
   handleChange(date, event) {
-    debugger;
     this.setState({
       selectedDate: date,
     });
 
     if (this.props.onChange) {
-      const dateString = date && date.isValid() ? date.format(this.state.dateFormat) : '';
+      const dateString = date && date.isValid() ? date.format() : '';
       this.props.onChange(dateString, event);
     }
   }
@@ -107,9 +105,6 @@ class DatePicker extends React.Component {
 
     // TODO: Need translation from date_util
     const todayString = 'Today';
-
-    debugger;
-
     const exludeMomentDates = DateUtil.filterInvalidDates(excludeDates, this.state.dateFormat);
     const includeMomentDates = DateUtil.filterInvalidDates(includeDates, this.state.dateFormat);
     const endMomentDate = DateUtil.createSafeDate(endDate, this.state.dateFormat);

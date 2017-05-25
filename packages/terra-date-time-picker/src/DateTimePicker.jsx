@@ -49,9 +49,13 @@ const propTypes = {
    */
   minDateTime: PropTypes.string,
   /**
-   * A callback function to execute when a valid date or time is selected or entered.
+   * A callback function to execute when a valid date is selected or entered.
    */
-  onChange: PropTypes.func,
+  onDateChange: PropTypes.func,
+  /**
+   * A callback function to execute when a valid time is entered.
+   */
+  onTimeChange: PropTypes.func,
   /**
    * An ISO 8601 string representation of the start date/time for a date range.
    */
@@ -77,14 +81,15 @@ class DateTimePicker extends React.Component {
   constructor(props) {
     super(props);
 
-    const data = DateTimeUtil.formatISO8601DateTime(props.value, 'MM/DD/YYYY', 'HH:mm');
+    // const data = DateTimeUtil.formatISO8601DateTime(props.value, 'MM/DD/YYYY', 'HH:mm');
 
     this.state = {
       locale: 'en-US', // TODO: Get the locale from i18n
       dateFormat: 'MM/DD/YYYY', // TODO: Get date format from i18n
       timeFormat: 'HH:mm', // TODO: Get time format from i18n
-      dateValue: data.date,
-      timeValue: data.time,
+      // dateValue: props.value,
+      // timeValue: data.time,
+      dateTime: moment(props.value),
     };
 
     this.handleDateChange = this.handleDateChange.bind(this);
@@ -92,24 +97,29 @@ class DateTimePicker extends React.Component {
   }
 
   handleDateChange(date, event) {
-    debugger;
-    this.setState({
-      dateValue: date,
-    });
+    // this.setState({
+    //   dateValue: date,
+    // });
 
-    if (this.props.onChange) {
-      this.props.onChange(date, event);
+    debugger;
+
+
+    if (this.props.onDateChange) {
+      this.props.onDateChange(date, event);
     }
   }
 
   handleTimeChange(time, event) {
-    debugger;
-    this.setState({
-      timeValue: time,
-    });
+    // this.setState({
+    //   timeValue: time,
+    // });
 
-    if (this.props.onChange) {
-      this.props.onChange(time, event);
+    debugger;
+
+    const dateTimeMoment = DateTimeUtil.updateTime(time, this.state.dateTime);
+
+    if (this.props.onTimeChange) {
+      this.props.onTimeChange(time, event);
     }
   }
 
@@ -125,6 +135,8 @@ class DateTimePicker extends React.Component {
       minDateTime,
       isEndDateRange,
       isStartDateRange,
+      onDateChange,
+      onTimeChange,
       startDateTime,
       timeInputAttributes,
       value,
@@ -133,11 +145,15 @@ class DateTimePicker extends React.Component {
 
     // const endDateTimeData = DateTimeUtil.formatISO8601DateTime(endDateTime, 'MM/DD/YYYY', 'HH:mm');
 
+    // const data = DateTimeUtil.formatISO8601DateTime(value, 'MM/DD/YYYY', 'HH:mm');
+
+    debugger;
+
     return (<div className="terra-DateTimePicker">
       <DatePicker
         {...customProps}
         inputAttributes={dateInputAttributes}
-        selectedDate={this.state.dateValue}
+        selectedDate={value}
         endDate={endDateTime}
         excludeDates={excludeDates}
         filterDate={filterDate}
@@ -152,37 +168,10 @@ class DateTimePicker extends React.Component {
       <TimeInput
         {...customProps}
         inputAttributes={timeInputAttributes}
-        value={this.state.timeValue}
+        value={value}
         onChange={this.handleTimeChange}
       />
     </div>);
-
-    // return (
-    //   (<ReactDatePicker
-    //     {...customProps}
-    //     onChange={this.handleChange}
-    //     customInput={<DateInput />}
-    //     endDate={endDate}
-    //     excludeDates={excludeDates}
-    //     filterDate={filterDate}
-    //     includeDates={includeDates}
-    //     maxDate={maxDate}
-    //     minDate={minDate}
-    //     selectsEnd={isEndDateRange}
-    //     selectsStart={isStartDateRange}
-    //     startDate={startDate}
-    //     todayButton={todayString}
-    //     withPortal
-    //     dateFormatCalendar=" "
-    //     dateFormat={momentDateFormat}
-    //     fixedHeight
-    //     locale={userLocale}
-    //     placeholderText={momentDateFormat}
-    //     dropdownMode={'select'}
-    //     showMonthDropdown
-    //     showYearDropdown
-    //   />)
-    // );
   }
 }
 

@@ -20,8 +20,19 @@ var DateTimeUtil = function () {
   }
 
   _createClass(DateTimeUtil, null, [{
-    key: 'formatISO8601DateTime',
+    key: 'updateDate',
+    value: function updateDate(date) {}
+  }, {
+    key: 'updateTime',
+    value: function updateTime(dateTimeMoment, time) {
+      var splitTime = time.split(':');
+      dateTimeMoment.set({ hour: splitTime[0], minute: splitTime[0] });
 
+      return dateTimeMoment;
+    }
+  }, {
+    key: 'evaluateAmbiguousHour',
+    value: function evaluateAmbiguousHour() {}
 
     /* Takes a supported ISO8601 string and formats it based on the provided date and time formats.
        :dateTime (String) - The ISO8601 string representation of the datetime to format.
@@ -30,6 +41,9 @@ var DateTimeUtil = function () {
         Returns a hash containing the formatted date and time when a valid ISO8601 date time string is passed.
        Returns empty hash when invalid datetime is passed.
       */
+
+  }, {
+    key: 'formatISO8601DateTime',
     value: function formatISO8601DateTime(dateTime, dateFormat, timeFormat) {
       if (!dateTime) {
         return {};

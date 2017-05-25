@@ -23,7 +23,7 @@ var TimeUtil = function () {
     key: 'formattedTime',
     value: function formattedTime(time, format) {
       if (time && format) {
-        var momentTime = (0, _moment2.default)(time, format);
+        var momentTime = (0, _moment2.default)(time);
         if (momentTime.isValid()) {
           return momentTime.format(format);
         }

@@ -20,13 +20,22 @@ var DateUtil = function () {
   }
 
   _createClass(DateUtil, null, [{
-    key: 'createSafeDate',
+    key: 'createSafeDateFromISO8601',
+    value: function createSafeDateFromISO8601(date) {
+      if (date) {
+        var momentDate = (0, _moment2.default)(date);
+        return momentDate.isValid() ? momentDate : date;
+      }
 
+      return date;
+    }
 
     // Converts an ISO 8601 date into a moment object. If the date is invalid and unable to convert, the originally provided date is returned.
+
+  }, {
+    key: 'createSafeDate',
     value: function createSafeDate(date) {
       if (date) {
-        debugger;
         var momentDate = (0, _moment2.default)(date);
         return momentDate.isValid() ? momentDate : date;
       }

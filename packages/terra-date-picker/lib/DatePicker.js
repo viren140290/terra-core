@@ -110,8 +110,6 @@ var DatePicker = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (DatePicker.__proto__ || Object.getPrototypeOf(DatePicker)).call(this, props));
 
-    debugger;
-
     _this.state = {
       locale: 'en-US', // TODO: Get the locale from i18n
       dateFormat: 'MM/DD/YYYY', // TODO: Get the locale from i18n
@@ -125,13 +123,12 @@ var DatePicker = function (_React$Component) {
   _createClass(DatePicker, [{
     key: 'handleChange',
     value: function handleChange(date, event) {
-      debugger;
       this.setState({
         selectedDate: date
       });
 
       if (this.props.onChange) {
-        var dateString = date && date.isValid() ? date.format(this.state.dateFormat) : '';
+        var dateString = date && date.isValid() ? date.format() : '';
         this.props.onChange(dateString, event);
       }
     }
@@ -156,9 +153,6 @@ var DatePicker = function (_React$Component) {
 
 
       var todayString = 'Today';
-
-      debugger;
-
       var exludeMomentDates = _DateUtil2.default.filterInvalidDates(excludeDates, this.state.dateFormat);
       var includeMomentDates = _DateUtil2.default.filterInvalidDates(includeDates, this.state.dateFormat);
       var endMomentDate = _DateUtil2.default.createSafeDate(endDate, this.state.dateFormat);

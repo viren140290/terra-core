@@ -2,6 +2,21 @@ import moment from 'moment';
 
 class DateTimeUtil {
 
+  static updateDate(date) {
+
+  }
+
+  static updateTime(dateTimeMoment, time) {
+    const splitTime = time.split(':');
+    dateTimeMoment.set({ hour: splitTime[0], minute: splitTime[0] });
+
+    return dateTimeMoment;
+  }
+
+  static evaluateAmbiguousHour() {
+
+  }
+
   /* Takes a supported ISO8601 string and formats it based on the provided date and time formats.
      :dateTime (String) - The ISO8601 string representation of the datetime to format.
      :dateFormat (String) - The format to format the date.

@@ -44,9 +44,13 @@ var propTypes = {
    */
   startDateTime: _propTypes2.default.string,
   /**
-   * A callback function to execute when a valid date or time is selected or entered.
+   * A callback function to execute when a valid date is selected or entered.
    */
-  onChange: _propTypes2.default.func
+  onDateChange: _propTypes2.default.func,
+  /**
+   * A callback function to execute when a valid time is entered.
+   */
+  onTimeChange: _propTypes2.default.func
 };
 
 var DateTimeRange = function (_React$Component) {
@@ -62,44 +66,84 @@ var DateTimeRange = function (_React$Component) {
       startDateTime: props.startDateTime,
       endDateTime: props.endDateTime
     };
-    _this.handleChangeStart = _this.handleChangeStart.bind(_this);
-    _this.handleChangeEnd = _this.handleChangeEnd.bind(_this);
+    _this.handleDateChangeStart = _this.handleDateChangeStart.bind(_this);
+    _this.handleDateChangeEnd = _this.handleDateChangeEnd.bind(_this);
+    _this.handleTimeChangeStart = _this.handleTimeChangeStart.bind(_this);
+    _this.handleTimeChangeEnd = _this.handleTimeChangeEnd.bind(_this);
+
+    _this.handleDateChange = _this.handleDateChange.bind(_this);
+    _this.handleTimeChange = _this.handleTimeChange.bind(_this);
     return _this;
   }
 
   _createClass(DateTimeRange, [{
-    key: 'handleChange',
-    value: function handleChange(_ref) {
+    key: 'handleDateChange',
+    value: function handleDateChange(_ref) {
       var _ref$startDate = _ref.startDate,
           startDate = _ref$startDate === undefined ? this.state.startDateTime : _ref$startDate,
           _ref$endDate = _ref.endDate,
-          endDate = _ref$endDate === undefined ? this.state.endDateTime : _ref$endDate;
+          endDate = _ref$endDate === undefined ? this.state.endDateTime : _ref$endDate,
+          event = _ref.event;
 
-      debugger;
       var startDateForRange = startDate;
       var endDateForRange = endDate;
 
-      if ((0, _moment2.default)(startDateForRange, this.state.format).isAfter((0, _moment2.default)(endDateForRange, this.state.format))) {
-        var _ref2 = [endDateForRange, startDateForRange];
-        startDateForRange = _ref2[0];
-        endDateForRange = _ref2[1];
-      }
+      // It seems unnatural to swap the start and stop date when start and after stop. Perhaps, we should just display an error instead.
+      // if (moment(startDateForRange).isAfter(moment(endDateForRange))) {
+      //   [startDateForRange, endDateForRange] = [endDateForRange, startDateForRange];
+      // }
 
       this.setState({ startDateTime: startDateForRange, endDateTime: endDateForRange });
 
-      if (this.props.onChange) {
-        this.props.onChange(startDateForRange, endDateForRange);
+      if (this.props.onDateChange) {
+        this.props.onDateChange(startDateForRange, endDateForRange, event);
       }
     }
   }, {
-    key: 'handleChangeStart',
-    value: function handleChangeStart(startDate) {
-      this.handleChange({ startDate: startDate });
+    key: 'handleTimeChange',
+    value: function handleTimeChange(_ref2) {
+      var _ref2$startTime = _ref2.startTime,
+          startTime = _ref2$startTime === undefined ? this.state.startDateTime : _ref2$startTime,
+          _ref2$endTime = _ref2.endTime,
+          endTime = _ref2$endTime === undefined ? this.state.endDateTime : _ref2$endTime,
+          event = _ref2.event;
+
+      var startTimeForRange = startTime;
+      var endTimeForRange = endTime;
+
+      // if (moment(startTimeForRange).isAfter(moment(endTimeForRange))) {
+      //   [startDateForRange, endDateForRange] = [endDateForRange, startDateForRange];
+      // }
+
+      // this.setState({ startDateTime: startDateForRange, endDateTime: endDateForRange });
+
+      // if (this.props.onChange) {
+      //   this.props.onChange(startDateForRange, endDateForRange);
+      // }
+
+      if (this.props.onTimeChange) {
+        this.props.onTimeChange(startTimeForRange, endTimeForRange, event);
+      }
     }
   }, {
-    key: 'handleChangeEnd',
-    value: function handleChangeEnd(endDate) {
-      this.handleChange({ endDate: endDate });
+    key: 'handleDateChangeStart',
+    value: function handleDateChangeStart(startDate, event) {
+      this.handleDateChange({ startDate: startDate, event: event });
+    }
+  }, {
+    key: 'handleDateChangeEnd',
+    value: function handleDateChangeEnd(endDate, event) {
+      this.handleDateChange({ endDate: endDate, event: event });
+    }
+  }, {
+    key: 'handleTimeChangeStart',
+    value: function handleTimeChangeStart(startTime, event) {
+      this.handleTimeChange({ startTime: startTime, event: event });
+    }
+  }, {
+    key: 'handleTimeChangeEnd',
+    value: function handleTimeChangeEnd(endTime, event) {
+      this.handleTimeChange({ endTime: endTime, event: event });
     }
   }, {
     key: 'render',
@@ -112,19 +156,16 @@ var DateTimeRange = function (_React$Component) {
           isStartDateRange: true,
           startDateTime: this.state.startDateTime,
           endDateTime: this.state.endDateTime,
-          onChange: this.handleChangeStart
+          onDateChange: this.handleDateChangeStart,
+          onTimeChange: this.handleTimeChangeStart
         })),
-        _react2.default.createElement(
-          'p',
-          null,
-          ' - '
-        ),
         _react2.default.createElement(_DateTimePicker2.default, _extends({}, this.props, {
           value: this.state.endDateTime,
           isEndDateRange: true,
           startDateTime: this.state.startDateTime,
           endDateTime: this.state.endDateTime,
-          onChange: this.handleChangeEnd
+          onDateChange: this.handleDateChangeEnd,
+          onTimeChange: this.handleTimeChangeEnd
         }))
       );
     }

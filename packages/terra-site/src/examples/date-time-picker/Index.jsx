@@ -18,7 +18,9 @@ const DateTimePickerExamples = () => (
     <div id="version">Version: {version}</div>
     <Markdown id="readme" src={ReadMe} />
     <PropsTable id="props" src={DateTimePickerSrc} />
-    <h2 id="default">Default</h2>
+    <h2 id="Default Date Time">Default Date Time</h2>
+    <DateTimePicker />
+    <h2 id="Date Time Range">Date Time Range</h2>
     <DateTimeRange endDateTime={'2017-02-22 22:22'} startDateTime={'2017-01-11 11:11'} />
   </div>
 );
