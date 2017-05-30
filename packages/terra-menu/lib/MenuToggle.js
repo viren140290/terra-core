@@ -12,6 +12,14 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _terraButton = require('terra-button');
+
+var _terraButton2 = _interopRequireDefault(_terraButton);
+
+var _terraList = require('terra-list');
+
+var _terraList2 = _interopRequireDefault(_terraList);
+
 var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -24,13 +32,9 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _terraList = require('terra-list');
-
-var _terraList2 = _interopRequireDefault(_terraList);
-
 require('terra-base/lib/baseStyles');
 
-require('./MenuItem.scss');
+require('./MenuToggle.scss');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -43,100 +47,79 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var propTypes = {
-  display: _propTypes2.default.element,
-  isSelected: _propTypes2.default.bool,
-  children: _propTypes2.default.element,
-  isListStyle: _propTypes2.default.bool
+  toggleText: _propTypes2.default.string,
+  isOpen: _propTypes2.default.bool,
+  children: _propTypes2.default.array
 };
 
 var defaultProps = {
-  isSelected: false,
-  isListStyle: false
+  toggleText: '...',
+  isOpen: false,
+  children: []
 };
 
-var MenuItem = function (_React$Component) {
-  _inherits(MenuItem, _React$Component);
+var MenuToggle = function (_React$Component) {
+  _inherits(MenuToggle, _React$Component);
 
-  function MenuItem(props) {
-    _classCallCheck(this, MenuItem);
+  function MenuToggle(props) {
+    _classCallCheck(this, MenuToggle);
 
-    var _this = _possibleConstructorReturn(this, (MenuItem.__proto__ || Object.getPrototypeOf(MenuItem)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (MenuToggle.__proto__ || Object.getPrototypeOf(MenuToggle)).call(this, props));
 
     _this.handleRequestClose = _this.handleRequestClose.bind(_this);
     _this.handleOnClick = _this.handleOnClick.bind(_this);
-    _this.wrapOnClick = _this.wrapOnClick.bind(_this);
-    _this.state = { isSelected: false };
+    _this.state = { isOpen: false };
     return _this;
   }
 
-  _createClass(MenuItem, [{
+  _createClass(MenuToggle, [{
     key: 'handleRequestClose',
     value: function handleRequestClose() {
-      this.setState({ isSelected: false });
+      this.setState({ isOpen: false });
     }
   }, {
     key: 'handleOnClick',
     value: function handleOnClick() {
       if (this.props.children) {
-        this.setState({ isSelected: true });
+        this.setState({ isOpen: true });
       }
-    }
-  }, {
-    key: 'wrapOnClick',
-    value: function wrapOnClick() {
-      var _this2 = this;
-
-      var onClick = this.props.display.props.onClick;
-      return function (event) {
-        _this2.handleOnClick(event);
-
-        if (onClick) {
-          onClick(event);
-        }
-      };
     }
   }, {
     key: 'render',
     value: function render() {
       var _props = this.props,
-          display = _props.display,
-          isSelected = _props.isSelected,
+          toggleText = _props.toggleText,
+          isOpen = _props.isOpen,
           children = _props.children,
-          isListStyle = _props.isListStyle,
-          customProps = _objectWithoutProperties(_props, ['display', 'isSelected', 'children', 'isListStyle']);
+          customProps = _objectWithoutProperties(_props, ['toggleText', 'isOpen', 'children']);
 
-      var menuItemClassName = (0, _classnames2.default)(['terra-MenuItem', customProps.className]);
-
-      var target = _react2.default.cloneElement(display, { onClick: this.wrapOnClick() });
-      if (isListStyle) {
-        target = _react2.default.createElement(_terraList2.default.Item, { content: _react2.default.createElement(
-            'div',
-            null,
-            display.props.text
-          ), onClick: this.wrapOnClick() });
-      }
+      var menuToggleClassName = (0, _classnames2.default)(['terra-MenuToggle', customProps.className]);
 
       var toggle = _react2.default.createElement(_terraPopupPresenter2.default, {
-        content: children,
+        content: _react2.default.createElement(
+          _terraList2.default,
+          { isDivided: true },
+          children
+        ),
         contentAttachment: 'bottom center',
-        isOpen: this.state.isSelected,
-        target: target,
+        isOpen: this.state.isOpen,
+        target: _react2.default.createElement(_terraButton2.default, { text: toggleText, onClick: this.handleOnClick }),
         onRequestClose: this.handleRequestClose,
         showArrow: true
       });
 
       return _react2.default.createElement(
         'div',
-        _extends({}, customProps, { className: menuItemClassName }),
+        _extends({}, customProps, { className: menuToggleClassName }),
         toggle
       );
     }
   }]);
 
-  return MenuItem;
+  return MenuToggle;
 }(_react2.default.Component);
 
-MenuItem.propTypes = propTypes;
-MenuItem.defaultProps = defaultProps;
+MenuToggle.propTypes = propTypes;
+MenuToggle.defaultProps = defaultProps;
 
-exports.default = MenuItem;
+exports.default = MenuToggle;

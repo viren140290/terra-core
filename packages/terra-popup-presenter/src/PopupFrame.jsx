@@ -119,7 +119,7 @@ class PopupFrame extends React.Component {
   }
 
   render() {
-    const { 
+    const {
       arrow,
       closeOnEsc,
       closeOnOutsideClick,
@@ -129,7 +129,7 @@ class PopupFrame extends React.Component {
       enableOnClickOutside,
       disableOnClickOutside,
       refCallback,
-      ...customProps,
+      ...customProps
     } = this.props;
 
     const frameClassNames = classNames([

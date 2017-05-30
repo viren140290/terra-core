@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "prop-types": "^15.5.8",
     "react-onclickoutside": "^5.11.1",
     "tether": "^1.4.0",
     "terra-base": "^0.4.1",

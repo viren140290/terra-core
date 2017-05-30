@@ -29,7 +29,9 @@
     "react-dom": "^15.5.4",
     "terra-base": "^0.x",
     "terra-button": "^0.x",
-    "terra-mixins": "^1.0.0"
+    "terra-list": "^0.x",
+    "terra-mixins": "^1.0.0",
+    "terra-popup-presenter": "^0.x"
   },
   "dependencies": {
     "classnames": "^2.2.5",
@@ -37,7 +39,9 @@
     "resize-observer-polyfill": "^1.4.1",
     "terra-base": "^0.x",
     "terra-button": "^0.x",
-    "terra-mixins": "^1.0.0"
+    "terra-list": "^0.x",
+    "terra-mixins": "^1.0.0",
+    "terra-popup-presenter": "^0.x"
   },
   "scripts": {
     "compile": "npm run compile:clean && npm run compile:build",

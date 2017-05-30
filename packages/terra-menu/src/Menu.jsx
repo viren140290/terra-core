@@ -2,9 +2,9 @@ import React from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Button from 'terra-button';
 import MenuItem from './MenuItem';
 import MenuItemGroup from './MenuItemGroup';
+import MenuToggle from './MenuToggle';
 import 'terra-base/lib/baseStyles';
 import './Menu.scss';
 
@@ -18,20 +18,30 @@ class Menu extends React.Component {
     super(props);
     this.setContainer = this.setContainer.bind(this);
     this.handleResize = this.handleResize.bind(this);
+    this.visibleChildComponents = this.visibleChildComponents.bind(this);
+    this.hiddenChildComponents = this.hiddenChildComponents.bind(this);
     this.state = {
       hiddenIndexes: [],
       toggleOpen: false,
+      toggleHidden: false,
     };
   }
 
   componentDidMount() {
     if (this.container) {
       this.resizeObserver = new ResizeObserver((entries) => {
-        this.setState({ hiddenIndexes: [], toggleOpen: this.state.toggleOpen });
+        this.setState({ hiddenIndexes: [], toggleOpen: this.state.toggleOpen, toggleHidden: false });
         this.forceUpdate();
         this.handleResize(entries[0].contentRect.width);
       });
       this.resizeObserver.observe(this.container);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.container) {
+      this.resizeObserver.disconnect(this.container);
+      this.container = null;
     }
   }
 
@@ -72,9 +82,19 @@ class Menu extends React.Component {
     return visibleChildren;
   }
 
+  hiddenChildComponents(children) {
+    const indexes = this.state.hiddenIndexes;
+    const hiddenChildren = [];
+    for (let i = 0; i < indexes.length; i += 1) {
+      hiddenChildren.push(React.cloneElement(children[indexes[i]], { isListStyle: true }));
+    }
+    return hiddenChildren;
+  }
+
   render() {
     const { children, ...customProps } = this.props;
     const visibleChildren = this.visibleChildComponents(children);
+    const hiddenChildren = this.hiddenChildComponents(children);
     const menuClassName = classNames([
       'terra-Menu',
       customProps.className,
@@ -85,9 +105,9 @@ class Menu extends React.Component {
         <div className="terra-Menu-container" ref={this.setContainer}>
           {visibleChildren}
         </div>
-        <div className="terra-Menu-toggle">
-          <Button text="..." />
-        </div>
+        <MenuToggle>
+          {hiddenChildren}
+        </MenuToggle>
       </div>
     );
   }

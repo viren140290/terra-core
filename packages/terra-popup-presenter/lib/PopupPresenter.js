@@ -155,15 +155,14 @@ var PopupPresenter = function (_React$Component) {
             return 'bottom';
           }
         }
-      } else {
-        if (popUpBounds.top + popUpBounds.height - offset >= targetBounds.top && popUpBounds.top + offset <= targetBounds.top + targetBounds.height) {
-          if (targetBounds.left < popUpBounds.left) {
-            return 'left';
-          } else if (targetBounds.right < popUpBounds.right) {
-            return 'right';
-          }
+      } else if (popUpBounds.top + popUpBounds.height - offset >= targetBounds.top && popUpBounds.top + offset <= targetBounds.top + targetBounds.height) {
+        if (targetBounds.left < popUpBounds.left) {
+          return 'left';
+        } else if (targetBounds.right < popUpBounds.right) {
+          return 'right';
         }
       }
+      return '';
     }
   }]);
 

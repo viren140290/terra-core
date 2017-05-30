@@ -24,10 +24,6 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _terraButton = require('terra-button');
-
-var _terraButton2 = _interopRequireDefault(_terraButton);
-
 var _MenuItem = require('./MenuItem');
 
 var _MenuItem2 = _interopRequireDefault(_MenuItem);
@@ -35,6 +31,10 @@ var _MenuItem2 = _interopRequireDefault(_MenuItem);
 var _MenuItemGroup = require('./MenuItemGroup');
 
 var _MenuItemGroup2 = _interopRequireDefault(_MenuItemGroup);
+
+var _MenuToggle = require('./MenuToggle');
+
+var _MenuToggle2 = _interopRequireDefault(_MenuToggle);
 
 require('terra-base/lib/baseStyles');
 
@@ -65,9 +65,12 @@ var Menu = function (_React$Component) {
 
     _this.setContainer = _this.setContainer.bind(_this);
     _this.handleResize = _this.handleResize.bind(_this);
+    _this.visibleChildComponents = _this.visibleChildComponents.bind(_this);
+    _this.hiddenChildComponents = _this.hiddenChildComponents.bind(_this);
     _this.state = {
       hiddenIndexes: [],
-      toggleOpen: false
+      toggleOpen: false,
+      toggleHidden: false
     };
     return _this;
   }
@@ -79,11 +82,19 @@ var Menu = function (_React$Component) {
 
       if (this.container) {
         this.resizeObserver = new _resizeObserverPolyfill2.default(function (entries) {
-          _this2.setState({ hiddenIndexes: [], toggleOpen: _this2.state.toggleOpen });
+          _this2.setState({ hiddenIndexes: [], toggleOpen: _this2.state.toggleOpen, toggleHidden: false });
           _this2.forceUpdate();
           _this2.handleResize(entries[0].contentRect.width);
         });
         this.resizeObserver.observe(this.container);
+      }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      if (this.container) {
+        this.resizeObserver.disconnect(this.container);
+        this.container = null;
       }
     }
   }, {
@@ -129,6 +140,16 @@ var Menu = function (_React$Component) {
       return visibleChildren;
     }
   }, {
+    key: 'hiddenChildComponents',
+    value: function hiddenChildComponents(children) {
+      var indexes = this.state.hiddenIndexes;
+      var hiddenChildren = [];
+      for (var i = 0; i < indexes.length; i += 1) {
+        hiddenChildren.push(_react2.default.cloneElement(children[indexes[i]], { isListStyle: true }));
+      }
+      return hiddenChildren;
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _props = this.props,
@@ -136,6 +157,7 @@ var Menu = function (_React$Component) {
           customProps = _objectWithoutProperties(_props, ['children']);
 
       var visibleChildren = this.visibleChildComponents(children);
+      var hiddenChildren = this.hiddenChildComponents(children);
       var menuClassName = (0, _classnames2.default)(['terra-Menu', customProps.className]);
 
       return _react2.default.createElement(
@@ -147,9 +169,9 @@ var Menu = function (_React$Component) {
           visibleChildren
         ),
         _react2.default.createElement(
-          'div',
-          { className: 'terra-Menu-toggle' },
-          _react2.default.createElement(_terraButton2.default, { text: '...' })
+          _MenuToggle2.default,
+          null,
+          hiddenChildren
         )
       );
     }
