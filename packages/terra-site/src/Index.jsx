@@ -15,6 +15,7 @@ import ContentExamples from './examples/content/Index';
 import ContentContainerExamples from './examples/content-container/Index';
 import DatePickerExamples from './examples/date-picker/Index';
 import DemographicsBannerExamples from './examples/demographics-banner/Index';
+import FormExamples from './examples/form/Index';
 import GridExamples from './examples/grid/Index';
 import I18nExamples from './examples/i18n/Index';
 import IconExamples from './examples/icon/Index';
@@ -56,6 +57,7 @@ import StatusTestRoutes from 'terra-status/tests/nightwatch/StatusTestRoutes';
 import GridTestRoutes from 'terra-grid/tests/nightwatch/GridTestRoutes';
 import ProgressBarTestRoutes from 'terra-progress-bar/tests/nightwatch/ProgressBarTestRoutes';
 import IconTestRoutes from 'terra-icon/tests/nightwatch/IconTestRoutes';
+import FormTestRoutes from 'terra-form/tests/nightwatch/FormTestRoutes';
 import TestLinks from './TestLinks';
 /* eslint-enable import/first */
 
@@ -73,6 +75,7 @@ ReactDOM.render((
       <Route path="content-container" component={ContentContainerExamples} />
       <Route path="datepicker" component={DatePickerExamples} />
       <Route path="demographics-banner" component={DemographicsBannerExamples} />
+      <Route path="form" component={FormExamples} />
       <Route path="grid" component={GridExamples} />
       <Route path="i18n" component={I18nExamples} />
       <Route path="icon" component={IconExamples} />
@@ -109,9 +112,9 @@ ReactDOM.render((
     {StatusTestRoutes}
     {TableTestRoutes}
     {ModalTestRoutes}
+    {ModalDialogTestRoutes}
     {ProgressBarTestRoutes}
     {GridTestRoutes}
     {IconTestRoutes}
-    {ModalDialogTestRoutes}
   </Router>
 ), document.getElementById('root'));

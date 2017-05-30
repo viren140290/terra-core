@@ -11,6 +11,7 @@ const ModalTests = () => (
       <li><Link to="/tests/modal-dialog-tests/icon">Children contain icons</Link></li>
       <li><Link to="/tests/modal-dialog-tests/long-text">Children are long strings</Link></li>
       <li><Link to="/tests/modal-dialog-tests/no-text">Children are empty strings</Link></li>
+      <li><Link to="/tests/modal-dialog-tests/form">Form Example</Link></li>
     </ul>
   </div>
 );

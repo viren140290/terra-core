@@ -5,6 +5,7 @@ import './ModalHeader.scss';
 
 const propTypes = {
   children: PropTypes.node,
+  hasDismiss: PropTypes.node,
   onClick: PropTypes.func,
 };
 
@@ -12,14 +13,16 @@ const defaultProps = {
   children: null,
 };
 
-const ModalHeader = ({ children, onClick, ...customProps }) => (
-  <div className={'terra-ModalDialog-header'}>
+const ModalHeader = ({ children, onClick, ...customProps }) => {
+  const dismissButton = onClick ? <ModalDismiss onClick={onClick} /> : null;
+
+  return (<div className={'terra-ModalDialog-header'}>
     <div className={'terra-ModalDialog-header-title'} {...customProps} >
       {children}
     </div>
-    <ModalDismiss onClick={onClick} />
-  </div>
-  );
+    {dismissButton}
+  </div>);
+};
 
 ModalHeader.propTypes = propTypes;
 ModalHeader.defaultProps = defaultProps;

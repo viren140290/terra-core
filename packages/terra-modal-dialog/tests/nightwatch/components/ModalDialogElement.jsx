@@ -1,5 +1,4 @@
 import React from 'react';
-import Modal from 'terra-modal';
 import ModalDialog from '../../../src/ModalDialog';
 
 import Example from './examplesetup';
@@ -9,7 +8,7 @@ class ModalDialogElement extends React.Component {
     super();
 
     this.state = {
-      isOpened: true,
+      isOpen: true,
     };
 
     this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -17,28 +16,26 @@ class ModalDialogElement extends React.Component {
   }
 
   handleOpenModal() {
-    this.setState({ isOpened: true });
+    this.setState({ isOpen: true });
   }
 
   handleCloseModal() {
-    this.setState({ isOpened: false });
+    this.setState({ isOpen: false });
   }
 
   render() {
     return (
       <div>
-        <Modal
+        <ModalDialog
           ariaLabel="Modal Dialog Example"
-          isOpened={this.state.isOpened}
+          isOpen={this.state.isOpen}
           onRequestClose={this.handleCloseModal}
         >
-          <ModalDialog>
-            <ModalDialog.Header onClick={this.handleCloseModal} >{Example.DialogHeaderElement}</ModalDialog.Header>
-            <ModalDialog.ContentHeader>{Example.DialogContentHeaderElement}</ModalDialog.ContentHeader>
-            <ModalDialog.Content>{Example.DialogContentElement}</ModalDialog.Content>
-            <ModalDialog.Footer>{Example.DialogFooterElement}</ModalDialog.Footer>
-          </ModalDialog>
-        </Modal>
+          <ModalDialog.Header onClick={this.handleCloseModal} >{Example.DialogHeaderElement}</ModalDialog.Header>
+          <ModalDialog.ContentHeader>{Example.DialogContentHeaderElement}</ModalDialog.ContentHeader>
+          <ModalDialog.Content>{Example.DialogContentElement}</ModalDialog.Content>
+          <ModalDialog.Footer>{Example.DialogFooterElement}</ModalDialog.Footer>
+        </ModalDialog>
         <button onClick={this.handleOpenModal}>Open Modal</button>
       </div>
     );

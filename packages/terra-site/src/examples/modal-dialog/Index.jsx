@@ -11,13 +11,12 @@ import ModalSrc from '!raw-loader!terra-modal-dialog/src/ModalDialog';
 // Example Files
 import ModalDialogDefault from './ModalDialogDefault';
 
-
 const ModalExamples = () => (
   <div>
     <div id="version">Version: {version}</div>
     <Markdown id="readme" src={ReadMe} />
     {/* <PropsTable id="props-table" src={ModalSrc} /> */}
-    <h2 id="defaul">Default Modal Dialog</h2>
+    <h2 id="default">Default Modal Dialog</h2>
     <ModalDialogDefault />
   </div>
 );
