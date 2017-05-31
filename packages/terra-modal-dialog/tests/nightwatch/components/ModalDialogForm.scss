@@ -6,3 +6,9 @@
   padding: 0.5714rem;
   text-align: right;
 }
+
+#example-dialog-form {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+}

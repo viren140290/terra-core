@@ -22,7 +22,7 @@ var _terraButton = require('terra-button');
 
 var _terraButton2 = _interopRequireDefault(_terraButton);
 
-require('./ModalDialogDismiss.scss');
+require('./ModalDialogHeaderDismiss.scss');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

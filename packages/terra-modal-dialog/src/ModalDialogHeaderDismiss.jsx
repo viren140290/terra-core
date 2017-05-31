@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import IconClose from 'terra-icon/lib/icon/IconClose';
 import Button from 'terra-button';
-import './ModalDialogDismiss.scss';
+import './ModalDialogHeaderDismiss.scss';
 
 const propTypes = {
   children: PropTypes.node,
