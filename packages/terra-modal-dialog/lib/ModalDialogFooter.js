@@ -14,7 +14,7 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-require('./ModalFooter.scss');
+require('./ModalDialogFooter.scss');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28,7 +28,7 @@ var defaultProps = {
   children: null
 };
 
-var ModalFooter = function ModalFooter(_ref) {
+var ModalDialogFooter = function ModalDialogFooter(_ref) {
   var children = _ref.children,
       customProps = _objectWithoutProperties(_ref, ['children']);
 
@@ -39,7 +39,7 @@ var ModalFooter = function ModalFooter(_ref) {
   );
 };
 
-ModalFooter.propTypes = propTypes;
-ModalFooter.defaultProps = defaultProps;
+ModalDialogFooter.propTypes = propTypes;
+ModalDialogFooter.defaultProps = defaultProps;
 
-exports.default = ModalFooter;
+exports.default = ModalDialogFooter;

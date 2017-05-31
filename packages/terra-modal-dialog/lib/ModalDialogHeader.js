@@ -14,32 +14,46 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-require('./ModalContent.scss');
+var _ModalDialogHeaderDismiss = require('./ModalDialogHeaderDismiss');
+
+var _ModalDialogHeaderDismiss2 = _interopRequireDefault(_ModalDialogHeaderDismiss);
+
+require('./ModalDialogHeader.scss');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 var propTypes = {
-  children: _propTypes2.default.node
+  children: _propTypes2.default.node,
+  hasDismiss: _propTypes2.default.node,
+  onClick: _propTypes2.default.func
 };
 
 var defaultProps = {
   children: null
 };
 
-var ModalContent = function ModalContent(_ref) {
+var ModalDialogHeader = function ModalDialogHeader(_ref) {
   var children = _ref.children,
-      customProps = _objectWithoutProperties(_ref, ['children']);
+      onClick = _ref.onClick,
+      customProps = _objectWithoutProperties(_ref, ['children', 'onClick']);
+
+  var dismissButton = onClick ? _react2.default.createElement(_ModalDialogHeaderDismiss2.default, { onClick: onClick }) : null;
 
   return _react2.default.createElement(
     'div',
-    _extends({ className: 'terra-ModalDialog-content' }, customProps),
-    children
+    { className: 'terra-ModalDialog-header' },
+    _react2.default.createElement(
+      'div',
+      _extends({ className: 'terra-ModalDialog-header-title' }, customProps),
+      children
+    ),
+    dismissButton
   );
 };
 
-ModalContent.propTypes = propTypes;
-ModalContent.defaultProps = defaultProps;
+ModalDialogHeader.propTypes = propTypes;
+ModalDialogHeader.defaultProps = defaultProps;
 
-exports.default = ModalContent;
+exports.default = ModalDialogHeader;

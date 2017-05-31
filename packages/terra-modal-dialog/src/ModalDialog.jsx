@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'terra-modal';
-import Header from './ModalHeader';
-import ContentHeader from './ModalContentHeader';
-import Content from './ModalContent';
-import Footer from './ModalFooter';
+import Header from './ModalDialogHeader';
+import ContentHeader from './ModalDialogContentHeader';
+import Content from './ModalDialogContent';
+import Footer from './ModalDialogFooter';
 import './ModalDialog.scss';
 
 const propTypes = {

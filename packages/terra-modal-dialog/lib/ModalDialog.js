@@ -16,21 +16,25 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _ModalHeader = require('./ModalHeader');
+var _terraModal = require('terra-modal');
 
-var _ModalHeader2 = _interopRequireDefault(_ModalHeader);
+var _terraModal2 = _interopRequireDefault(_terraModal);
 
-var _ModalContentHeader = require('./ModalContentHeader');
+var _ModalDialogHeader = require('./ModalDialogHeader');
 
-var _ModalContentHeader2 = _interopRequireDefault(_ModalContentHeader);
+var _ModalDialogHeader2 = _interopRequireDefault(_ModalDialogHeader);
 
-var _ModalContent = require('./ModalContent');
+var _ModalDialogContentHeader = require('./ModalDialogContentHeader');
 
-var _ModalContent2 = _interopRequireDefault(_ModalContent);
+var _ModalDialogContentHeader2 = _interopRequireDefault(_ModalDialogContentHeader);
 
-var _ModalFooter = require('./ModalFooter');
+var _ModalDialogContent = require('./ModalDialogContent');
 
-var _ModalFooter2 = _interopRequireDefault(_ModalFooter);
+var _ModalDialogContent2 = _interopRequireDefault(_ModalDialogContent);
+
+var _ModalDialogFooter = require('./ModalDialogFooter');
+
+var _ModalDialogFooter2 = _interopRequireDefault(_ModalDialogFooter);
 
 require('./ModalDialog.scss');
 
@@ -45,11 +49,58 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var propTypes = {
-  children: _propTypes2.default.node
+  /**
+   * String that labels the modal for screen readers
+   **/
+  ariaLabel: _propTypes2.default.string.isRequired,
+  /**
+   * Content inside the modal dialog
+   **/
+  children: _propTypes2.default.node.isRequired,
+  /**
+   * CSS classnames that are append to the modal
+   **/
+  classNameModal: _propTypes2.default.string,
+  /**
+   * CSS classnames that are append to the overlay
+   **/
+  classNameOverlay: _propTypes2.default.string,
+  /**
+   * If set to true, the modal will close when the esc key is pressed
+   **/
+  closeOnEsc: _propTypes2.default.bool,
+  /**
+   * If set to true, the modal will close when a mouseclick is triggered outside the modal
+   **/
+  closeOnOutsideClick: _propTypes2.default.bool,
+  /**
+   * If set to true, the modal will be fullscreen on all breakpoint sizes
+   **/
+  isFullscreen: _propTypes2.default.bool,
+  /**
+   * If set to true, the modal will rendered as opened
+   **/
+  isOpen: _propTypes2.default.bool.isRequired,
+  /**
+   * Function to set isOpen={false} and close the modal.
+   **/
+  onRequestClose: _propTypes2.default.func.isRequired,
+  /**
+   * Role attribute on the modal dialog
+   **/
+  role: _propTypes2.default.string
 };
 
 var defaultProps = {
-  children: null
+  ariaLabel: null,
+  children: null,
+  classNameModal: null,
+  classNameOverlay: null,
+  closeOnEsc: true,
+  closeOnOutsideClick: true,
+  isFullscreen: false,
+  isOpen: false,
+  role: 'document'
 };
 
 var ModalDialog = function (_React$Component) {
@@ -90,14 +141,42 @@ var ModalDialog = function (_React$Component) {
     key: 'render',
     value: function render() {
       var _props = this.props,
+          ariaLabel = _props.ariaLabel,
           children = _props.children,
-          customProps = _objectWithoutProperties(_props, ['children']);
+          classNameModal = _props.classNameModal,
+          classNameOverlay = _props.classNameOverlay,
+          closeOnEsc = _props.closeOnEsc,
+          closeOnOutsideClick = _props.closeOnOutsideClick,
+          isFullscreen = _props.isFullscreen,
+          isOpen = _props.isOpen,
+          role = _props.role,
+          onRequestClose = _props.onRequestClose,
+          customProps = _objectWithoutProperties(_props, ['ariaLabel', 'children', 'classNameModal', 'classNameOverlay', 'closeOnEsc', 'closeOnOutsideClick', 'isFullscreen', 'isOpen', 'role', 'onRequestClose']);
 
       var newHeight = { maxHeight: this.state.height };
+
+      if (!isOpen) {
+        return null;
+      }
+
       return _react2.default.createElement(
-        'div',
-        _extends({ style: newHeight, className: 'terra-ModalDialog' }, customProps),
-        children
+        _terraModal2.default,
+        {
+          ariaLabel: ariaLabel,
+          classNameModal: classNameModal,
+          classNameOverlay: classNameOverlay,
+          closeOnOutsideClick: closeOnOutsideClick,
+          closeOnEsc: closeOnEsc,
+          isFullscreen: isFullscreen,
+          isOpen: isOpen,
+          onRequestClose: onRequestClose,
+          role: role
+        },
+        _react2.default.createElement(
+          'div',
+          _extends({ style: newHeight, className: 'terra-ModalDialog' }, customProps),
+          children
+        )
       );
     }
   }]);
@@ -108,9 +187,9 @@ var ModalDialog = function (_React$Component) {
 ModalDialog.propTypes = propTypes;
 ModalDialog.defaultProps = defaultProps;
 
-ModalDialog.Header = _ModalHeader2.default;
-ModalDialog.ContentHeader = _ModalContentHeader2.default;
-ModalDialog.Content = _ModalContent2.default;
-ModalDialog.Footer = _ModalFooter2.default;
+ModalDialog.Header = _ModalDialogHeader2.default;
+ModalDialog.ContentHeader = _ModalDialogContentHeader2.default;
+ModalDialog.Content = _ModalDialogContent2.default;
+ModalDialog.Footer = _ModalDialogFooter2.default;
 
 exports.default = ModalDialog;

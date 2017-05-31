@@ -22,7 +22,7 @@ var _terraButton = require('terra-button');
 
 var _terraButton2 = _interopRequireDefault(_terraButton);
 
-require('./ModalDismiss.scss');
+require('./ModalDialogDismiss.scss');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37,7 +37,7 @@ var defaultProps = {
   children: null
 };
 
-var ModalDismiss = function ModalDismiss(_ref) {
+var ModalDialogDismiss = function ModalDialogDismiss(_ref) {
   var onClick = _ref.onClick,
       customProps = _objectWithoutProperties(_ref, ['onClick']);
 
@@ -48,7 +48,7 @@ var ModalDismiss = function ModalDismiss(_ref) {
   );
 };
 
-ModalDismiss.propTypes = propTypes;
-ModalDismiss.defaultProps = defaultProps;
+ModalDialogDismiss.propTypes = propTypes;
+ModalDialogDismiss.defaultProps = defaultProps;
 
-exports.default = ModalDismiss;
+exports.default = ModalDialogDismiss;

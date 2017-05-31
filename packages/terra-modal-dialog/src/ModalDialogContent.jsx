@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './ModalContent.scss';
+import './ModalDialogContent.scss';
 
 const propTypes = {
   children: PropTypes.node,
@@ -10,14 +10,14 @@ const defaultProps = {
   children: null,
 };
 
-const ModalContent = ({ children, ...customProps }) => (
+const ModalDialogContent = ({ children, ...customProps }) => (
   <div className={'terra-ModalDialog-content'} {...customProps} >
     {children}
   </div>
   );
 
 
-ModalContent.propTypes = propTypes;
-ModalContent.defaultProps = defaultProps;
+ModalDialogContent.propTypes = propTypes;
+ModalDialogContent.defaultProps = defaultProps;
 
-export default ModalContent;
+export default ModalDialogContent;

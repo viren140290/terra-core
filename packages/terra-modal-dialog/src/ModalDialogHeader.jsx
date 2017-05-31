@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ModalDismiss from './ModalDismiss';
-import './ModalHeader.scss';
+import ModalDialogHeaderDismiss from './ModalDialogHeaderDismiss';
+import './ModalDialogHeader.scss';
 
 const propTypes = {
   children: PropTypes.node,
@@ -13,8 +13,8 @@ const defaultProps = {
   children: null,
 };
 
-const ModalHeader = ({ children, onClick, ...customProps }) => {
-  const dismissButton = onClick ? <ModalDismiss onClick={onClick} /> : null;
+const ModalDialogHeader = ({ children, onClick, ...customProps }) => {
+  const dismissButton = onClick ? <ModalDialogHeaderDismiss onClick={onClick} /> : null;
 
   return (<div className={'terra-ModalDialog-header'}>
     <div className={'terra-ModalDialog-header-title'} {...customProps} >
@@ -24,7 +24,7 @@ const ModalHeader = ({ children, onClick, ...customProps }) => {
   </div>);
 };
 
-ModalHeader.propTypes = propTypes;
-ModalHeader.defaultProps = defaultProps;
+ModalDialogHeader.propTypes = propTypes;
+ModalDialogHeader.defaultProps = defaultProps;
 
-export default ModalHeader;
+export default ModalDialogHeader;

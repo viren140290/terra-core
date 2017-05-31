@@ -1,0 +1,128 @@
+exports[`ModalDialogHeader with dismiss button should mount a modal dialog header 1`] = `
+<ModalDialogHeader
+  onClick={[Function]}>
+  <div
+    className="terra-ModalDialog-header">
+    <div
+      className="terra-ModalDialog-header-title">
+      This is content
+    </div>
+    <ModalDialogDismiss
+      onClick={[Function]}>
+      <Button
+        className="terra-ModalDialog-header-dismiss"
+        isBlock={false}
+        isCompact={false}
+        isDisabled={false}
+        isReversed={false}
+        onClick={[Function]}
+        variant="link">
+        <button
+          aria-disabled={false}
+          className="terra-Button terra-Button--link terra-ModalDialog-header-dismiss"
+          disabled={false}
+          onClick={[Function]}>
+          <IconClose
+            data-name="Layer 1"
+            viewBox="0 0 48 48"
+            xmlns="http://www.w3.org/2000/svg">
+            <IconBase
+              ariaLabel={null}
+              data-name="Layer 1"
+              focusable={false}
+              height="1em"
+              isBidi={false}
+              isSpin={false}
+              viewBox="0 0 48 48"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg">
+              <svg
+                aria-hidden="true"
+                className="terra-Icon"
+                data-name="Layer 1"
+                focusable={false}
+                height="1em"
+                viewBox="0 0 48 48"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M28.2 24L42.9 9.1 40.8 7l-1.7-1.6-.4-.5L24 19.7 9.4 4.9 7.2 7 5.6 8.6l-.5.5L19.8 24 5.1 38.9 7.2 41l1.7 1.6.5.5L24 28.3l14.7 14.8.4-.5 1.7-1.6 2.1-2.1L28.2 24z" />
+              </svg>
+            </IconBase>
+          </IconClose>
+        </button>
+      </Button>
+    </ModalDialogDismiss>
+  </div>
+</ModalDialogHeader>
+`;
+
+exports[`ModalDialogHeader with dismiss button should render a modal dialog header 1`] = `
+<div
+  class="terra-ModalDialog-header">
+  <div
+    class="terra-ModalDialog-header-title">
+    This is content
+  </div>
+  <button
+    aria-disabled="false"
+    class="terra-Button terra-Button--link terra-ModalDialog-header-dismiss">
+    <svg
+      aria-hidden="true"
+      class="terra-Icon"
+      data-name="Layer 1"
+      focusable="false"
+      height="1em"
+      viewbox="0 0 48 48"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M28.2 24L42.9 9.1 40.8 7l-1.7-1.6-.4-.5L24 19.7 9.4 4.9 7.2 7 5.6 8.6l-.5.5L19.8 24 5.1 38.9 7.2 41l1.7 1.6.5.5L24 28.3l14.7 14.8.4-.5 1.7-1.6 2.1-2.1L28.2 24z" />
+    </svg>
+  </button>
+</div>
+`;
+
+exports[`ModalDialogHeader with dismiss button should shallow a modal dialog header 1`] = `
+<div
+  className="terra-ModalDialog-header">
+  <div
+    className="terra-ModalDialog-header-title">
+    This is content
+  </div>
+  <ModalDialogDismiss
+    onClick={[Function]} />
+</div>
+`;
+
+exports[`ModalDialogHeader without dismiss button should mount a modal dialog header 1`] = `
+<ModalDialogHeader>
+  <div
+    className="terra-ModalDialog-header">
+    <div
+      className="terra-ModalDialog-header-title">
+      This is content
+    </div>
+  </div>
+</ModalDialogHeader>
+`;
+
+exports[`ModalDialogHeader without dismiss button should render a modal dialog header 1`] = `
+<div
+  class="terra-ModalDialog-header">
+  <div
+    class="terra-ModalDialog-header-title">
+    This is content
+  </div>
+</div>
+`;
+
+exports[`ModalDialogHeader without dismiss button should shallow a modal dialog header 1`] = `
+<div
+  className="terra-ModalDialog-header">
+  <div
+    className="terra-ModalDialog-header-title">
+    This is content
+  </div>
+</div>
+`;

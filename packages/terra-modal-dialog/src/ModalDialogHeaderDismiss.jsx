@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import IconClose from 'terra-icon/lib/icon/IconClose';
 import Button from 'terra-button';
-import './ModalDismiss.scss';
+import './ModalDialogDismiss.scss';
 
 const propTypes = {
   children: PropTypes.node,
@@ -13,12 +13,12 @@ const defaultProps = {
   children: null,
 };
 
-const ModalDismiss = ({ onClick, ...customProps }) => (
+const ModalDialogDismiss = ({ onClick, ...customProps }) => (
   <Button variant="link" className="terra-ModalDialog-header-dismiss" onClick={onClick} {...customProps} >
     <IconClose />
   </Button>);
 
-ModalDismiss.propTypes = propTypes;
-ModalDismiss.defaultProps = defaultProps;
+ModalDialogDismiss.propTypes = propTypes;
+ModalDialogDismiss.defaultProps = defaultProps;
 
-export default ModalDismiss;
+export default ModalDialogDismiss;

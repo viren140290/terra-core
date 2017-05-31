@@ -1,0 +1,22 @@
+exports[`test should mount an open modal 1`] = `
+<ModalDialogContentHeader>
+  <div
+    className="terra-ModalDialog-contentHeader">
+    This is content
+  </div>
+</ModalDialogContentHeader>
+`;
+
+exports[`test should render an open modal 1`] = `
+<div
+  class="terra-ModalDialog-contentHeader">
+  This is content
+</div>
+`;
+
+exports[`test should shallow an open modal 1`] = `
+<div
+  className="terra-ModalDialog-contentHeader">
+  This is content
+</div>
+`;

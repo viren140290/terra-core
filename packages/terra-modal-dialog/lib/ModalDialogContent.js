@@ -14,7 +14,7 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-require('./ModalContentHeader.scss');
+require('./ModalDialogContent.scss');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28,18 +28,18 @@ var defaultProps = {
   children: null
 };
 
-var ModalContentHeader = function ModalContentHeader(_ref) {
+var ModalDialogContent = function ModalDialogContent(_ref) {
   var children = _ref.children,
       customProps = _objectWithoutProperties(_ref, ['children']);
 
   return _react2.default.createElement(
     'div',
-    _extends({ className: 'terra-ModalDialog-contentHeader' }, customProps),
+    _extends({ className: 'terra-ModalDialog-content' }, customProps),
     children
   );
 };
 
-ModalContentHeader.propTypes = propTypes;
-ModalContentHeader.defaultProps = defaultProps;
+ModalDialogContent.propTypes = propTypes;
+ModalDialogContent.defaultProps = defaultProps;
 
-exports.default = ModalContentHeader;
+exports.default = ModalDialogContent;
