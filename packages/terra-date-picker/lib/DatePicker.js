@@ -94,12 +94,17 @@ var propTypes = {
   /**
    * An ISO 8601 string representation of the start date for a date range.
    */
-  startDate: _propTypes2.default.string
+  startDate: _propTypes2.default.string,
+  /**
+   * Datepicker is appended to the body in the DOM
+   */
+  withPortal: _propTypes2.default.bool
 };
 
 var defaultProps = {
   isEndDateRange: false,
-  isStartDateRange: false
+  isStartDateRange: false,
+  withPortal: true
 };
 
 var DatePicker = function (_React$Component) {
@@ -180,7 +185,7 @@ var DatePicker = function (_React$Component) {
         selectsStart: isStartDateRange,
         startDate: startMomentDate,
         todayButton: todayString,
-        withPortal: true,
+        withPortal: withPortal,
         dateFormatCalendar: ' ',
         dateFormat: this.state.dateFormat,
         fixedHeight: true,

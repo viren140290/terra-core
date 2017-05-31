@@ -56,11 +56,16 @@ const propTypes = {
    * An ISO 8601 string representation of the start date for a date range.
    */
   startDate: PropTypes.string,
+  /**
+   * Datepicker is appended to the body in the DOM
+   */
+  withPortal: PropTypes.bool,
 };
 
 const defaultProps = {
   isEndDateRange: false,
   isStartDateRange: false,
+  withPortal: true
 };
 
 class DatePicker extends React.Component {
@@ -134,7 +139,7 @@ class DatePicker extends React.Component {
         selectsStart={isStartDateRange}
         startDate={startMomentDate}
         todayButton={todayString}
-        withPortal
+        withPortal={withPortal}
         dateFormatCalendar=" "
         dateFormat={this.state.dateFormat}
         fixedHeight

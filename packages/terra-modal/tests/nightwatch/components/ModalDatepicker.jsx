@@ -41,6 +41,11 @@ class ModalIsOpen extends React.Component {
             />
             <p>The Terra Modal is appended to the document body.</p>
             <p>{'Modal is assigned a role of \'document\' for accessibility.'}</p>
+            <Datepicker
+              minDate={'1-12-2015'}
+              maxDate={'1-12-2018'}
+              withPortal
+            />
             <button onClick={this.handleCloseModal}>Close Modal</button>
           </div>
         </Modal>
