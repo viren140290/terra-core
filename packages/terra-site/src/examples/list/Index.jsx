@@ -17,6 +17,7 @@ import ListDemo from './ListDemo';
 import SingleSelect from './SingleSelect';
 import MultiSelect from './MultiSelect';
 import MultiSelectMaxSelection from './MultiSelectMaxSelection';
+import ListHyperLink from './ListHyperLink';
 
 const ListExamples = () => (
   <div>
@@ -43,6 +44,8 @@ const ListExamples = () => (
     <br />
     <h2 id="multi-max-selection">Multi Select List - Maximum Selection of 2 Items</h2>
     <MultiSelectMaxSelection />
+    <h2 id="list-hyperlink">List Hyperlink</h2>
+    <ListHyperLink />
   </div>
 );
 
