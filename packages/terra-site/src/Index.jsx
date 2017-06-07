@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, hashHistory, IndexRoute, Redirect } from 'react-router';
@@ -12,10 +11,10 @@ import BaseExamples from './examples/base/Index';
 import ButtonExamples from './examples/button/Index';
 import ButtonGroupExamples from './examples/button-group/Index';
 import CollapsibleMenuView from './examples/collapsible-menu-view/Index';
-import ContentExamples from './examples/content/Index';
 import ContentContainerExamples from './examples/content-container/Index';
 import DatePickerExamples from './examples/date-picker/Index';
 import DemographicsBannerExamples from './examples/demographics-banner/Index';
+import FormExamples from './examples/form/Index';
 import GridExamples from './examples/grid/Index';
 import I18nExamples from './examples/i18n/Index';
 import IconExamples from './examples/icon/Index';
@@ -26,14 +25,12 @@ import ModalExamples from './examples/modal/Index';
 import PopupPresenterExamples from './examples/popup-presenter/Index';
 import ProgressBarExamples from './examples/progress-bar/Index';
 import ResponsiveElementExamples from './examples/responsive-element/Index';
+import SearchFieldExamples from './examples/search-field/Index';
 import SlidePanelExamples from './examples/slide-panel/Index';
-import StandoutExamples from './examples/standout/Index';
 import StatusExamples from './examples/status/Index';
 import TableExamples from './examples/table/Index';
-import TitleExamples from './examples/title/Index';
 
-
-// Test
+// Test Routes
 /* eslint-disable import/first */
 import ArrangeTestRoutes from 'terra-arrange/tests/nightwatch/ArrangeTestRoutes';
 import BadgeTestRoutes from 'terra-badge/tests/nightwatch/BadgeTestRoutes';
@@ -57,8 +54,13 @@ import StatusTestRoutes from 'terra-status/tests/nightwatch/StatusTestRoutes';
 import GridTestRoutes from 'terra-grid/tests/nightwatch/GridTestRoutes';
 import ProgressBarTestRoutes from 'terra-progress-bar/tests/nightwatch/ProgressBarTestRoutes';
 import IconTestRoutes from 'terra-icon/tests/nightwatch/IconTestRoutes';
-import PopupPresenterTestRoutes from 'terra-popup-presenter/tests/nightwatch/PopupPresenterTestRoutes';
+import SearchFieldTestRoutes from 'terra-search-field/tests/nightwatch/SearchFieldTestRoutes';
 import TestLinks from './TestLinks';
+
+// Remove eslint-disable as these pacakges are published
+/* eslint-disable import/no-extraneous-dependencies */
+import FormTestRoutes from 'terra-form/tests/nightwatch/FormTestRoutes';
+/* eslint-enable import/no-extraneous-dependencies */
 /* eslint-enable import/first */
 
 ReactDOM.render((
@@ -72,10 +74,10 @@ ReactDOM.render((
       <Route path="button" component={ButtonExamples} />
       <Route path="button-group" component={ButtonGroupExamples} />
       <Route path="collapsible-menu-view" component={CollapsibleMenuView} />
-      <Route path="content" component={ContentExamples} />
       <Route path="content-container" component={ContentContainerExamples} />
       <Route path="datepicker" component={DatePickerExamples} />
       <Route path="demographics-banner" component={DemographicsBannerExamples} />
+      <Route path="form" component={FormExamples} />
       <Route path="grid" component={GridExamples} />
       <Route path="i18n" component={I18nExamples} />
       <Route path="icon" component={IconExamples} />
@@ -86,10 +88,9 @@ ReactDOM.render((
       <Route path="popup-presenter" component={PopupPresenterExamples} />
       <Route path="progress-bar" component={ProgressBarExamples} />
       <Route path="responsive-element" component={ResponsiveElementExamples} />
+      <Route path="search-field" component={SearchFieldExamples} />
       <Route path="slide-panel" component={SlidePanelExamples} />
-      <Route path="standout" component={StandoutExamples} />
       <Route path="status" component={StatusExamples} />
-      <Route path="title" component={TitleExamples} />
       <Route path="table" component={TableExamples} />
     </Route>
     <Route path="/tests" component={TestLinks} />
@@ -115,6 +116,8 @@ ReactDOM.render((
     {ModalTestRoutes}
     {ProgressBarTestRoutes}
     {GridTestRoutes}
-    {PopupPresenterTestRoutes}
+    {IconTestRoutes}
+    {SearchFieldTestRoutes}
+    {FormTestRoutes}
   </Router>
 ), document.getElementById('root'));

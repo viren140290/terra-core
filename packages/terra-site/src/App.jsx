@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import Base from 'terra-base';
 import Grid from 'terra-grid';
 import List from 'terra-list';
 import './site.scss';
@@ -10,8 +11,10 @@ const propTypes = {
   children: PropTypes.node,
 };
 
+const locale = document.getElementsByTagName('html')[0].getAttribute('lang');
+
 const App = props => (
-  <div>
+  <Base locale={locale}>
     <Grid>
       <Grid.Row>
         <Grid.Column small={2}>
@@ -31,6 +34,7 @@ const App = props => (
             <List.Item content={<Link to="/site/content-container">Content Container</Link>} />
             <List.Item content={<Link to="/site/datepicker">Date Picker</Link>} />
             <List.Item content={<Link to="/site/demographics-banner">Demographics Banner</Link>} />
+            <List.Item content={<Link to="/site/form">Form</Link>} />
             <List.Item content={<Link to="/site/grid">Grid</Link>} />
             <List.Item content={<Link to="/site/i18n">I18n</Link>} />
             <List.Item content={<Link to="/site/icon">Icon</Link>} />
@@ -41,6 +45,7 @@ const App = props => (
             <List.Item content={<Link to="/site/popup-presenter">Popup Presenter</Link>} />
             <List.Item content={<Link to="/site/progress-bar">Progress Bar</Link>} />
             <List.Item content={<Link to="/site/responsive-element">Responsive Element</Link>} />
+            <List.Item content={<Link to="/site/search-field">Search Field</Link>} />
             <List.Item content={<Link to="/site/slide-panel">Slide Panel</Link>} />
             <List.Item content={<Link to="/site/standout">Standout</Link>} />
             <List.Item content={<Link to="/site/status">Status</Link>} />
@@ -54,7 +59,7 @@ const App = props => (
         </Grid.Column>
       </Grid.Row>
     </Grid>
-  </div>
+  </Base>
 );
 
 App.propTypes = propTypes;

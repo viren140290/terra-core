@@ -20,6 +20,8 @@ Cerner Corporation
 - Emily Rohrbough [@emilyrohrbough]
 - Rory Hardy [@gneatgeek]
 - Neil Pfeiffer [@neilpfeiffer]
+- David Schoonover [@dkschoonover]
+- Christian Alten [@cwalten]
 
 [@ryanthemanuel]: https://github.com/ryanthemanuel
 [@Matt-Butler]: https://github.com/Matt-Butler
@@ -42,3 +44,5 @@ Cerner Corporation
 [@gneatgeek]: https://github.com/gneatgeek
 [@JakeLaCombe]: https://github.com/JakeLaCombe
 [@neilpfeiffer]: https://github.com/neilpfeiffer
+[@dkschoonover]: https://github.com/dkschoonover
+[@cwalten]: https://github.com/cwalten
