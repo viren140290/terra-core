@@ -1,7 +1,7 @@
 @import '~terra-mixins';
 
-.terra-TetherOverlay {
-  background-color: #fff;
+.terra-PopupOverlay {
+  background-color: $terra-white;
   height: 100%;
   opacity: 0.01;
   overflow: -moz-scrollbars-none;
@@ -11,7 +11,7 @@
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: $terra-z-index-5;
+  z-index: $terra-z-index-7;
   @include terra-position-start(0);
 
   &::-webkit-scrollbar {
@@ -19,14 +19,10 @@
   }
 }
 
-.terra-TetherOverlay-inner {
+.terra-PopupOverlay-inner {
   height: 200%;
   position: absolute;
   top: 0;
   width: 200%;
   @include terra-position-start(0);
-}
-
-.terra-TetherOverlay--modal {
-  z-index: $terra-z-index-8;
 }

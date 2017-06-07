@@ -116,7 +116,6 @@ ReactDOM.render((
     {ModalTestRoutes}
     {ProgressBarTestRoutes}
     {GridTestRoutes}
-    {IconTestRoutes}
     {SearchFieldTestRoutes}
     {FormTestRoutes}
   </Router>

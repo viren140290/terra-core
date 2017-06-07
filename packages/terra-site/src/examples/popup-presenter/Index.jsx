@@ -13,7 +13,7 @@ const PopupPresenterExamples = () => (
   <div>
     <Markdown id="readme" src={ReadMe} />
     <PropsTable id="props" src={PopupPresenterSrc} />
-    <h2 id="standard">Standard PopupPresenter</h2>
+    <h2 id="standard-popup">Standard PopupPresenter</h2>
     <PopupPresenterStandard />
   </div>
 );

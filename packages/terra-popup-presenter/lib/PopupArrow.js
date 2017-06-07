@@ -26,7 +26,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
+/**
+ * Half the diameter of the arrow, to use for arrow positioning offset.
+ */
 var ARROW_OFFSET = 10;
+
+/**
+ * Directional classes to be applied by a presenting component.
+ */
 var ARROW_CLASSES = {
   top: 'terra-PopupArrow--alignTop',
   bottom: 'terra-PopupArrow--alignBottom',
@@ -34,6 +41,9 @@ var ARROW_CLASSES = {
   right: 'terra-PopupArrow--alignRight'
 };
 
+/**
+ * Mirrored directional classes, used to flip the arrow on repositioning.
+ */
 var ARROW_OPPOSITE_CLASSES = {
   top: 'terra-PopupArrow--alignBottom',
   bottom: 'terra-PopupArrow--alignTop',
@@ -48,21 +58,20 @@ var propTypes = {
   refCallback: _propTypes2.default.func
 };
 
-var defaultProps = {
-  refCallback: undefined
-};
-
 var PopupArrow = function PopupArrow(_ref) {
   var refCallback = _ref.refCallback,
       customProps = _objectWithoutProperties(_ref, ['refCallback']);
 
   var arrowClassNames = (0, _classnames2.default)(['terra-PopupArrow', customProps.className]);
 
-  return _react2.default.createElement('div', _extends({}, customProps, { className: arrowClassNames, ref: refCallback }));
+  return _react2.default.createElement(
+    'div',
+    _extends({}, customProps, { className: arrowClassNames, ref: refCallback }),
+    _react2.default.createElement('div', { className: 'terra-PopupArrow-inner' })
+  );
 };
 
 PopupArrow.propTypes = propTypes;
-PopupArrow.defaultProps = defaultProps;
 PopupArrow.positionClasses = ARROW_CLASSES;
 PopupArrow.oppositePositionClasses = ARROW_OPPOSITE_CLASSES;
 PopupArrow.arrowSize = ARROW_OFFSET;
