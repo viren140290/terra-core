@@ -1,122 +1,73 @@
 import React from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
+import List from 'terra-list';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import PopupPresenter from 'terra-popup-presenter';
 import MenuItem from './MenuItem';
 import MenuItemGroup from './MenuItemGroup';
-import MenuToggle from './MenuToggle';
 import 'terra-base/lib/baseStyles';
 import './Menu.scss';
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
-  alignment: PropTypes.oneOf(['alignStart', 'alignEnd']),
+  target: PropTypes.element.isRequired,
+  isOpen: PropTypes.bool,
+  onRequestClose: PropTypes.func,
+  children: PropTypes.node,
+};
+
+const defaultProps = {
+  isOpen: false,
+  children: [],
 };
 
 class Menu extends React.Component {
   constructor(props) {
     super(props);
-    this.setContainer = this.setContainer.bind(this);
-    this.handleResize = this.handleResize.bind(this);
-    this.visibleChildComponents = this.visibleChildComponents.bind(this);
-    this.hiddenChildComponents = this.hiddenChildComponents.bind(this);
-    this.state = {
-      hiddenIndexes: [],
-      toggleOpen: false,
-      toggleHidden: false,
-    };
+    this.handleOnClick = this.handleOnClick.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
+    this.state = { isOpen: false };
   }
 
-  componentDidMount() {
-    if (this.container) {
-      this.resizeObserver = new ResizeObserver((entries) => {
-        this.setState({ hiddenIndexes: [], toggleOpen: this.state.toggleOpen, toggleHidden: false });
-        this.forceUpdate();
-        this.handleResize(entries[0].contentRect.width);
-      });
-      this.resizeObserver.observe(this.container);
+  handleOnClick() {
+    if (this.props.children) {
+      this.setState({ isOpen: true });
     }
   }
 
-  componentWillUnmount() {
-    if (this.container) {
-      this.resizeObserver.disconnect(this.container);
-      this.container = null;
-    }
-  }
-
-  setContainer(node) {
-    if (node === null) { return; } // Ref callbacks happen on mount and unmount, element will be null on unmount
-    this.container = node;
-  }
-
-  handleResize(width) {
-    // do calculation here
-    const availableWidth = width;
-    const hiddenIndexes = [];
-    let calcWidth = 0;
-
-    for (let i = 0; i < this.props.children.length; i += 1) {
-      const child = this.container.children[i];
-      if (!child) {
-        break;
-      }
-      calcWidth += child.getBoundingClientRect().width;
-      if (calcWidth > availableWidth) {
-        hiddenIndexes.push(i);
-      }
-    }
-    // this needs to match arrays
-    if (hiddenIndexes.length !== this.state.hiddenIndexes.length) {
-      this.setState({ toggleOpen: false, hiddenIndexes });
-    }
-  }
-
-  visibleChildComponents(children) {
-    const visibleChildren = [];
-    for (let i = 0; i < children.length; i += 1) {
-      if (this.state.hiddenIndexes.indexOf(i) < 0) {
-        visibleChildren.push(children[i]);
-      }
-    }
-    return visibleChildren;
-  }
-
-  hiddenChildComponents(children) {
-    const indexes = this.state.hiddenIndexes;
-    const hiddenChildren = [];
-    for (let i = 0; i < indexes.length; i += 1) {
-      hiddenChildren.push(React.cloneElement(children[indexes[i]], { isListStyle: true }));
-    }
-    return hiddenChildren;
+  handleRequestClose() {
+    this.setState({ isOpen: false });
+    this.props.onRequestClose();
   }
 
   render() {
-    const { children, ...customProps } = this.props;
-    const visibleChildren = this.visibleChildComponents(children);
-    const hiddenChildren = this.hiddenChildComponents(children);
+    const { target, isOpen, onRequestClose, children, ...customProps } = this.props;
+    const attributes = Object.assign({}, customProps);
     const menuClassName = classNames([
       'terra-Menu',
-      customProps.className,
+      attributes.className,
     ]);
 
     return (
-      <div {...customProps} className={menuClassName}>
-        <div className="terra-Menu-container" ref={this.setContainer}>
-          {visibleChildren}
-        </div>
-        <MenuToggle>
-          {hiddenChildren}
-        </MenuToggle>
-      </div>
+      <PopupPresenter
+        content={
+          <List {...attributes} className={menuClassName}>
+            {children}
+          </List>
+        }
+        contentAttachment="bottom center"
+        isOpen={this.state.isOpen}
+        target={React.cloneElement(target, { onClick: this.handleOnClick })}
+        onRequestClose={this.handleRequestClose}
+        showArrow
+      />
     );
   }
 }
 
 Menu.propTypes = propTypes;
-
+Menu.defaultProps = defaultProps;
 Menu.Item = MenuItem;
-
-Menu.Group = MenuItemGroup;
+Menu.ItemGroup = MenuItemGroup;
 
 export default Menu;
+

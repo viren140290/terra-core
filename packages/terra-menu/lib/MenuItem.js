@@ -6,8 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -16,13 +14,13 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _terraPopupPresenter = require('terra-popup-presenter');
+var _terraButton = require('terra-button');
 
-var _terraPopupPresenter2 = _interopRequireDefault(_terraPopupPresenter);
+var _terraButton2 = _interopRequireDefault(_terraButton);
 
-var _classnames = require('classnames');
+var _terraButtonGroup = require('terra-button-group');
 
-var _classnames2 = _interopRequireDefault(_classnames);
+var _terraButtonGroup2 = _interopRequireDefault(_terraButtonGroup);
 
 var _terraList = require('terra-list');
 
@@ -36,105 +34,85 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var propTypes = {
-  display: _propTypes2.default.element,
+  /**
+   * Sets the item's text
+   **/
+  text: _propTypes2.default.string,
+
+  /**
+   * An optional icon. Nested inline with the text when provided
+   **/
+  icon: _propTypes2.default.element,
+
+  /**
+   * Reverses the position of the icon and text
+   **/
+  isReversed: _propTypes2.default.bool,
+
+  /**
+   * Indicates if the item is selected. IsSelectable must also be true for this to work.
+   **/
   isSelected: _propTypes2.default.bool,
-  children: _propTypes2.default.element,
-  isListStyle: _propTypes2.default.bool
+
+  /**
+   * List of Menu.Items to display in a submenu when this item is selected.
+   **/
+  subMenuItems: _propTypes2.default.arrayOf(_propTypes2.default.element),
+
+  /**
+   * This should only be set if the item is being placed in a collapsible menu view, or as the `target` in a menu.
+   **/
+  isButtonStyle: _propTypes2.default.bool,
+
+  /**
+   * Private.
+   **/
+  isGroupItem: _propTypes2.default.bool
 };
 
 var defaultProps = {
+  text: '',
+  isReversed: false,
+  isSelectable: false,
   isSelected: false,
-  isListStyle: false
+  isButtonStyle: false,
+  isGroupItem: false,
+  subMenuItems: []
 };
 
-var MenuItem = function (_React$Component) {
-  _inherits(MenuItem, _React$Component);
+var MenuItem = function MenuItem(_ref) {
+  var text = _ref.text,
+      icon = _ref.icon,
+      isReversed = _ref.isReversed,
+      isSelectable = _ref.isSelectable,
+      isSelected = _ref.isSelected,
+      isButtonStyle = _ref.isButtonStyle,
+      isGroupItem = _ref.isGroupItem,
+      subMenuItems = _ref.subMenuItems,
+      customProps = _objectWithoutProperties(_ref, ['text', 'icon', 'isReversed', 'isSelectable', 'isSelected', 'isButtonStyle', 'isGroupItem', 'subMenuItems']);
 
-  function MenuItem(props) {
-    _classCallCheck(this, MenuItem);
+  var attributes = _extends({}, customProps);
 
-    var _this = _possibleConstructorReturn(this, (MenuItem.__proto__ || Object.getPrototypeOf(MenuItem)).call(this, props));
-
-    _this.handleRequestClose = _this.handleRequestClose.bind(_this);
-    _this.handleOnClick = _this.handleOnClick.bind(_this);
-    _this.wrapOnClick = _this.wrapOnClick.bind(_this);
-    _this.state = { isSelected: false };
-    return _this;
+  var item = void 0;
+  if (isButtonStyle && isGroupItem) {
+    item = _react2.default.createElement(_terraButtonGroup2.default.Button, _extends({}, attributes, { text: text, icon: icon, isSelected: isSelected }));
+  } else if (isButtonStyle) {
+    item = _react2.default.createElement(_terraButton2.default, _extends({}, attributes, { text: text, icon: icon, isReversed: isReversed }));
+  } else {
+    item = _react2.default.createElement(_terraList2.default.Item, _extends({}, attributes, {
+      hasChevron: subMenuItems.length > 0,
+      content: _react2.default.createElement(
+        'div',
+        null,
+        text
+      ),
+      isSelectable: subMenuItems.length > 0 || isGroupItem
+    }));
   }
 
-  _createClass(MenuItem, [{
-    key: 'handleRequestClose',
-    value: function handleRequestClose() {
-      this.setState({ isSelected: false });
-    }
-  }, {
-    key: 'handleOnClick',
-    value: function handleOnClick() {
-      if (this.props.children) {
-        this.setState({ isSelected: true });
-      }
-    }
-  }, {
-    key: 'wrapOnClick',
-    value: function wrapOnClick() {
-      var _this2 = this;
-
-      var onClick = this.props.display.props.onClick;
-      return function (event) {
-        _this2.handleOnClick(event);
-
-        if (onClick) {
-          onClick(event);
-        }
-      };
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          display = _props.display,
-          isSelected = _props.isSelected,
-          children = _props.children,
-          isListStyle = _props.isListStyle,
-          customProps = _objectWithoutProperties(_props, ['display', 'isSelected', 'children', 'isListStyle']);
-
-      var menuItemClassName = (0, _classnames2.default)(['terra-MenuItem', customProps.className]);
-
-      var target = _react2.default.cloneElement(display, { onClick: this.wrapOnClick() });
-      if (isListStyle) {
-        target = _react2.default.createElement(_terraList2.default.Item, { content: _react2.default.createElement(
-            'div',
-            null,
-            display.props.text
-          ), onClick: this.wrapOnClick() });
-      }
-
-      var toggle = _react2.default.createElement(_terraPopupPresenter2.default, {
-        content: children,
-        contentAttachment: 'bottom center',
-        isOpen: this.state.isSelected,
-        target: target,
-        onRequestClose: this.handleRequestClose,
-        showArrow: true
-      });
-
-      return _react2.default.createElement(
-        'div',
-        _extends({}, customProps, { className: menuItemClassName }),
-        toggle
-      );
-    }
-  }]);
-
-  return MenuItem;
-}(_react2.default.Component);
+  return item;
+};
 
 MenuItem.propTypes = propTypes;
 MenuItem.defaultProps = defaultProps;

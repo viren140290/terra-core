@@ -26,6 +26,7 @@ const App = props => (
             <List.Item content={<Link to="/site/badge">Badge</Link>} />
             <List.Item content={<Link to="/site/button">Button</Link>} />
             <List.Item content={<Link to="/site/button-group">Button Group</Link>} />
+            <List.Item content={<Link to="/site/collapsible-menu-view">Collapsible Menu View</Link>} />
             <List.Item content={<Link to="/site/content">Content</Link>} />
             <List.Item content={<Link to="/site/content-container">Content Container</Link>} />
             <List.Item content={<Link to="/site/datepicker">Date Picker</Link>} />
@@ -37,7 +38,7 @@ const App = props => (
             <List.Item content={<Link to="/site/list">List</Link>} />
             <List.Item content={<Link to="/site/menu">Menu</Link>} />
             <List.Item content={<Link to="/site/modal">Modal</Link>} />
-	          <List.Item content={<Link to="/site/popup-presenter">Popup Presenter</Link>} />
+            <List.Item content={<Link to="/site/popup-presenter">Popup Presenter</Link>} />
             <List.Item content={<Link to="/site/progress-bar">Progress Bar</Link>} />
             <List.Item content={<Link to="/site/responsive-element">Responsive Element</Link>} />
             <List.Item content={<Link to="/site/slide-panel">Slide Panel</Link>} />

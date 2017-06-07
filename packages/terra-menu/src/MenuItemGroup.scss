@@ -2,14 +2,11 @@
 @import './variables';
 @import './mixins';
 
-.terra-MenuItemGroup {
-  border: solid 2px #cc5423;
+.terra-MenuItemGroup--buttonStyle {
+  @include terra-padding-end(1.429rem);
+
   display: flex;
   flex: 0 0 auto;
   flex-wrap: nowrap;
   position: relative;
-}
-
-.terra-MenuItemGroup--list {
-  border: solid 2px #cc5423;
 }

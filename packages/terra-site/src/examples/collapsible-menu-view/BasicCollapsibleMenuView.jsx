@@ -1,8 +1,9 @@
 import React from 'react';
 import Menu from 'terra-menu';
+import CollapsibleMenuView from 'terra-collapsible-menu-view';
 
 const group = (
-  <Menu.ItemGroup isSelectable key="6">
+  <Menu.ItemGroup key="6">
     <Menu.Item text="Default 61" key="61" />
     <Menu.Item text="Default 62" key="62" />
     <Menu.Item text="Default 63" key="63" />
@@ -10,7 +11,9 @@ const group = (
 );
 
 const buttonViews = [
-  <Menu.Item text="Default 1" key="1" />,
+  (<Menu.Item text="Default 1" key="1">
+    <div> Popup Content For Default 1 </div>
+  </Menu.Item>),
   <Menu.Item text="Default 2" key="2" />,
   <Menu.Item text="Default 3" key="3" />,
   <Menu.Item text="Default 4" key="4" />,
@@ -20,12 +23,10 @@ const buttonViews = [
   <Menu.Item text="Default 7" key="8" />,
   <Menu.Item text="Default 8" key="9" />];
 
-const target = <Menu.Item isButtonStyle text="Click Me" />;
-
 const MenuDemo = () => (
-  <Menu target={target}>
+  <CollapsibleMenuView>
     {buttonViews}
-  </Menu>
+  </CollapsibleMenuView>
 );
 
 export default MenuDemo;

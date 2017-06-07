@@ -14,7 +14,6 @@ import MenuItemGroupSrc from '!raw-loader!terra-menu/src/MenuItemGroup';
 
 // Example Files
 import BasicMenu from './BasicMenu';
-import PopupMenu from './PopupMenu';
 
 const MenuExamples = () => (
   <div>
@@ -23,13 +22,9 @@ const MenuExamples = () => (
     <h2>Menu</h2>
     <PropsTable id="props" src={MenuSrc} />
     <h2>Menu Item</h2>
-    <PropsTable src={MenuItemSrc} />
     <h2>Menu Group</h2>
-    <PropsTable src={MenuItemGroupSrc} />
     <h2>Basic Menu</h2>
     <BasicMenu />
-    <h2>PopupMenu</h2>
-    <PopupMenu />
   </div>
 );
 

@@ -14,13 +14,13 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _classnames = require('classnames');
+var _terraButtonGroup = require('terra-button-group');
 
-var _classnames2 = _interopRequireDefault(_classnames);
+var _terraButtonGroup2 = _interopRequireDefault(_terraButtonGroup);
 
-var _terraList = require('terra-list');
+var _SingleSelectList = require('terra-list/lib/SingleSelectList');
 
-var _terraList2 = _interopRequireDefault(_terraList);
+var _SingleSelectList2 = _interopRequireDefault(_SingleSelectList);
 
 require('terra-base/lib/baseStyles');
 
@@ -31,39 +31,43 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 var propTypes = {
-  children: _propTypes2.default.node,
-  isListStyle: _propTypes2.default.bool
+  isSelectable: _propTypes2.default.bool,
+  isButtonStyle: _propTypes2.default.bool,
+  children: _propTypes2.default.array
 };
 
 var defaultProps = {
-  isListStyle: false
+  isSelectable: false,
+  isButtonStyle: false,
+  children: []
 };
 
 var MenuItemGroup = function MenuItemGroup(_ref) {
-  var children = _ref.children,
-      isListStyle = _ref.isListStyle,
-      customProps = _objectWithoutProperties(_ref, ['children', 'isListStyle']);
+  var isSelectable = _ref.isSelectable,
+      isButtonStyle = _ref.isButtonStyle,
+      children = _ref.children,
+      customProps = _objectWithoutProperties(_ref, ['isSelectable', 'isButtonStyle', 'children']);
 
-  var menuItemGroupClassName = (0, _classnames2.default)(['terra-MenuItemGroup', customProps.className]);
-
-  var items = children;
-  var group = _react2.default.createElement(
-    'div',
-    _extends({}, customProps, { className: menuItemGroupClassName }),
-    items
-  );
-
-  if (isListStyle) {
-    items = children.map(function (child) {
-      return _react2.default.createElement(_terraList2.default.Item, { content: _react2.default.createElement(
-          'div',
-          null,
-          child.props.display.props.text
-        ) });
+  var attributes = _extends({}, customProps);
+  var items = children.map(function (child) {
+    return _react2.default.cloneElement(child, {
+      isButtonStyle: isButtonStyle,
+      isSelectable: isSelectable,
+      isGroupItem: true
     });
+  });
+
+  var group = void 0;
+  if (isButtonStyle) {
     group = _react2.default.createElement(
-      _terraList2.default,
-      _extends({}, customProps, { className: 'terra-MenuItemGroup--list' }),
+      _terraButtonGroup2.default,
+      _extends({}, attributes, { isSelectable: isSelectable }),
+      items
+    );
+  } else {
+    group = _react2.default.createElement(
+      _SingleSelectList2.default,
+      attributes,
       items
     );
   }

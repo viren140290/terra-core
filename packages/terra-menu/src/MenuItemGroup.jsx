@@ -1,40 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import List from 'terra-list';
+import ButtonGroup from 'terra-button-group';
+import SingleSelectList from 'terra-list/lib/SingleSelectList';
 import 'terra-base/lib/baseStyles';
 import './MenuItemGroup.scss';
 
 const propTypes = {
-  children: PropTypes.node,
-  isListStyle: PropTypes.bool,
+  isSelectable: PropTypes.bool,
+  isButtonStyle: PropTypes.bool,
+  children: PropTypes.array,
 };
 
 const defaultProps = {
-  isListStyle: false,
+  isSelectable: false,
+  isButtonStyle: false,
+  children: [],
 };
 
-const MenuItemGroup = ({ children, isListStyle, ...customProps }) => {
-  const menuItemGroupClassName = classNames([
-    'terra-MenuItemGroup',
-    customProps.className,
-  ]);
+const MenuItemGroup = ({ isSelectable, isButtonStyle, children, ...customProps }) => {
+  const attributes = Object.assign({}, customProps);
+  const items = children.map(child => (
+    React.cloneElement(child, {
+      isButtonStyle,
+      isSelectable,
+      isGroupItem: true,
+    })
+  ));
 
-  let items = children;
-  let group = (
-    <div {...customProps} className={menuItemGroupClassName}>
-      {items}
-    </div>
-  );
-
-  if (isListStyle) {
-    items = children.map(child => (
-      <List.Item content={<div>{child.props.display.props.text}</div>} />
-    ));
+  let group;
+  if (isButtonStyle) {
     group = (
-      <List {...customProps} className="terra-MenuItemGroup--list" isDivided>
+      <ButtonGroup {...attributes} isSelectable={isSelectable}>
         {items}
-      </List>
+      </ButtonGroup>
+    );
+  } else {
+    group = (
+      <SingleSelectList {...attributes} >
+        {items}
+      </SingleSelectList>
     );
   }
 
