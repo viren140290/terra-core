@@ -20,7 +20,7 @@ const buttonViews = [
   <Menu.Item text="Default 7" key="8" />,
   <Menu.Item text="Default 8" key="9" />];
 
-const target = <Menu.Item isButtonStyle text="Click Me" />;
+const target = <Menu.Item isButtonStyle text="Click Me" id="test-menu-button" />;
 
 const MenuDemo = () => (
   <Menu target={target}>

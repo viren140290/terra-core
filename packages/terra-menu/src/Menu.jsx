@@ -1,7 +1,6 @@
 import React from 'react';
 import List from 'terra-list';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import PopupPresenter from 'terra-popup-presenter';
 import MenuItem from './MenuItem';
 import MenuItemGroup from './MenuItemGroup';
@@ -9,14 +8,11 @@ import 'terra-base/lib/baseStyles';
 import './Menu.scss';
 
 const propTypes = {
-  target: PropTypes.element.isRequired,
-  isOpen: PropTypes.bool,
-  onRequestClose: PropTypes.func,
+  target: PropTypes.element,
   children: PropTypes.node,
 };
 
 const defaultProps = {
-  isOpen: false,
   children: [],
 };
 
@@ -25,7 +21,18 @@ class Menu extends React.Component {
     super(props);
     this.handleOnClick = this.handleOnClick.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
+    this.setButtonNode = this.setButtonNode.bind(this);
+    this.getButtonNode = this.getButtonNode.bind(this);
     this.state = { isOpen: false };
+  }
+
+  setButtonNode(node) {
+    if (node === null) { return; }
+    this.buttonNode = node;
+  }
+
+  getButtonNode() {
+    return this.buttonNode;
   }
 
   handleOnClick() {
@@ -36,30 +43,29 @@ class Menu extends React.Component {
 
   handleRequestClose() {
     this.setState({ isOpen: false });
-    this.props.onRequestClose();
   }
 
   render() {
-    const { target, isOpen, onRequestClose, children, ...customProps } = this.props;
+    const { target, children, ...customProps } = this.props;
     const attributes = Object.assign({}, customProps);
-    const menuClassName = classNames([
-      'terra-Menu',
-      attributes.className,
-    ]);
+    const targetClone = React.cloneElement(target, { onClick: this.handleOnClick });
 
     return (
-      <PopupPresenter
-        content={
-          <List {...attributes} className={menuClassName}>
+      <div>
+        <PopupPresenter
+          isOpen={this.state.isOpen}
+          targetRef={this.getButtonNode}
+          onRequestClose={this.handleRequestClose}
+          isArrowDisplayed
+        >
+          <List {...attributes}>
             {children}
           </List>
-        }
-        contentAttachment="bottom center"
-        isOpen={this.state.isOpen}
-        target={React.cloneElement(target, { onClick: this.handleOnClick })}
-        onRequestClose={this.handleRequestClose}
-        showArrow
-      />
+        </PopupPresenter>
+        <div ref={this.setButtonNode}>
+          {targetClone}
+        </div>
+      </div>
     );
   }
 }
