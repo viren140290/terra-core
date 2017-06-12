@@ -22,13 +22,13 @@ $terra-table-row-border-horizontal: $terra-table-base-border-width solid $terra-
 $terra-table-cell-border: 0 !default;
 
 // Table Header Font Styles
-$terra-table-thead-th-font-size: 1rem !default;
+$terra-table-thead-th-font-size: 1rem !default; // 14px
 $terra-table-thead-th-font-weight: bold !default;
 $terra-table-thead-th-color: $terra-dark !default;
 $terra-table-sort-indicator-color: $terra-dark !default;
 
 // Table Subheader Font Styles
-$terra-table-subheader-font-size: 1rem !default;
+$terra-table-subheader-font-size: 1rem !default; // 14px
 $terra-table-subheader-font-weight: bold !default;
 $terra-table-subheader-color: $terra-dark !default;
 
@@ -39,11 +39,11 @@ $terra-table-cell-padding-right: 0.75em !default;
 $terra-table-cell-padding-top: 0.5em !default;
 
 // Table Cell Min Width
-$terra-table-cell-min-width-tiny: 3rem;
-$terra-table-cell-min-width-small: 4.25rem;
-$terra-table-cell-min-width-medium: 5.75rem;
-$terra-table-cell-min-width-large: 8.5rem;
-$terra-table-cell-min-width-huge: 10.5rem;
+$terra-table-cell-min-width-tiny: 3rem; // 42px
+$terra-table-cell-min-width-small: 4.25rem; // 59px
+$terra-table-cell-min-width-medium: 5.75rem; // 80px
+$terra-table-cell-min-width-large: 8.5rem; // 119px
+$terra-table-cell-min-width-huge: 10.5rem; // 147px
 
 // Selection Styles
 $terra-table-row-hover-background-color: $terra-blue-10 !default;
