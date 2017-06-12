@@ -46,7 +46,6 @@ const propTypes = {
 const defaultProps = {
   text: '',
   isReversed: false,
-  isSelectable: false,
   isSelected: false,
   isButtonStyle: false,
   isGroupItem: false,
@@ -57,7 +56,6 @@ const MenuItem = ({
   text,
   icon,
   isReversed,
-  isSelectable,
   isSelected,
   isButtonStyle,
   isGroupItem,
