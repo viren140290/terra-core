@@ -1,10 +1,10 @@
 import React from 'react';
-import List from 'terra-list';
 import PropTypes from 'prop-types';
 import PopupPresenter from 'terra-popup-presenter';
+import 'terra-base/lib/baseStyles';
 import MenuItem from './MenuItem';
 import MenuItemGroup from './MenuItemGroup';
-import 'terra-base/lib/baseStyles';
+import SubMenu from './SubMenu';
 import './Menu.scss';
 
 const propTypes = {
@@ -23,7 +23,33 @@ class Menu extends React.Component {
     this.handleRequestClose = this.handleRequestClose.bind(this);
     this.setButtonNode = this.setButtonNode.bind(this);
     this.getButtonNode = this.getButtonNode.bind(this);
-    this.state = { isOpen: false };
+    this.handleItemSelection = this.handleItemSelection.bind(this);
+    this.wrapOnClick = this.wrapOnClick.bind(this);
+    this.getInitialState = this.getInitialState.bind(this);
+    this.push = this.push.bind(this);
+    this.pop = this.pop.bind(this);
+    this.state = this.getInitialState();
+  }
+
+  getInitialState() {
+    const items = this.props.children.map((item) => {
+      if (item.props.subMenuItems && item.props.subMenuItems.length > 0) {
+        return React.cloneElement(item, { onClick: this.wrapOnClick(item) });
+      }
+
+      return item;
+    });
+
+    const initialMenu = (
+      <SubMenu>
+        {items}
+      </SubMenu>
+    );
+
+    return {
+      isOpen: false,
+      stack: [initialMenu],
+    };
   }
 
   setButtonNode(node) {
@@ -42,7 +68,36 @@ class Menu extends React.Component {
   }
 
   handleRequestClose() {
-    this.setState({ isOpen: false });
+    this.setState(this.getInitialState());
+  }
+
+  handleItemSelection(event, item) {
+    this.push(<SubMenu title={item.props.text} onBack={this.pop}>{item.props.subMenuItems}</SubMenu>);
+  }
+
+  wrapOnClick(item) {
+    const onClick = item.props.onClick;
+    return (event) => {
+      this.handleItemSelection(event, item);
+
+      if (onClick) {
+        onClick(event);
+      }
+    };
+  }
+
+  pop() {
+    this.setState((prevState) => {
+      prevState.stack.pop();
+      return { stack: prevState.stack };
+    });
+  }
+
+  push(content) {
+    this.setState((prevState) => {
+      prevState.stack.push(content);
+      return { stack: prevState.stack };
+    });
   }
 
   render() {
@@ -51,16 +106,14 @@ class Menu extends React.Component {
     const targetClone = React.cloneElement(target, { onClick: this.handleOnClick });
 
     return (
-      <div>
+      <div {...attributes}>
         <PopupPresenter
           isOpen={this.state.isOpen}
           targetRef={this.getButtonNode}
           onRequestClose={this.handleRequestClose}
           isArrowDisplayed
         >
-          <List {...attributes}>
-            {children}
-          </List>
+          {this.state.stack[this.state.stack.length - 1]}
         </PopupPresenter>
         <div ref={this.setButtonNode}>
           {targetClone}
@@ -76,4 +129,3 @@ Menu.Item = MenuItem;
 Menu.ItemGroup = MenuItemGroup;
 
 export default Menu;
-

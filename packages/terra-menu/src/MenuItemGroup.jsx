@@ -22,7 +22,6 @@ const MenuItemGroup = ({ isSelectable, isButtonStyle, children, ...customProps }
   const items = children.map(child => (
     React.cloneElement(child, {
       isButtonStyle,
-      isSelectable,
       isGroupItem: true,
     })
   ));

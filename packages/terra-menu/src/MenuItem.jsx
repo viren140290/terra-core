@@ -23,7 +23,7 @@ const propTypes = {
   isReversed: PropTypes.bool,
 
   /**
-   * Indicates if the item is selected. IsSelectable must also be true for this to work.
+   * Indicates if the item is selected.
    **/
   isSelected: PropTypes.bool,
 
